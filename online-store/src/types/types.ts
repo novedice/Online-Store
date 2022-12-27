@@ -13,10 +13,14 @@ export interface IProduct {
     quantity?: number;
 }
 
-export interface ItemInBasket extends IProduct {
+export interface ItemInBasket {
+    product: IProduct
     quantity: number
 }
 
 export interface IBasket {
-    productsInBascket: ItemInBasket[]
+    productsInBasket: ItemInBasket[]
+    basketList: string[]
+    summaryItems: number
+    totalPay: number
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShowProduct } from '../components/product';
+import { ShowProduct } from '../components/ShowProduct';
 import { useProducts } from '../hooks/products'
 // import { allProducts } from '../data/products';
 // import axios, { AxiosError } from 'axios';

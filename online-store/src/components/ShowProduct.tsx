@@ -1,6 +1,7 @@
 import React from 'react';
 import { IProduct } from '../types/types';
-import { addToBasket } from './AddToBasket';
+// import { Basket} from './AddToBasket';
+import { myBasket } from '../App'
 
 interface ProductProps {
   product: IProduct
@@ -15,7 +16,7 @@ export function ShowProduct(props: ProductProps) {
         <p className='font-bold'>{props.product.title}</p>
         <p className='font-bold'>{props.product.price}</p>
         <p className='font-bold'>{props.product.discountPercentage}</p>
-        <button className='btnAddToBasket px-2 py-4 flex items-center border mb-2' onClick={() => addToBasket(props.product)}>Add</button>
+        <button className='btnAddToBasket px-2 py-4 flex items-center border mb-2' onClick={() => myBasket.addToBasket(props.product)}>Add</button>
       </div>
     </>
   )
