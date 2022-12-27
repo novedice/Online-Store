@@ -1,10 +1,7 @@
 import React from 'react';
 import { ShowProduct } from '../components/ShowProduct';
 import { useProducts } from '../hooks/products'
-// import { allProducts } from '../data/products';
-// import axios, { AxiosError } from 'axios';
-// import { IProduct } from '../types/types';
-// import { IProduct } from '../types/types';
+
 
 export function ShopPage() {
 
