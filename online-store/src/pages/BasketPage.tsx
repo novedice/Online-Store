@@ -3,7 +3,9 @@ import { ModalWindow } from '../components/ModalWindow';
 import { Payment } from '../components/Payment';
 import { ModalWindowContext } from '../Context/ModalWindowContext';
 import { myBasket } from '../App';
-import { ShowItem } from '../components/ItemInBasket';
+import { ShowItem } from '../components/ShowItemInBasket';
+// import { render } from '@testing-library/react';
+// import { InBasketContext } from '../Context/InBasketContext';
 
 export function BasketPage() {
 

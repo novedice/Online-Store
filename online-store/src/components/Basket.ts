@@ -1,6 +1,8 @@
+import { myBasket } from '../App';
 import { IBasket, IProduct, ItemInBasket } from '../types/types';
 
 export class Basket implements IBasket {
+
   productsInBasket: ItemInBasket[];
   basketList: string[];
   summaryItems: number;
@@ -15,6 +17,8 @@ export class Basket implements IBasket {
   }
 
   addToBasket(product: IProduct) {
+    
+    product.inBasket = true;
 
     let itemInBasket: ItemInBasket = {
       product: product,
@@ -31,16 +35,52 @@ export class Basket implements IBasket {
 
     this.summaryItems += 1;
     this.totalPay += product.price;
+    console.log(myBasket);
+
 
   }
 
   removeFromBasket(product: IProduct) {
+    
+    const index = this.basketList.indexOf(product.title);
+    
+    product.inBasket = false;
+
+    this.basketList.splice(index, 1);
+    this.summaryItems -= this.productsInBasket[index].quantity;
+    this.totalPay -= (product.price * this.productsInBasket[index].quantity);
+    this.productsInBasket.splice(index, 1);
+    console.log(myBasket);
+  }
+
+  addOneMore(product: IProduct) {
 
     const index = this.basketList.indexOf(product.title);
-    this.basketList.splice(index, 1);
-    this.productsInBasket.splice(index, 1);
-    this.summaryItems -= 1;
-    this.totalPay -= product.price
+    
+    if (this.productsInBasket[index].quantity >= this.productsInBasket[index].product.stock) {
+      return
+    }
+
+    this.productsInBasket[index].quantity += 1;
+    this.totalPay += product.price;
+    this.summaryItems += 1; 
+    console.log(myBasket);
+
+  }
+
+  minusOneMore(product: IProduct) {
+
+    const index = this.basketList.indexOf(product.title);
+    
+    if (this.productsInBasket[index].quantity <= 0) {
+      return
+    }
+
+    this.productsInBasket[index].quantity -= 1;
+    this.totalPay -= product.price;
+    this.summaryItems -= 1; 
+    console.log(myBasket);
+
   }
 }
 

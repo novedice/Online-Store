@@ -11,6 +11,7 @@ export interface IProduct {
     thumbnail: string
     images: string[]
     quantity?: number;
+    inBasket?: boolean;
 }
 
 export interface ItemInBasket {
