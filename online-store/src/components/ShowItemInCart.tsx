@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { ItemInBasket } from '../types/types';
-import { myBasket } from '../App';
-// import { InBasketContext } from '../Context/InBasketContext';
+import { ItemInCart } from '../types/types';
+import { myCart } from '../App';
+// import { InCartContext } from '../Context/InCartContext';
 
 
 interface ItemProps {
-  item: ItemInBasket
+  item: ItemInCart
 }
 
 export function ShowItem({item}: ItemProps) {
@@ -14,12 +14,12 @@ export function ShowItem({item}: ItemProps) {
   // const [oldSum, setOldSum] = useState();
   // const [sum, setSum] = useState();
 
-// const { removeFrom } = useContext(InBasketContext);
+// const { removeFrom } = useContext(InCartContext);
 
   return (
     <>
-      <div className='item-in-basket border px-2 py-2 rounded flex items-center space-btw'>
-          <img src={item.product.thumbnail} className="image-in-basket basic-1/5 w-1/6 mb-1 px-1 py-1" alt={item.product.title}></img>
+      <div className='item-in-Cart border px-2 py-2 rounded flex items-center space-btw'>
+          <img src={item.product.thumbnail} className="image-in-Cart basic-1/5 w-1/6 mb-1 px-1 py-1" alt={item.product.title}></img>
           <div className='item-description basis-2/5 flex flex-col px-2 py-4'>
             <p className='font-bold'>{item.product.title}</p>
             <p className=''>Category: {item.product.category}</p>
@@ -32,7 +32,7 @@ export function ShowItem({item}: ItemProps) {
                   className='plus-one border rounded-full px-2 py-0 text-2xl'
                   onClick={() => {
                     console.log('-1');
-                    myBasket.minusOneMore(item.product);
+                    myCart.minusOneMore(item.product);
                     setQty(item.quantity);
                   }}> - </button>
               <span> { qty } </span>
@@ -40,7 +40,7 @@ export function ShowItem({item}: ItemProps) {
                   className='minus-one border rounded-full px-2 py-0 text-2xl'
                   onClick={() => {
                     console.log('+1');
-                    myBasket.addOneMore(item.product);
+                    myCart.addOneMore(item.product);
                     setQty(item.quantity);
                     }}> + </button>
             </div>
@@ -53,8 +53,8 @@ export function ShowItem({item}: ItemProps) {
               onClick={() => {
               console.log('remove');
               // removeFrom();
-              myBasket.removeFromBasket(item.product)
-              }}>remove item from basket</p>
+              myCart.removeFromCart(item.product)
+              }}>remove item from Cart</p>
           </div>
       </div>
     </>

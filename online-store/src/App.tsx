@@ -1,12 +1,12 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import { Basket } from './components/Basket';
+import { Cart } from './components/ShopCart';
 import { Navigation } from './components/Navigation';
-import { BasketPage } from './pages/BasketPage';
+import { CartPage } from './pages/CartPage';
 import { ShopPage } from './pages/ShopPage';
 
-export const myBasket = new Basket([], [], 0, 0);
+export const myCart = new Cart([], [], 0, 0);
 
 export function App() {
   return (
@@ -14,7 +14,7 @@ export function App() {
       <Navigation />
       <Routes>
         <Route path="/" element={ <ShopPage /> }/>
-        <Route path="/basket" element={ <BasketPage /> }/>
+        <Route path="/cart" element={ <CartPage /> }/>
       </Routes>
     </>
   );

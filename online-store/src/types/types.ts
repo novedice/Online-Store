@@ -11,17 +11,17 @@ export interface IProduct {
     thumbnail: string
     images: string[]
     quantity?: number;
-    inBasket?: boolean;
+    inCart?: boolean;
 }
 
-export interface ItemInBasket {
+export interface ItemInCart {
     product: IProduct
     quantity: number
 }
 
-export interface IBasket {
-    productsInBasket: ItemInBasket[]
-    basketList: string[]
+export interface ICart {
+    productsInCart: ItemInCart[]
+    cartList: string[]
     summaryItems: number
     totalPay: number
 }

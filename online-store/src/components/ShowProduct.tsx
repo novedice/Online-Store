@@ -1,36 +1,28 @@
 import React from 'react';
 import { IProduct } from '../types/types';
-// import { Basket} from './AddToBasket';
-import { myBasket } from '../App'
-// import { InBasketContext } from '../Context/InBasketContext';
+// import { Cart} from './AddToCart';
+import { myCart } from '../App'
+// import { InCartContext } from '../Context/InCartContext';
 
 interface ProductProps {
   product: IProduct
 }
 
-export const ifInBasket = (product: IProduct) => {
-  if (myBasket.basketList.indexOf(product.title) === -1) {
-    return false
-  } else {
-    return true
-  }
-}
-
 export function ShowProduct({product} : ProductProps) {
 
-// const {inBasket, addIn, removeFrom} = useContext(InBasketContext);
+// const {inCart, addIn, removeFrom} = useContext(InCartContext);
 
 
 const buttonHandler = (product: IProduct) => {
-  console.log('before ', product.inBasket);
-  if (product.inBasket) {
+  console.log('before ', product.inCart);
+  if (product.inCart) {
     console.log('remove');
-    myBasket.removeFromBasket(product)
+    myCart.removeFromCart(product)
     
-    console.log('after remove:', product.inBasket)
+    console.log('after remove:', product.inCart)
   } else {
-    myBasket.addToBasket(product)
-    console.log('after add: ', product.inBasket)
+    myCart.addToCart(product)
+    console.log('after add: ', product.inCart)
   }
 }
 
@@ -42,22 +34,22 @@ const buttonHandler = (product: IProduct) => {
         <p className='font-bold'>{product.price}</p>
         <p className='font-bold'>{product.discountPercentage}</p>
         <button 
-            className='btnAddToBasket px-2 py-4 flex items-center border mb-2' 
+            className='btnAddToCart px-2 py-4 flex items-center border mb-2' 
             onClick={() => {
               buttonHandler(product);
-              // console.log('before ', product.inBasket);
-              // if (product.inBasket) {
+              // console.log('before ', product.inCart);
+              // if (product.inCart) {
               //   console.log('remove');
-              //   myBasket.removeFromBasket(product)
+              //   myCart.removeFromCart(product)
               //   // removeFrom();
-              //   console.log('after remove:', product.inBasket)
+              //   console.log('after remove:', product.inCart)
               // } else {
-              //   myBasket.addToBasket(product)
+              //   myCart.addToCart(product)
               //   // addIn();
-              //   console.log('after add: ', product.inBasket)
+              //   console.log('after add: ', product.inCart)
               // }
             }}>
-          {!product.inBasket ? 'Add' : 'Remove'}
+          {myCart.isInCart(product) ? 'Remove' : 'Add'}
         </button>
       </div>
     </>
