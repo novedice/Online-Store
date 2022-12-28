@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { ItemInCart } from '../types/types';
-import { myCart } from '../App';
+import { App, myCart } from '../App';
+import { root } from '..';
+// import { CartPage } from '../pages/CartPage';
+// import { Navigation } from './Navigation'
 // import { InCartContext } from '../Context/InCartContext';
+import { BrowserRouter } from 'react-router-dom';
+import { ModalWindowState } from '../Context/ModalWindowContext';
 
 
 interface ItemProps {
@@ -31,9 +36,18 @@ export function ShowItem({item}: ItemProps) {
               <button 
                   className='plus-one border rounded-full px-2 py-0 text-2xl'
                   onClick={() => {
-                    console.log('-1');
                     myCart.minusOneMore(item.product);
-                    setQty(item.quantity);
+                    root.render(
+                      <BrowserRouter>
+                      <ModalWindowState>
+                          <App />
+                      </ModalWindowState>
+                      </BrowserRouter>
+                    )
+
+                    //TODO: fix bug with quantity after remove item 
+                    setQty(prev => prev - 1);
+
                   }}> - </button>
               <span> { qty } </span>
               <button 
@@ -41,7 +55,18 @@ export function ShowItem({item}: ItemProps) {
                   onClick={() => {
                     console.log('+1');
                     myCart.addOneMore(item.product);
-                    setQty(item.quantity);
+                    root.render(
+                      <BrowserRouter>
+                      <ModalWindowState>
+                          <App />
+                      </ModalWindowState>
+                      </BrowserRouter>
+                    )
+
+                    //TODO: fix bug with quantity after remove item 
+
+                    setQty(prev => prev + 1);
+                    
                     }}> + </button>
             </div>
             <p className=''>Discount: {item.product.discountPercentage}%</p>
@@ -52,8 +77,14 @@ export function ShowItem({item}: ItemProps) {
             <p className='underline hover:text-blue-800 hover:cursor-pointer' 
               onClick={() => {
               console.log('remove');
-              // removeFrom();
               myCart.removeFromCart(item.product)
+              root.render(
+                <BrowserRouter>
+                <ModalWindowState>
+                    <App />
+                </ModalWindowState>
+                </BrowserRouter>
+              )
               }}>remove item from Cart</p>
           </div>
       </div>

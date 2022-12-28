@@ -1,5 +1,7 @@
+// import { root } from '..';
 import { myCart } from '../App';
 import { ICart, IProduct, ItemInCart } from '../types/types';
+// import { Navigation } from './Navigation'
 
 export class Cart implements ICart {
 
@@ -70,16 +72,14 @@ export class Cart implements ICart {
   minusOneMore(product: IProduct) {
 
     const index = this.cartList.indexOf(product.title);
-    
-    if (this.productsInCart[index].quantity <= 0) {
-      return
-    }
 
     this.productsInCart[index].quantity -= 1;
     this.totalPay -= product.price;
     this.summaryItems -= 1; 
     console.log(myCart);
-
+    if (this.productsInCart[index].quantity <= 0) {
+      return this.removeFromCart(product);
+    }
   }
 
   isInCart(product: IProduct) {

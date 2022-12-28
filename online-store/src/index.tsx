@@ -4,15 +4,18 @@ import './index.css';
 import { App } from './App';
 import { ModalWindowState } from './Context/ModalWindowContext';
 import { BrowserRouter } from 'react-router-dom';
+// import { InCartState } from './Context/InCartContext';
 
-const root = ReactDOM.createRoot(
+export const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
 root.render(
   <BrowserRouter>
   <ModalWindowState>
-    <App />
+    {/* <InCartState> */}
+      <App />
+    {/* </InCartState> */}
   </ModalWindowState>
   </BrowserRouter>
 );

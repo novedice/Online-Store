@@ -1,31 +1,31 @@
 import React, { createContext, useState } from "react";
 
-interface IInBasketContext {
-    inBasket: boolean
+interface IInCartContext {
+    inCart: boolean
     addIn: () => void
     removeFrom: () => void
 }
 
-export const InBasketContext = createContext<IInBasketContext>({
-    inBasket: false,
+export const InCartContext = createContext<IInCartContext>({
+    inCart: false,
     addIn: () => {},
     removeFrom: () => {}
 })
 
-export const InBasketState = ({ children }: { children: React.ReactNode}) => {
-    const [inBasket, setInBasket] = useState(false);
+export const InCartState = ({ children }: { children: React.ReactNode}) => {
+    const [inCart, setInCart] = useState(false);
 
     const addIn = () => {
-      console.log('inBasket in funcAdd', inBasket);
-      setInBasket(true);
-      console.log('inBasket in funcAdd after', inBasket);
+      console.log('inCart in funcAdd', inCart);
+      setInCart(true);
+      console.log('inCart in funcAdd after', inCart);
 
     };
-    const removeFrom = () => setInBasket(false);
+    const removeFrom = () => setInCart(false);
 
     return (
-       <InBasketContext.Provider value={ {inBasket, addIn, removeFrom} }>
+       <InCartContext.Provider value={ {inCart, addIn, removeFrom} }>
         { children }
-       </InBasketContext.Provider> 
+       </InCartContext.Provider> 
     )
 }

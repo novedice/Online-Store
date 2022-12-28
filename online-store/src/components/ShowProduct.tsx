@@ -1,7 +1,10 @@
 import React from 'react';
 import { IProduct } from '../types/types';
 // import { Cart} from './AddToCart';
-import { myCart } from '../App'
+import { App, myCart } from '../App'
+import { root } from '..';
+import { BrowserRouter } from 'react-router-dom';
+import { ModalWindowState } from '../Context/ModalWindowContext';
 // import { InCartContext } from '../Context/InCartContext';
 
 interface ProductProps {
@@ -24,6 +27,13 @@ const buttonHandler = (product: IProduct) => {
     myCart.addToCart(product)
     console.log('after add: ', product.inCart)
   }
+  root.render(
+    <BrowserRouter>
+    <ModalWindowState>
+        <App />
+    </ModalWindowState>
+    </BrowserRouter>
+  )
 }
 
   return (
@@ -37,15 +47,15 @@ const buttonHandler = (product: IProduct) => {
             className='btnAddToCart px-2 py-4 flex items-center border mb-2' 
             onClick={() => {
               buttonHandler(product);
-              // console.log('before ', product.inCart);
+              console.log('before ', product.inCart);
               // if (product.inCart) {
               //   console.log('remove');
               //   myCart.removeFromCart(product)
-              //   // removeFrom();
+              //   removeFrom();
               //   console.log('after remove:', product.inCart)
               // } else {
               //   myCart.addToCart(product)
-              //   // addIn();
+              //   addIn();
               //   console.log('after add: ', product.inCart)
               // }
             }}>
