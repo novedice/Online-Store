@@ -77,9 +77,7 @@ export class Cart implements ICart {
     this.totalPay -= product.price;
     this.summaryItems -= 1; 
     console.log(myCart);
-    if (this.productsInCart[index].quantity <= 0) {
-      return this.removeFromCart(product);
-    }
+  
   }
 
   isInCart(product: IProduct) {
