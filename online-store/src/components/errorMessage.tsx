@@ -1,8 +1,10 @@
-import React from 'react';
+import React from "react";
+interface ErrorMessageProps {
+    error: string
+}
 
-export function ErroeMes() {
-  return (
-  <>
-    <div className=''></div>
-  </>
-)}
+export function ErrorMes ({error}: ErrorMessageProps) {
+    return (
+        <p className='text-center'>{ error }</p>
+    )
+}

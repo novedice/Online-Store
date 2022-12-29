@@ -24,4 +24,6 @@ export interface ICart {
     cartList: string[]
     summaryItems: number
     totalPay: number
+    rsDiscount: boolean
+    epmDiscount: boolean
 }

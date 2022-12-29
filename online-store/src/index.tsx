@@ -4,7 +4,7 @@ import './index.css';
 import { App } from './App';
 import { ModalWindowState } from './Context/ModalWindowContext';
 import { BrowserRouter } from 'react-router-dom';
-// import { InCartState } from './Context/InCartContext';
+import { DiscountState } from './Context/DiscountContext';
 
 export const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -12,11 +12,11 @@ export const root = ReactDOM.createRoot(
 
 root.render(
   <BrowserRouter>
+    <DiscountState>
   <ModalWindowState>
-    {/* <InCartState> */}
       <App />
-    {/* </InCartState> */}
   </ModalWindowState>
+    </DiscountState>
   </BrowserRouter>
 );
 

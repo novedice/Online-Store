@@ -9,6 +9,8 @@ export class Cart implements ICart {
   cartList: string[];
   summaryItems: number;
   totalPay: number;
+  rsDiscount: boolean;
+  epmDiscount: boolean;
   
   constructor(productsInCart: ItemInCart[], cartList: string[], summaryItem: number, totalPay: number) {
 
@@ -16,6 +18,8 @@ export class Cart implements ICart {
     this.cartList = cartList
     this.summaryItems = summaryItem
     this.totalPay = totalPay
+    this.rsDiscount = false
+    this.epmDiscount = false
   }
 
   addToCart(product: IProduct) {
