@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -45,7 +46,11 @@ resolve: {
 extensions: ['.tsx', '.ts', '.js'],
 },
 plugins:[
-  new ESLintPlugin(),
+    new ESLintPlugin({
+      extensions: ['.tsx', '.ts', '.js'],
+      exclude: 'node_modules'
+    }),
+  
 new HtmlWebpackPlugin({
 template: './src/index.html'
 })
