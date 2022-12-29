@@ -14,7 +14,6 @@ export function CartPage() {
     const {modalWindow, open, close } = useContext(ModalWindowContext);
     // const { RSDiscount, EPMDiscount, applyRS, notApplyRS, applyEPM, notApplyEPM } = useContext(DiscountContext);
 
-
     return (
         <>
           {modalWindow && <ModalWindow title='Please enter your data' toClose={()=>{close()}}>

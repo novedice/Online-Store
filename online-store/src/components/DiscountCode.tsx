@@ -15,28 +15,27 @@ export function DiscountCode() {
     const submitHandler = async (event: React.FormEvent) => {
       event.preventDefault();
       setError('');
-        if (value === 'RS') {
-          myCart.rsDiscount = true;
-          // applyRS();
-          console.log('rs applied', myCart.rsDiscount);
-        }
-        if (value === 'EPM') {
-          myCart.epmDiscount = true;
-          // applyEPM();
-          console.log('epm applied', myCart.epmDiscount);
-
-        }
-        root.render(
-                  <BrowserRouter>
-                  <ModalWindowState>
-                    <App />
-                  </ModalWindowState>
-                  </BrowserRouter>
-                )
       
-    //     if (value !== 'EPM') {
-    //       setError('Please enter valid discount code');
-    //     return
+      if (value === 'RS') {
+        myCart.rsDiscount = true;
+        // applyRS();
+        console.log('rs applied', myCart.rsDiscount);
+      }
+      if (value === 'EPM') {
+        myCart.epmDiscount = true;
+        // applyEPM();
+        console.log('epm applied', myCart.epmDiscount);
+
+      }
+      root.render(
+                <BrowserRouter>
+                <ModalWindowState>
+                  <App />
+                </ModalWindowState>
+                </BrowserRouter>
+              )
+      
+    //     
     //     } else {
     //       myCart.totalPay *= 0.9;
     //       root.render(

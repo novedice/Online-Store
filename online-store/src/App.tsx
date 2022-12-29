@@ -9,6 +9,7 @@ import { ShopPage } from './pages/ShopPage';
 export const myCart = new Cart([], [], 0, 0);
 
 export function App() {
+  console.log(1);
   return (
     <>
       <Navigation />
