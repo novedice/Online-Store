@@ -26,7 +26,7 @@ export class Cart implements ICart {
     
     product.inCart = true;
 
-    let itemInCart: ItemInCart = {
+    const itemInCart: ItemInCart = {
       product: product,
       quantity: 1
     };
