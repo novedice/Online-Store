@@ -1,11 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { IProduct } from '../types/types';
-// import { Cart} from './AddToCart';
-import { App, myCart } from '../App'
-import { root } from '..';
-import { BrowserRouter } from 'react-router-dom';
-import { ModalWindowState } from '../Context/ModalWindowContext';
-// import { InCartContext } from '../Context/InCartContext';
+import { CartContext } from '../Context/CartContext';
 
 interface ProductProps {
   product: IProduct
@@ -13,28 +8,27 @@ interface ProductProps {
 
 export function ShowProduct({product} : ProductProps) {
 
-// const {inCart, addIn, removeFrom} = useContext(InCartContext);
+const { addToCart, delFromCart, listOfProd, productsInCart } = useContext(CartContext);
 
 
 const buttonHandler = (product: IProduct) => {
-  console.log('before ', product.inCart);
-  if (product.inCart) {
-    console.log('remove');
-    myCart.removeFromCart(product)
+  if (listOfProd.includes(product.id)) {
+    delFromCart(product.id);
+    console.log('del prod.id', product.id);
+    console.log('del list:', listOfProd);
+    console.log('del prodincart', productsInCart);
     
-    console.log('after remove:', product.inCart)
   } else {
-    myCart.addToCart(product)
-    console.log('after add: ', product.inCart)
+    addToCart(product.id);
+    console.log('add prod.id', product.id);
+    console.log('add list:', listOfProd);
+    console.log('del prodincart', productsInCart);
+    
   }
-  root.render(
-    <BrowserRouter>
-    <ModalWindowState>
-        <App />
-    </ModalWindowState>
-    </BrowserRouter>
-  )
+ 
 }
+
+
 
   return (
     <>
@@ -47,19 +41,8 @@ const buttonHandler = (product: IProduct) => {
             className='btnAddToCart px-2 py-4 flex items-center border mb-2' 
             onClick={() => {
               buttonHandler(product);
-              console.log('before ', product.inCart);
-              // if (product.inCart) {
-              //   console.log('remove');
-              //   myCart.removeFromCart(product)
-              //   removeFrom();
-              //   console.log('after remove:', product.inCart)
-              // } else {
-              //   myCart.addToCart(product)
-              //   addIn();
-              //   console.log('after add: ', product.inCart)
-              // }
             }}>
-          {myCart.isInCart(product) ? 'Remove' : 'Add'}
+          {(listOfProd.includes(product.id)) ? 'Remove' : 'Add'}
         </button>
       </div>
     </>

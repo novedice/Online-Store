@@ -5,7 +5,8 @@ import { useProducts } from '../hooks/products'
 
 export function ShopPage() {
 
-const {allProd, loading, error} = useProducts(); 
+const {allProd, loading, error} = useProducts();
+// console.log(allProd);
 
   return (
       <>

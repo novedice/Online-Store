@@ -1,5 +1,5 @@
 // import { root } from '..';
-import { myCart } from '../App';
+// import { myCart } from '../App';
 import { ICart, IProduct, ItemInCart } from '../types/types';
 // import { Navigation } from './Navigation'
 
@@ -41,7 +41,7 @@ export class Cart implements ICart {
 
     this.summaryItems += 1;
     this.totalPay += product.price;
-    console.log(myCart);
+    // console.log(myCart);
 
   }
 
@@ -55,7 +55,7 @@ export class Cart implements ICart {
     this.summaryItems -= this.productsInCart[index].quantity;
     this.totalPay -= (product.price * this.productsInCart[index].quantity);
     this.productsInCart.splice(index, 1);
-    console.log(myCart);
+    // console.log(myCart);
   }
 
   addOneMore(product: IProduct) {
@@ -69,7 +69,7 @@ export class Cart implements ICart {
     this.productsInCart[index].quantity += 1;
     this.totalPay += product.price;
     this.summaryItems += 1; 
-    console.log(myCart);
+    // console.log(myCart);
 
   }
 
@@ -80,7 +80,7 @@ export class Cart implements ICart {
     this.productsInCart[index].quantity -= 1;
     this.totalPay -= product.price;
     this.summaryItems -= 1; 
-    console.log(myCart);
+    // console.log(myCart);
   
   }
 

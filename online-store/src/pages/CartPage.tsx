@@ -2,17 +2,15 @@ import React, { useContext } from 'react';
 import { ModalWindow } from '../components/ModalWindow';
 import { Payment } from '../components/Payment';
 import { ModalWindowContext } from '../Context/ModalWindowContext';
-import { myCart } from '../App';
 import { ShowItem } from '../components/ShowItemInCart';
 import { DiscountCode } from '../components/DiscountCode';
-// import { DiscountContext } from '../Context/DiscountContext';
-// import { render } from '@testing-library/react';
-// import { InCartContext } from '../Context/InCartContext';
+import { CartContext } from '../Context/CartContext';
+import { allProducts } from '../hooks/products';
 
 export function CartPage() {
 
-    const {modalWindow, open, close } = useContext(ModalWindowContext);
-    // const { RSDiscount, EPMDiscount, applyRS, notApplyRS, applyEPM, notApplyEPM } = useContext(DiscountContext);
+  const {modalWindow, open, close } = useContext(ModalWindowContext);
+  const { rsDiscount, epmDiscount, listOfProd, productsInCart } = useContext(CartContext);
 
     return (
         <>
@@ -24,10 +22,10 @@ export function CartPage() {
           <div className='Cart-container flex px-2 py-4 border justify-between'>
             <div className='basic-3/5 border w-[100%]'>
               <p>
-                My bag ({ myCart.summaryItems } items)
+                My bag ({ listOfProd.length } items)
               </p>
               <div className='item-container flex flex-col mx-auto max-w-2xl pt-5 border justify-around'>
-                { myCart.productsInCart.map((item, index) => <ShowItem item ={ item } key = {index} />) }
+                { productsInCart.map((item, index) => <ShowItem item ={ item } key = {index} />) }
               </div>
             </div>
             <div className='basic-2/5 w-[100%] flex flex-col items-center'>
@@ -37,27 +35,27 @@ export function CartPage() {
               </div>
               <div className='border w-[100%]'>
                 <p>Summary</p>
-                { myCart.rsDiscount ? 
-                (myCart.epmDiscount ? 
+                { rsDiscount ? 
+                (epmDiscount ? 
                 <div>
                   <p>Applied code RS - 10%</p>
                   <p>Applied code EPM - 10%</p>
-                  <p className='line-through'>Total: {myCart.totalPay}€</p>
-                  <p>Total: {myCart.totalPay * 0.8}€</p>
+                  <p className='line-through'>Total: { allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc , curVal) => acc + curVal.price, 0) }€</p>
+                  <p>Total: {allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc , curVal) => acc + curVal.price, 0) * 0.8}€</p>
                 </div> :
                 <div>
                   <p>Applied code RS - 10%</p>
-                  <p className='line-through'>Total: {myCart.totalPay}€</p>
-                  <p>Total: {myCart.totalPay * 0.9}€</p>
+                  <p className='line-through'>Total: { allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc , curVal) => acc + curVal.price, 0)}€</p>
+                  <p>Total: {allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc , curVal) => acc + curVal.price, 0) * 0.9}€</p>
                 </div>
                 ) :
-                (myCart.epmDiscount ? 
+                (epmDiscount ? 
                   <div>
                   <p>Applied code EPM - 10%</p>
-                  <p className='line-through'>Total: {myCart.totalPay}€</p>
-                  <p>Total: {myCart.totalPay * 0.9}€</p>
+                  <p className='line-through'>Total: { allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc , curVal) => acc + curVal.price, 0)}€</p>
+                  <p>Total: { allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc , curVal) => acc + curVal.price, 0) * 0.9}€</p>
                 </div> :
-                <div>Total: {myCart.totalPay}€</div>
+                <div>Total: { allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc , curVal) => acc + curVal.price, 0)}€</div>
                 )
                 }
               </div>

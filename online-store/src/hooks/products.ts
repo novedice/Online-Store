@@ -9,6 +9,8 @@ interface IData {
   total: number
 }
 
+export let allProducts: IProduct[];
+
 export function useProducts() {
   const [allProd, setAllProd] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(false);
@@ -23,6 +25,8 @@ export function useProducts() {
       console.log(response);
   
       setAllProd(response.data.products);
+
+      allProducts = (response.data.products).slice();
   
       setLoading(false);
 
