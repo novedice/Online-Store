@@ -47,6 +47,7 @@ extensions: ['.tsx', '.ts', '.js'],
 },
 plugins:[
     new ESLintPlugin({
+      emitWarning: false,
       extensions: ['.tsx', '.ts', '.js'],
       exclude: 'node_modules'
     }),

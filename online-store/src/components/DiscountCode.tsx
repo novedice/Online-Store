@@ -1,52 +1,26 @@
-import React, { useState } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { root } from '..';
-import { App, myCart } from '../App';
-import { ModalWindowState } from '../Context/ModalWindowContext';
+import React, { useContext, useState } from 'react';
+import { CartContext } from '../Context/CartContext';
 import { ErrorMes } from './errorMessage';
-// import { DiscountContext } from '../Context/DiscountContext';
 
 export function DiscountCode() {
+
+  const { rsDiscount, epmDiscount, addRsDisc, addEpmDisc } = useContext(CartContext);
     const [value, setValue] = useState('');
     const [error, setError] = useState('');
-    // const { RSDiscount, EPMDiscount, applyRS, notApplyRS, applyEPM, notApplyEPM } = useContext(DiscountContext);
-    // const [showAddButton, setShowAddButton] = useState(false);
 
     const submitHandler = async (event: React.FormEvent) => {
       event.preventDefault();
       setError('');
       
       if (value === 'RS') {
-        myCart.rsDiscount = true;
-        // applyRS();
-        console.log('rs applied', myCart.rsDiscount);
+        addRsDisc();
+        console.log('rs applied', rsDiscount);
       }
       if (value === 'EPM') {
-        myCart.epmDiscount = true;
-        // applyEPM();
-        console.log('epm applied', myCart.epmDiscount);
+        addEpmDisc();
+        console.log('epm applied', epmDiscount);
 
       }
-      root.render(
-                <BrowserRouter>
-                <ModalWindowState>
-                  <App />
-                </ModalWindowState>
-                </BrowserRouter>
-              )
-      
-    //     
-    //     } else {
-    //       myCart.totalPay *= 0.9;
-    //       root.render(
-    //         <BrowserRouter>
-    //         <ModalWindowState>
-    //           <App />
-    //         </ModalWindowState>
-    //         </BrowserRouter>
-    //       )
-    //     }
-    //   }
     }
 
     const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {

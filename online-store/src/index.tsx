@@ -4,7 +4,8 @@ import './index.css';
 import { App } from './App';
 import { ModalWindowState } from './Context/ModalWindowContext';
 import { BrowserRouter } from 'react-router-dom';
-import { DiscountState } from './Context/DiscountContext';
+// import { DiscountState } from './Context/DiscountContext';
+import { CartState } from './Context/CartContext';
 
 export const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -12,11 +13,11 @@ export const root = ReactDOM.createRoot(
 
 root.render(
   <BrowserRouter>
-    <DiscountState>
-  <ModalWindowState>
-      <App />
-  </ModalWindowState>
-    </DiscountState>
+    <CartState>
+      <ModalWindowState>
+        <App />
+      </ModalWindowState>
+    </CartState>
   </BrowserRouter>
 );
 
