@@ -3,6 +3,8 @@
 import React, { createContext, useState } from "react";
 import { ICartContext, IProdInCart } from "../types/types";
 
+// interface setProductsInCart: React.Dispatch<React.SetStateAction<IProdInCart[]>>
+
 export const CartContext = createContext<ICartContext>({
   listOfProd: [],
   rsDiscount: false,
@@ -38,15 +40,13 @@ export const CartState = ({ children }: { children: React.ReactNode }) => {
     setQuantity(productsInCart[listOfProd.indexOf(product.id)].quantity -= 1);
   };
   
-  //TODO: fix the bug with adding to the cart
-
   const addToCart = (id: number) => {
     setProductsInCart(prev => [...prev, {id: id, quantity: 1}]);
     setListOfProd((prev) => [...prev, id]);
   }
   const delFromCart = (id: number) => {
-    setProductsInCart(prev => prev.splice(listOfProd.indexOf(id), 1));
-    setListOfProd(prev => prev.splice(prev.indexOf(id), 1));
+    setProductsInCart(prev => prev.filter(product => product.id !== id));
+    setListOfProd(prev => prev.filter(product => product !== id));
   }
 
   return (

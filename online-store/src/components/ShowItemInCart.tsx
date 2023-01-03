@@ -13,7 +13,6 @@ export function ShowItem({item}: ItemProps) {
   const { minusOne, addOne, delFromCart } = useContext(CartContext);
 
   // const {allProd, loading, error} = useProducts();
-  // console.log('in showItem', allProd);
   console.log('in showItem all products', allProducts);
 
   
