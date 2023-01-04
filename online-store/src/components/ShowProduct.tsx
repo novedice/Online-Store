@@ -16,16 +16,9 @@ const btnClasses = ['mb-2 flex rounded items-center  px-4 py-1 mr-3', btnBgClass
 const buttonHandler = (product: IProduct) => {
   if (listOfProd.includes(product.id)) {
     delFromCart(product.id);
-    console.log('del prod.id', product.id);
-    console.log('del list:', listOfProd);
-    console.log('del prodincart', productsInCart);
     
   } else {
     addToCart(product.id);
-    console.log('add prod.id', product.id);
-    console.log('add list:', listOfProd);
-    console.log('del prodincart', productsInCart);
-    
   }
  
 }

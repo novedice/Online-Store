@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { CartContext } from '../Context/CartContext';
-import { ErrorMes } from './errorMessage';
+import ErrorMes from './errorMessage';
+// import { ErrorMes } from './errorMessage';
 
 export function DiscountCode() {
 

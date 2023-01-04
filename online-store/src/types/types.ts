@@ -47,3 +47,25 @@ export interface ICartContext {
   removeRsDisc: () => void
   removeEpmDisc: () => void
 }
+
+
+// export type ParamKeyValuePair = [string, string];
+
+// export type URLSearchParamsInit =
+//   | string
+//   | ParamKeyValuePair[]
+//   | Record<string, string | string[]>
+//   | URLSearchParams;
+
+// export type SetURLSearchParams = (
+//   nextInit?:
+//     | URLSearchParamsInit
+//     | ((prev: URLSearchParams) => URLSearchParamsInit),
+//   navigateOpts?: NavigateOptions
+// ) => void;
+
+// export interface NavigateOptions {
+//   replace?: boolean;
+//   state?: any;
+//   preventScrollReset?: boolean;
+// }
