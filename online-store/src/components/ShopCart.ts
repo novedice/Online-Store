@@ -40,7 +40,7 @@ export class Cart implements ICart {
     }
 
     this.summaryItems += 1;
-    this.totalPay += product.price
+    this.totalPay += product.price;
     // console.log(myCart);
 
   }
