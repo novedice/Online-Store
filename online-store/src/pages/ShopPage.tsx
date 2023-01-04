@@ -1,5 +1,5 @@
 import React from "react";
-// import { Categories } from "../components/Categories";
+import { Categories } from "../components/Categories";
 import { ShowProduct } from "../components/ShowProduct";
 import { useProducts } from "../hooks/products";
 
@@ -8,13 +8,14 @@ export function ShopPage() {
 
   return (
     <div className="w-auto">
-      {/* <Categories/> */}
+      <Categories/>
       <div className="container mx-auto flex w-3/4 flex-wrap pt-5">
         {error && <p>{error}</p>}
         {loading && <p>Loading...</p>}
         {allProd.map((product) => (
           <ShowProduct product={product} key={product.id} />
         ))}
+        {/* filter((elem) => elem.props.product.category === "smartphones") */}
       </div>
     </div>
   );
