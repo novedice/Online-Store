@@ -1,11 +1,6 @@
-import React from "react";
-import { IProduct } from "../types/types";
-// import { Cart} from './AddToCart';
-import { App, myCart } from "../App";
-import { root } from "..";
-import { BrowserRouter } from "react-router-dom";
-import { ModalWindowState } from "../Context/ModalWindowContext";
-// import { InCartContext } from '../Context/InCartContext';
+import React, { useContext } from 'react';
+import { IProduct } from '../types/types';
+import { CartContext } from '../Context/CartContext';
 
 interface ProductProps {
   product: IProduct;
@@ -13,24 +8,30 @@ interface ProductProps {
 
 export function ShowProduct({ product }: ProductProps) {
 
-  const btnBgClassName = myCart.isInCart(product) ? 'bg-red-400 hover:bg-red-600' : 'bg-green-400 hover:bg-green-600';
-  const btnClasses = ['mb-2 flex rounded items-center  px-4 py-1 mr-3', btnBgClassName];
-  const buttonHandler = (product: IProduct) => {
+const { addToCart, delFromCart, listOfProd, productsInCart } = useContext(CartContext);
+
+const btnBgClassName = (listOfProd.includes(product.id)) ? 'bg-red-400 hover:bg-red-600' : 'bg-green-400 hover:bg-green-600';
+const btnClasses = ['mb-2 flex rounded items-center  px-4 py-1 mr-3', btnBgClassName];
+
+const buttonHandler = (product: IProduct) => {
+  if (listOfProd.includes(product.id)) {
+    delFromCart(product.id);
+    console.log('del prod.id', product.id);
+    console.log('del list:', listOfProd);
+    console.log('del prodincart', productsInCart);
     
-    if (product.inCart) {
-      myCart.removeFromCart(product);
-    } else {
-      myCart.addToCart(product);
-    }
-    root.render(
-      <BrowserRouter>
-        <ModalWindowState>
-          <App />
-        </ModalWindowState>
-      </BrowserRouter>
-    );
-  };
-  
+  } else {
+    addToCart(product.id);
+    console.log('add prod.id', product.id);
+    console.log('add list:', listOfProd);
+    console.log('del prodincart', productsInCart);
+    
+  }
+ 
+}
+
+
+
   return (
     <>
       <div 
@@ -55,10 +56,11 @@ export function ShowProduct({ product }: ProductProps) {
           className={btnClasses.join(' ')}
           onClick={() => {
             buttonHandler(product);
-            console.log("before ", product.inCart);
+            
           }}
         >
-          {myCart.isInCart(product) ? "Drop from Cart" : "Add to Cart"}
+          {(listOfProd.includes(product.id)) ? 'Remove' : 'Add'}
+          {/* {myCart.isInCart(product.) ? "Drop from Cart" : "Add to Cart"} */}
         </button>
         <button className="mb-2 flex rounded items-center px-4 py-1 bg-slate-300">Details</button>
         </div>

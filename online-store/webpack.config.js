@@ -45,8 +45,9 @@ module.exports = {
   },
   plugins: [
     new ESLintPlugin({
-      extensions: [".tsx", ".ts", ".js"],
-      exclude: "node_modules",
+      emitWarning: false,
+      extensions: ['.tsx', '.ts', '.js'],
+      exclude: 'node_modules'
     }),
 
     new HtmlWebpackPlugin({
