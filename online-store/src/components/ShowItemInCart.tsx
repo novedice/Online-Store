@@ -11,28 +11,19 @@ interface ItemProps {
 export function ShowItem({item}: ItemProps) {
 
   const { minusOne, addOne, delFromCart } = useContext(CartContext);
-
-  // const {allProd, loading, error} = useProducts();
-  console.log('in showItem all products', allProducts);
-
   
   let prod;
   console.log(allProducts);
 
   for (let i = 0; i <= allProducts.length; i += 1) {
-    console.log('item id:', item.id);
-    console.log('allP i', allProducts[i]);
+    // console.log('item id:', item.id);
+    // console.log('allP i', allProducts[i]);
     if (allProducts[i].id === item.id) {
       prod = allProducts[i];
-      console.log('prod', prod);
+      // console.log('prod', prod);
       break;
     }
   }
-  // const [qty, setQty] = useState(item.quantity);
-  // const [oldSum, setOldSum] = useState();
-  // const [sum, setSum] = useState();
-
-// const { removeFrom } = useContext(InCartContext);
 
   return (
     <>
@@ -54,34 +45,15 @@ export function ShowItem({item}: ItemProps) {
                       delFromCart(item.id);
                     } else {
                       minusOne(item);
-                      // setQty(item.quantity);
                     }
-                    // root.render(
-                    //   <BrowserRouter>
-                    //   <ModalWindowState>
-                    //     <App />
-                    //   </ModalWindowState>
-                    //   </BrowserRouter>
-                    // )
 
                   }}> - </button>
               <span> { item.quantity } </span>
               <button 
                   className='minus-one border rounded-full px-2 py-0 text-2xl'
                   onClick={() => {
-                    console.log('+1');
+                    // console.log('+1');
                     addOne(item);
-                    // setQty(item.quantity);
-                    // root.render(
-                    //   <BrowserRouter>
-                    //   <ModalWindowState>
-                    //       <App />
-                    //   </ModalWindowState>
-                    //   </BrowserRouter>
-                    // )
-
-                    //TODO: fix bug with quantity after remove item 
-
 
                     }}> + </button>
             </div>
@@ -92,15 +64,8 @@ export function ShowItem({item}: ItemProps) {
             </p>
             <p className='underline hover:text-blue-800 hover:cursor-pointer' 
               onClick={() => {
-              console.log('remove');
-              delFromCart(item.id)
-              // root.render(
-              //   <BrowserRouter>
-              //   <ModalWindowState>
-              //       <App />
-              //   </ModalWindowState>
-              //   </BrowserRouter>
-              // )
+              // console.log('remove');
+              delFromCart(item.id);
               }}>remove item from Cart</p>
           </div>
       </div>
