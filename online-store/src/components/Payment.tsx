@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 interface PaymentProps {
-  paid: () => void
+  paid: () => void;
 }
 
 export function Payment({paid}: PaymentProps) {
@@ -11,7 +11,8 @@ export function Payment({paid}: PaymentProps) {
   const [address, setAddress] = useState('');
   const [email, setEmail] = useState('');
   const [bankCard, setBankCard] = useState('');
-  const [cardDate, setCardDate] = useState('');
+  const [cardMonth, setCardMonth] = useState('');
+  const [cardYear, setCardYear] = useState('');
   const [cvv, setCvv] = useState('');
   const [nameError, setNameError] = useState('');
   const [phoneError, setPhoneError] = useState('');
@@ -20,20 +21,22 @@ export function Payment({paid}: PaymentProps) {
   const [cardError, setCardError] = useState('');
   const [cardDateError, setCardDateError] = useState('');
   const [cvvError, setCvvError] = useState('');
-  const [error, setError] = useState('');
-
 
   function submitHandler(event: React.FormEvent) {
+
+    const numbers = '1234567890';
+    let err = 0;
+
     setNameError('');
     setPhoneError('');
-    setNameError('');
-    setNameError('');
-    setNameError('');
-    setNameError('');
-    setNameError('');
+    setAddressError('');
+    setEmailError('');
+    setCardError('');
+    setCardDateError('');
+    setCvvError('');
 
     event.preventDefault();
-    const numbers = '1234567890';
+
     function isNumber(str: string) {
       for (let i = 0; i < str.length; i += 1) {
         if (!numbers.includes(str[i])) {
@@ -42,35 +45,44 @@ export function Payment({paid}: PaymentProps) {
       }
       return true;
     }
-    console.log(name);
-    console.log(phone);
-    console.log(address);
 
     if (name.trim().split(' ').length < 2 || name.trim().split(' ')[0].length < 3 || name.trim().split(' ')[1].length < 3) {
-      setError('Please enter valid name and surname');
-      // return;
+      setNameError('Please enter valid name and surname');
+      err += 1;
     }
     if (!phone.startsWith('+') || phone.length < 9 || !isNumber(phone.slice(1))) {
-      setError('Please enter valid phone number');
-      // return;
+      setPhoneError('Please enter valid phone number');
+      err += 1;
     }
     if (address.trim().split(' ').length < 3 || address.trim().split(' ')[0].length < 5 || address.trim().split(' ')[1].length < 5 || address.trim().split(' ')[2].length < 5) {
-      setError('Please enter valid address');
-      return;
+      setAddressError('Please enter valid address');
+      err += 1;
     }
     if (!email.includes('@') || !email.includes('.') || email.startsWith('@') || email.lastIndexOf('.') < email.lastIndexOf('@')) {
-      setError('Please enter valid email');
-      return;
+      setEmailError('Please enter valid email');
+      err += 1;
     }
     if (bankCard.length !== 16 || !isNumber(bankCard)) {
-      setError('Please enter valid card number');
-      return;
+      setCardError('Please enter valid card number');
+      err += 1;
+    }
+    if (cardMonth.length !== 2) {
+      setCardDateError('Please enter valid card date');
+      err += 1;
+    }
+    if (cardYear.length !== 2) {
+      setCardDateError('Please enter valid card date');
+      err += 1;
     }
     if (cvv.length !== 3 || !isNumber(cvv)) {
-      setError('Please enter valid cvv');
+      setCvvError('Please enter valid cvv');
+      err += 1;
+    }
+
+    if (err > 0) {
       return;
     }
-    
+
     paid();
   }
 
@@ -89,8 +101,11 @@ export function Payment({paid}: PaymentProps) {
   function bankCardHandler(event: React.ChangeEvent<HTMLInputElement>) {
     setBankCard(event.target.value);
   }
-  function cardDateHandler(event: React.ChangeEvent<HTMLInputElement>) {
-    setCardDate(event.target.value);
+  function cardMonthHandler(event: React.ChangeEvent<HTMLInputElement>) {
+    setCardMonth(event.target.value);
+  }
+  function cardYearHandler(event: React.ChangeEvent<HTMLInputElement>) {
+    setCardYear(event.target.value);
   }
   function cvvHandler(event: React.ChangeEvent<HTMLInputElement>) {
     setCvv(event.target.value);
@@ -99,22 +114,28 @@ export function Payment({paid}: PaymentProps) {
   return (
     <>
     <form  className='flex flex-col' onSubmit={submitHandler}>
+      {nameError && <p className="text-red-400 text-xs">{ nameError }</p>}
       <input className='border py-2 px-4 mb-2' onChange={ nameHandler } type='text' placeholder='enter name and surname'name='nameSurname' value = { name }></input>
-      {error && <p>{ error }</p>}
+      {phoneError && <p className="text-red-400 text-xs">{ phoneError }</p>}
       <input className='border py-2 px-4 mb-2' onChange={ phoneHandler } type='tel' placeholder='+00000000000' name='mobilePhone' value = { phone }></input>
-      {error && <p>{ error }</p>}
+      {addressError && <p className="text-red-400 text-xs">{ addressError }</p>}
       <input className='border py-2 px-4 mb-2' onChange={ addressHandler } type='text' placeholder='Enter your address' name='address' value = { address }></input>
-      {error && <p>{ error }</p>}
+      {emailError && <p className="text-red-400 text-xs">{ emailError }</p>}
       <input className='border py-2 px-4 mb-2' onChange={ emailHandler } type='email' placeholder='example@example.com' name='email' value = { email }></input>
-      {error && <p>{ error }</p>}
-      <input className='border py-2 px-4 mb-2' onChange={ bankCardHandler } type='number' name='bankCard' value = { bankCard }></input>
-      {error && <p>{ error }</p>}
-      <input className='border py-2 px-4 mb-2' onChange={ cardDateHandler } type='number' name='cardDate' value = { cardDate }></input>
-      {error && <p>{ error }</p>}
-      <input className='border py-2 px-4 mb-2' onChange={ cvvHandler } type='number' name='cvv' value = { cvv }></input>
-      {error && <p>{ error }</p>}
+      <div className="border rounded mb-2 flex flex-col">
+        <input className='border py-2 px-4 mb-2' onChange={ bankCardHandler } type='number' name='bankCard' value = { bankCard }></input>
+        <div>
+        <input className='border py-2 px-4 mb-2' onChange={ cardMonthHandler } type='number' name='cardMonth' min = '1' max = '12' value = { cardMonth}></input>
+        <span>/</span>
+        <input className='border py-2 px-4 mb-2' onChange={ cardYearHandler } type='number' name='cardYear' min='23' max='99' value = { cardYear }></input>
+        </div>
+        <input className='border py-2 px-4 mb-2' onChange={ cvvHandler } type='number' name='cvv' value = { cvv }></input>
+        {cardError && <p className="text-red-400 text-xs">{ cardError }</p>}
+        {cardDateError && <p className="text-red-400 text-xs">{ cardDateError }</p>}
+        {cvvError && <p className="text-red-400 text-xs">{ cvvError }</p>}
+      </div>
       <button type='submit' className='btn-submit py-2 px-4 border bg-yellow-300'>Submit</button>
     </form>
     </>
-  )
+  );
 }

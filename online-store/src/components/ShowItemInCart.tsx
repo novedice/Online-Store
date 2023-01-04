@@ -70,5 +70,5 @@ export function ShowItem({item}: ItemProps) {
           </div>
       </div>
     </>
-  )
+  );
 }

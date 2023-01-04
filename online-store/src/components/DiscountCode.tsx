@@ -23,24 +23,28 @@ export function DiscountCode() {
       }
     }
 
-    const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValue(event.target.value);
-    }
+  const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
 
+  return (
+    <form className="flex" onSubmit={submitHandler}>
+      <input
+        type="text"
+        className="mb-2 w-full border py-2 px-4"
+        placeholder="Enter discount code"
+        value={value}
+        onChange={changeHandler}
+      />
 
-    return (
-        <form className='flex' onSubmit={submitHandler}>
-            <input
-            type='text'
-            className="border py-2 px-4 mb-2 w-full"
-            placeholder="Enter discount code"
-            value={value}
-            onChange={changeHandler}
-            />
+      {error && <ErrorMes error={error} />}
 
-            {error && <ErrorMes error = {error} />}
-            
-            <button type="submit" className="text-base m-0 h-[40px] py-0 px-2 border bg-green-400 hover:bg-red-300">apply</button>
-        </form>
-    )
+      <button
+        type="submit"
+        className="m-0 h-[40px] border bg-green-400 py-0 px-2 text-base hover:bg-red-300"
+      >
+        apply
+      </button>
+    </form>
+  );
 }
