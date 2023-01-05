@@ -8,20 +8,22 @@ interface ProductProps {
 
 export function ShowProduct({ product }: ProductProps) {
 
-const { addToCart, delFromCart, listOfProd, productsInCart } = useContext(CartContext);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+     const { addToCart, delFromCart, listOfProd, productsInCart } = useContext(CartContext);
 
-const btnBgClassName = (listOfProd.includes(product.id)) ? 'bg-red-400 hover:bg-red-600' : 'bg-green-400 hover:bg-green-600';
-const btnClasses = ['mb-2 flex rounded items-center  px-4 py-1 mr-3', btnBgClassName];
+  const btnBgClassName = (listOfProd.includes(product.id)) ? 'bg-red-400 hover:bg-red-600' : 'bg-green-400 hover:bg-green-600';
+  const btnClasses = ['mb-2 flex rounded items-center  px-4 py-1 mr-3', btnBgClassName];
 
-const buttonHandler = (product: IProduct) => {
-  if (listOfProd.includes(product.id)) {
-    delFromCart(product.id);
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const buttonHandler = (product: IProduct) => {
+    if (listOfProd.includes(product.id)) {
+      delFromCart(product.id);
     
-  } else {
-    addToCart(product.id);
-  }
+    } else {
+      addToCart(product.id);
+    }
  
-}
+  };
 
 
 
@@ -32,8 +34,8 @@ const buttonHandler = (product: IProduct) => {
       style={{
         backgroundImage: `url(${product.thumbnail})`,
         backgroundSize: 'cover',
-        height: '250px'
-        }}> 
+        height: '250px',
+      }}> 
         
         <p className="font-bold title text-lg bg-slate-600 w-full text-center">{product.title}</p>
         <div className="text-xs bg-slate-300 flex flex-col justify-start">

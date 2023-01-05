@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { IProduct } from "../types/types";
-import axios, { AxiosError } from "axios";
+import { useState, useEffect } from 'react';
+import { IProduct } from '../types/types';
+import axios, { AxiosError } from 'axios';
 
 interface IData {
   limit: number;
@@ -14,15 +14,15 @@ export let allProducts: IProduct[];
 export function useProducts() {
   const [allProd, setAllProd] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   async function fetchProducts() {
     try {
-      setError("");
+      setError('');
       setLoading(true);
  
       const response = await axios.get<IData>(
-        "https://dummyjson.com/products?limit=20"
+        'https://dummyjson.com/products?limit=20',
       );
       console.log(response);
 
@@ -32,6 +32,7 @@ export function useProducts() {
   
       setLoading(false);
     } catch (e: unknown) {
+      // eslint-disable-next-line @typescript-eslint/no-shadow
       const error = e as AxiosError;
       setLoading(false);
       setError(error.message);

@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import { Categories } from "../components/Categories";
-import { ShowProduct } from "../components/ShowProduct";
-import { useProducts } from "../hooks/products";
+import { Categories } from '../components/Categories';
+import { ShowProduct } from '../components/ShowProduct';
+import { useProducts } from '../hooks/products';
 // import { SearchParams } from "../components/SearchParams";
 
 export function ShopPage() {

@@ -29,9 +29,9 @@ export interface ICart {
 }
 
 export interface IProdInCart {
-    id: number
-    quantity: number
-  }
+  id: number
+  quantity: number
+}
 
 export interface ICartContext {
   listOfProd: number[]

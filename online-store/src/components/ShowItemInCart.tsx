@@ -8,7 +8,7 @@ interface ItemProps {
   item: IProdInCart
 }
 
-export function ShowItem({item}: ItemProps) {
+export function ShowItem({ item }: ItemProps) {
 
   const { minusOne, addOne, delFromCart } = useContext(CartContext);
 
@@ -32,7 +32,7 @@ export function ShowItem({item}: ItemProps) {
   // const [oldSum, setOldSum] = useState();
   // const [sum, setSum] = useState();
 
-// const { removeFrom } = useContext(InCartContext);
+  // const { removeFrom } = useContext(InCartContext);
 
   return (
     <>
@@ -83,7 +83,7 @@ export function ShowItem({item}: ItemProps) {
                     //TODO: fix bug with quantity after remove item 
 
 
-                    }}> + </button>
+                  }}> + </button>
             </div>
             <p className=''>Discount: {prod.discountPercentage}%</p>
             <p className=''>
@@ -92,8 +92,8 @@ export function ShowItem({item}: ItemProps) {
             </p>
             <p className='underline hover:text-blue-800 hover:cursor-pointer' 
               onClick={() => {
-              console.log('remove');
-              delFromCart(item.id)
+                console.log('remove');
+                delFromCart(item.id);
               // root.render(
               //   <BrowserRouter>
               //   <ModalWindowState>
