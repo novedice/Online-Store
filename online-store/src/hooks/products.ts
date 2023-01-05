@@ -19,7 +19,7 @@ export function useProducts() {
   async function fetchProducts() {
     try {
       setError('');
-      setLoading(true);
+      setLoading(true); 
  
       const response = await axios.get<IData>(
         'https://dummyjson.com/products?limit=20',

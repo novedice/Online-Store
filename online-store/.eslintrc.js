@@ -14,7 +14,7 @@ module.exports = {
   rules: {
     "react/jsx-filename-extension": "off",
     '@typescript-eslint/explicit-function-return-type': 'off',
-    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-explicit-any": "off",
     'import/no-extraneous-dependencies': 'off',
     'import/extensions' : 'off'
     // "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]

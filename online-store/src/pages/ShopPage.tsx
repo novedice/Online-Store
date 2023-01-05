@@ -7,17 +7,21 @@ import { useProducts } from '../hooks/products';
 
 export function ShopPage() {
   const { allProd, loading, error } = useProducts();
+  console.log(props.product.category);
 
   return (
     <div className="w-auto">
-      <Categories/>
-      
+      <Categories />
+
       <div className="container mx-auto flex w-3/4 flex-wrap pt-5">
         {error && <p>{error}</p>}
         {loading && <p>Loading...</p>}
-        {allProd.map((product) => (
-          <ShowProduct product={product} key={product.id} />
-        ))}
+        {allProd
+          .filter((cat) => cat.category.includes('smartphones'))
+          .map((product) => (
+            <ShowProduct product={product} key={product.id} />
+          ))}
+
         {/* filter((elem) => elem.props.product.category === "smartphones") */}
       </div>
     </div>
