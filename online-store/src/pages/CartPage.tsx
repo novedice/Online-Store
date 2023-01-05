@@ -6,17 +6,27 @@ import { ShowItem } from '../components/ShowItemInCart';
 import { DiscountCode } from '../components/DiscountCode';
 import { CartContext } from '../Context/CartContext';
 import { allProducts } from '../hooks/products';
+import { AfterPayment } from '../components/AfterPayment';
 
 export function CartPage() {
 
-  const {modalWindow, open, close } = useContext(ModalWindowContext);
+  const {modalWindow, open, close, afterPaymentWindow, openAfterPayment, closeAfterPayment } = useContext(ModalWindowContext);
   const { rsDiscount, epmDiscount, listOfProd, productsInCart } = useContext(CartContext);
-
+  
     return (
         <>
-          {modalWindow && <ModalWindow title='Please enter your data' toClose={()=>{close()}}>
+          {modalWindow && <ModalWindow title='Please enter your data' toClose={()=>{ close() }}>
             <Payment paid={ function (): void {
-                    close()
+                    close();
+                    openAfterPayment();
+                } } />
+          </ModalWindow>}
+          {afterPaymentWindow && <ModalWindow title='' toClose={ ()=>{closeAfterPayment() }}>
+            <AfterPayment paidSuccess={ function (): void {
+                  setTimeout(() => {
+                    closeAfterPayment();
+                    window.location.href = '/';
+                  }, 4500)
                 } } />
           </ModalWindow>}
           <div className='Cart-container flex px-2 py-4 border justify-between'>

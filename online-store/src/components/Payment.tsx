@@ -1,18 +1,21 @@
 import React, { useState } from "react";
+import '../assets/ae.jpeg';
+import '../assets/visa.jpeg';
+import '../assets/mastercard.jpeg';
+import '../assets/jcb.jpeg';
 
 interface PaymentProps {
   paid: () => void;
 }
 
 export function Payment({paid}: PaymentProps) {
-
+  
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
   const [email, setEmail] = useState('');
   const [bankCard, setBankCard] = useState('');
-  const [cardMonth, setCardMonth] = useState('');
-  const [cardYear, setCardYear] = useState('');
+  const [cardDate, setCardDate] = useState('');
   const [cvv, setCvv] = useState('');
   const [nameError, setNameError] = useState('');
   const [phoneError, setPhoneError] = useState('');
@@ -21,6 +24,7 @@ export function Payment({paid}: PaymentProps) {
   const [cardError, setCardError] = useState('');
   const [cardDateError, setCardDateError] = useState('');
   const [cvvError, setCvvError] = useState('');
+  const [paymentSystem, setPaymentSystem] = useState('jcb.jpeg');
 
   function submitHandler(event: React.FormEvent) {
 
@@ -66,11 +70,7 @@ export function Payment({paid}: PaymentProps) {
       setCardError('Please enter valid card number');
       err += 1;
     }
-    if (cardMonth.length !== 2) {
-      setCardDateError('Please enter valid card date');
-      err += 1;
-    }
-    if (cardYear.length !== 2) {
+    if (cardDate.length !== 5 || !isNumber(cardDate.slice(0,2)) || !isNumber(cardDate.slice(3))) {
       setCardDateError('Please enter valid card date');
       err += 1;
     }
@@ -99,13 +99,37 @@ export function Payment({paid}: PaymentProps) {
     setEmail(event.target.value);
   }
   function bankCardHandler(event: React.ChangeEvent<HTMLInputElement>) {
-    setBankCard(event.target.value);
+    
+    setBankCard(() => {
+
+      if (event.target.value[0] === '4') {
+        setPaymentSystem('visa.jpeg');
+      } else if (event.target.value[0] === '5') {
+        setPaymentSystem('mastercard.jpeg');
+      } else if (event.target.value[0] === '1') {
+        setPaymentSystem('ae.jpeg');
+      } else {
+        setPaymentSystem('jcb.jpeg');
+      }
+
+      return event.target.value;
+    });
   }
-  function cardMonthHandler(event: React.ChangeEvent<HTMLInputElement>) {
-    setCardMonth(event.target.value);
-  }
-  function cardYearHandler(event: React.ChangeEvent<HTMLInputElement>) {
-    setCardYear(event.target.value);
+  function cardDateHandler(event: React.ChangeEvent<HTMLInputElement>) {
+
+    setCardDate((prev) => {
+
+      if (prev.length > event.target.value.length && event.target.value[event.target.value.length - 1] === '/') {
+        return event.target.value.slice(0,2);
+      }
+
+      if (event.target.value.length === 2 && !event.target.value.includes('/')) {
+        return `${event.target.value.slice(0,2)}/`;
+      } else {
+        return event.target.value;
+      }
+
+    });
   }
   function cvvHandler(event: React.ChangeEvent<HTMLInputElement>) {
     setCvv(event.target.value);
@@ -123,12 +147,11 @@ export function Payment({paid}: PaymentProps) {
       {emailError && <p className="text-red-400 text-xs">{ emailError }</p>}
       <input className='border py-2 px-4 mb-2' onChange={ emailHandler } type='email' placeholder='example@example.com' name='email' value = { email }></input>
       <div className="border rounded mb-2 flex flex-col">
-        <input className='border py-2 px-4 mb-2' onChange={ bankCardHandler } type='number' name='bankCard' value = { bankCard }></input>
-        <div>
-        <input className='border py-2 px-4 mb-2' onChange={ cardMonthHandler } type='number' name='cardMonth' min = '1' max = '12' value = { cardMonth}></input>
-        <span>/</span>
-        <input className='border py-2 px-4 mb-2' onChange={ cardYearHandler } type='number' name='cardYear' min='23' max='99' value = { cardYear }></input>
+        <div className="flex">
+        <img className="w-[7%] mr-2 border rounded" src={ paymentSystem }></img>
+        <input className='border py-2 px-4 mb-2 w-[89%]' onChange={ bankCardHandler } type='number' name='bankCard' value = { bankCard }></input>
         </div>
+        <input className='border py-2 px-4 mb-2' onChange={ cardDateHandler } type='text' name='cardDate' value = { cardDate}></input>
         <input className='border py-2 px-4 mb-2' onChange={ cvvHandler } type='number' name='cvv' value = { cvv }></input>
         {cardError && <p className="text-red-400 text-xs">{ cardError }</p>}
         {cardDateError && <p className="text-red-400 text-xs">{ cardDateError }</p>}

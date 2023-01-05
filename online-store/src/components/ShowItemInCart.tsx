@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { IProdInCart } from '../types/types';
+import { IProdInCart, IProduct } from '../types/types';
 import { CartContext } from '../Context/CartContext';
 import { allProducts } from '../hooks/products';
 
@@ -11,19 +11,16 @@ interface ItemProps {
 export function ShowItem({item}: ItemProps) {
 
   const { minusOne, addOne, delFromCart } = useContext(CartContext);
-  
-  let prod;
-  console.log(allProducts);
 
-  for (let i = 0; i <= allProducts.length; i += 1) {
-    // console.log('item id:', item.id);
-    // console.log('allP i', allProducts[i]);
-    if (allProducts[i].id === item.id) {
-      prod = allProducts[i];
-      // console.log('prod', prod);
-      break;
+  function findProd(item: IProdInCart): IProduct {
+    let i = 0;
+    while (allProducts[i].id !== item.id) {
+      i += 1;
     }
+    return allProducts[i];
   }
+  
+  const prod: IProduct = findProd(item);
 
   return (
     <>
@@ -39,7 +36,7 @@ export function ShowItem({item}: ItemProps) {
             <div className='item-qty flex'>
               <p>Qty: </p>
               <button 
-                  className='plus-one border rounded-full px-2 py-0 text-2xl'
+                  className='minus-one border rounded-full px-2 py-0 text-2xl'
                   onClick={() => {
                     if (item.quantity === 1) {
                       delFromCart(item.id);
@@ -50,11 +47,11 @@ export function ShowItem({item}: ItemProps) {
                   }}> - </button>
               <span> { item.quantity } </span>
               <button 
-                  className='minus-one border rounded-full px-2 py-0 text-2xl'
+                  className='plus-one border rounded-full px-2 py-0 text-2xl'
                   onClick={() => {
-                    // console.log('+1');
-                    addOne(item);
-
+                    if (item.quantity < prod.stock) {
+                      addOne(item);
+                    }
                     }}> + </button>
             </div>
             <p className=''>Discount: {prod.discountPercentage}%</p>

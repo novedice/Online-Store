@@ -3,8 +3,6 @@
 import React, { createContext, useState } from "react";
 import { ICartContext, IProdInCart } from "../types/types";
 
-// interface setProductsInCart: React.Dispatch<React.SetStateAction<IProdInCart[]>>
-
 export const CartContext = createContext<ICartContext>({
   listOfProd: [],
   rsDiscount: false,
@@ -18,6 +16,7 @@ export const CartContext = createContext<ICartContext>({
   addEpmDisc: () => {},
   removeRsDisc: () => {},
   removeEpmDisc: () => {},
+  clearCart: () => {},
 })
 
 export const CartState = ({ children }: { children: React.ReactNode }) => {
@@ -48,10 +47,16 @@ export const CartState = ({ children }: { children: React.ReactNode }) => {
     setProductsInCart(prev => prev.filter(product => product.id !== id));
     setListOfProd(prev => prev.filter(product => product !== id));
   }
+  const clearCart = () => {
+    setProductsInCart([]);
+    setListOfProd([]);
+    removeEpmDisc;
+    removeRsDisc;
+  }
 
   return (
     <CartContext.Provider value = { { rsDiscount, epmDiscount, listOfProd, addRsDisc, addEpmDisc,
-     removeRsDisc, removeEpmDisc, productsInCart, minusOne, addOne, addToCart, delFromCart } }>
+     removeRsDisc, removeEpmDisc, productsInCart, minusOne, addOne, addToCart, delFromCart, clearCart } }>
       { children }
     </CartContext.Provider>
   )

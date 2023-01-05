@@ -46,4 +46,5 @@ export interface ICartContext {
   addEpmDisc: () => void
   removeRsDisc: () => void
   removeEpmDisc: () => void
+  clearCart: () => void
 }
