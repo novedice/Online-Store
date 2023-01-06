@@ -3,25 +3,24 @@ import { CartContext } from '../Context/CartContext';
 import { ErrorMes } from './errorMessage';
 
 export function DiscountCode() {
+  const { rsDiscount, epmDiscount, addRsDisc, addEpmDisc } =
+    useContext(CartContext);
+  const [value, setValue] = useState('');
+  const [error, setError] = useState('');
 
-  const { rsDiscount, epmDiscount, addRsDisc, addEpmDisc } = useContext(CartContext);
-    const [value, setValue] = useState('');
-    const [error, setError] = useState('');
+  const submitHandler = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setError('');
 
-    const submitHandler = async (event: React.FormEvent) => {
-      event.preventDefault();
-      setError('');
-      
-      if (value === 'RS') {
-        addRsDisc();
-        console.log('rs applied', rsDiscount);
-      }
-      if (value === 'EPM') {
-        addEpmDisc();
-        console.log('epm applied', epmDiscount);
-
-      }
+    if (value === 'RS') {
+      addRsDisc();
+      console.log('rs applied', rsDiscount);
     }
+    if (value === 'EPM') {
+      addEpmDisc();
+      console.log('epm applied', epmDiscount);
+    }
+  };
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
@@ -41,7 +40,7 @@ export function DiscountCode() {
 
       <button
         type="submit"
-        className="m-0 h-[40px] border bg-green-400 py-0 px-2 text-base hover:bg-red-300"
+        className="btn-submit flex-shrink-0 rounded border-4 border-teal-500 bg-teal-500 py-1 px-2 text-sm text-white hover:border-teal-700 hover:bg-teal-700"
       >
         apply
       </button>

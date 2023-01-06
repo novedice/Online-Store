@@ -9,71 +9,209 @@ import { allProducts } from '../hooks/products';
 import { AfterPayment } from '../components/AfterPayment';
 
 export function CartPage() {
+  const {
+    modalWindow,
+    open,
+    close,
+    afterPaymentWindow,
+    openAfterPayment,
+    closeAfterPayment,
+  } = useContext(ModalWindowContext);
 
-  const {modalWindow, open, close, afterPaymentWindow, openAfterPayment, closeAfterPayment } = useContext(ModalWindowContext);
-  const { rsDiscount, epmDiscount, listOfProd, productsInCart } = useContext(CartContext);
-  
-    return (
-        <>
-          {modalWindow && <ModalWindow title='Please enter your data' toClose={()=>{ close() }}>
-            <Payment paid={ function (): void {
-                    close();
-                    openAfterPayment();
-                } } />
-          </ModalWindow>}
-          {afterPaymentWindow && <ModalWindow title='' toClose={ ()=>{closeAfterPayment() }}>
-            <AfterPayment paidSuccess={ function (): void {
-                  setTimeout(() => {
-                    closeAfterPayment();
-                    window.location.href = '/';
-                  }, 4500)
-                } } />
-          </ModalWindow>}
-          <div className='Cart-container flex px-2 py-4 border justify-between'>
-            <div className='basic-3/5 border w-[100%]'>
-              <p>
-                My bag ({ listOfProd.length } items)
-              </p>
-              <div className='item-container flex flex-col mx-auto max-w-2xl pt-5 border justify-around'>
-                { productsInCart.map((item, index) => <ShowItem item ={ item } key = {index} />) }
-              </div>
-            </div>
-            <div className='basic-2/5 w-[100%] flex flex-col items-center'>
-              <div className='border px-2 py-4 w-[100%] hover:cursor-pointer'>
-                <p>Discount code</p>
-                <DiscountCode />
-              </div>
-              <div className='border w-[100%]'>
-                <p>Summary</p>
-                { rsDiscount ? 
-                (epmDiscount ? 
-                <div>
-                  <p>Applied code RS - 10%</p>
-                  <p>Applied code EPM - 10%</p>
-                  <p className='line-through'>Total: { allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc , curVal) => acc + curVal.price * productsInCart[listOfProd.indexOf(curVal.id)].quantity, 0).toFixed(2) }€</p>
-                  <p>Total: { (allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc , curVal) => acc + curVal.price * productsInCart[listOfProd.indexOf(curVal.id)].quantity, 0) * 0.8).toFixed(2) }€</p>
-                </div> :
-                <div>
-                  <p>Applied code RS - 10%</p>
-                  <p className='line-through'>Total: { allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc , curVal) => acc + curVal.price * productsInCart[listOfProd.indexOf(curVal.id)].quantity, 0).toFixed(2) }€</p>
-                  <p>Total: { (allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc , curVal) => acc + curVal.price * productsInCart[listOfProd.indexOf(curVal.id)].quantity, 0) * 0.9).toFixed(2) }€</p>
-                </div>
-                ) :
-                (epmDiscount ? 
-                  <div>
-                  <p>Applied code EPM - 10%</p>
-                  <p className='line-through'>Total: { allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc , curVal) => acc + curVal.price * productsInCart[listOfProd.indexOf(curVal.id)].quantity, 0).toFixed(2) }€</p>
-                  <p>Total: { (allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc , curVal) => acc + curVal.price * productsInCart[listOfProd.indexOf(curVal.id)].quantity, 0) * 0.9).toFixed(2) }€</p>
-                </div> :
-                <div>Total: { allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc , curVal) => acc + curVal.price * productsInCart[listOfProd.indexOf(curVal.id)].quantity, 0).toFixed(2) }€</div>
-                )
-                }
-              </div>
-              <div className='border w-[100%]'>
-                <button className='btn-checkout border rounded flex items-center px-2 py-2' onClick={() => {open()}}>CHECKOUT</button>
-              </div>
-            </div>
+  const { rsDiscount, epmDiscount, listOfProd, productsInCart } =
+    useContext(CartContext);
+
+  return (
+    <>
+      {modalWindow && (
+        <ModalWindow
+          title=""
+          toClose={() => {
+            close();
+          }}
+        >
+          <Payment
+            paid={function (): void {
+              close();
+              openAfterPayment();
+            }}
+          />
+        </ModalWindow>
+      )}
+      {afterPaymentWindow && (
+        <ModalWindow
+          title=""
+          toClose={() => {
+            closeAfterPayment();
+          }}
+        >
+          <AfterPayment
+            paidSuccess={function (): void {
+              setTimeout(() => {
+                closeAfterPayment();
+                window.location.href = '/';
+              }, 4500);
+            }}
+          />
+        </ModalWindow>
+      )}
+      <div className="Cart-container flex justify-between border px-2 py-4">
+        <div className="basic-3/5 w-[100%] border">
+          <p>My bag ({listOfProd ? listOfProd.length : 0} items)</p>
+          <div className="item-container mx-auto flex max-w-2xl flex-col justify-around border pt-5">
+            {productsInCart ? (
+              productsInCart.map((item, index) => (
+                <ShowItem item={item} key={index} />
+              ))
+            ) : (
+              <p>Your cart is empty</p>
+            )}
           </div>
-        </>
-    )
+        </div>
+        <div className="basic-2/5 flex w-[100%] flex-col items-center">
+          <div className="w-[100%] border px-2 py-4 hover:cursor-pointer">
+            <p>Discount code</p>
+            <DiscountCode />
+          </div>
+          <div className="w-[100%] border">
+            <p>Summary</p>
+            {rsDiscount ? (
+              epmDiscount ? (
+                <div>
+                  <p>Applied code RS - 10%</p>
+                  <p>Applied code EPM - 10%</p>
+                  <p className="line-through">
+                    Total:{' '}
+                    {allProducts
+                      .filter((product) => listOfProd.includes(product.id))
+                      .reduce(
+                        (acc, curVal) =>
+                          acc +
+                          curVal.price *
+                            productsInCart[listOfProd.indexOf(curVal.id)]
+                              .quantity,
+                        0
+                      )
+                      .toFixed(2)}
+                    €
+                  </p>
+                  <p>
+                    Total:{' '}
+                    {(
+                      allProducts
+                        .filter((product) => listOfProd.includes(product.id))
+                        .reduce(
+                          (acc, curVal) =>
+                            acc +
+                            curVal.price *
+                              productsInCart[listOfProd.indexOf(curVal.id)]
+                                .quantity,
+                          0
+                        ) * 0.8
+                    ).toFixed(2)}
+                    €
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  <p>Applied code RS - 10%</p>
+                  <p className="line-through">
+                    Total:{' '}
+                    {allProducts
+                      .filter((product) => listOfProd.includes(product.id))
+                      .reduce(
+                        (acc, curVal) =>
+                          acc +
+                          curVal.price *
+                            productsInCart[listOfProd.indexOf(curVal.id)]
+                              .quantity,
+                        0
+                      )
+                      .toFixed(2)}
+                    €
+                  </p>
+                  <p>
+                    Total:{' '}
+                    {(
+                      allProducts
+                        .filter((product) => listOfProd.includes(product.id))
+                        .reduce(
+                          (acc, curVal) =>
+                            acc +
+                            curVal.price *
+                              productsInCart[listOfProd.indexOf(curVal.id)]
+                                .quantity,
+                          0
+                        ) * 0.9
+                    ).toFixed(2)}
+                    €
+                  </p>
+                </div>
+              )
+            ) : epmDiscount ? (
+              <div>
+                <p>Applied code EPM - 10%</p>
+                <p className="line-through">
+                  Total:{' '}
+                  {allProducts
+                    .filter((product) => listOfProd.includes(product.id))
+                    .reduce(
+                      (acc, curVal) =>
+                        acc +
+                        curVal.price *
+                          productsInCart[listOfProd.indexOf(curVal.id)]
+                            .quantity,
+                      0
+                    )
+                    .toFixed(2)}
+                  €
+                </p>
+                <p>
+                  Total:{' '}
+                  {(
+                    allProducts
+                      .filter((product) => listOfProd.includes(product.id))
+                      .reduce(
+                        (acc, curVal) =>
+                          acc +
+                          curVal.price *
+                            productsInCart[listOfProd.indexOf(curVal.id)]
+                              .quantity,
+                        0
+                      ) * 0.9
+                  ).toFixed(2)}
+                  €
+                </p>
+              </div>
+            ) : (
+              <div>
+                Total:{' '}
+                {allProducts
+                  .filter((product) => listOfProd.includes(product.id))
+                  .reduce(
+                    (acc, curVal) =>
+                      acc +
+                      curVal.price *
+                        productsInCart[listOfProd.indexOf(curVal.id)].quantity,
+                    0
+                  )
+                  .toFixed(2)}
+                €
+              </div>
+            )}
+          </div>
+          <div className="w-[100%] border">
+            <button
+              className="flex-shrink-0 rounded border-4 border-teal-500 bg-teal-500 py-1 px-2 text-sm text-white hover:border-teal-700 hover:bg-teal-700"
+              onClick={() => {
+                open();
+              }}
+            >
+              CHECKOUT
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import { Footer } from './components/Footer';
 // import { Cart } from './components/ShopCart';
 import { Navigation } from './components/Navigation';
 import { CartPage } from './pages/CartPage';
@@ -12,11 +13,13 @@ export function App() {
   return (
     <>
       <Navigation />
-      
+
       <Routes>
         <Route path="/" element={<ShopPage />} />
         <Route path="/cart" element={<CartPage />} />
       </Routes>
+
+      <Footer />
     </>
   );
 }
