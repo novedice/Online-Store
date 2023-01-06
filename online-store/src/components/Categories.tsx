@@ -9,8 +9,8 @@ export function Categories() {
     const categories = searchParams.get('categories');
     const categoriesArray = categories?.split(',') || [];
 
-    console.log(categoriesArray);
-    console.log(categories);
+    // console.log(categoriesArray);
+    // console.log(categories);
 
     if (categoriesArray.includes(category)) {
       const newCategories = categoriesArray.filter((el) => el != category);
@@ -38,22 +38,20 @@ export function Categories() {
 
   return (
     <div className="Categories w- 1/4">
-      <ul>
-        {CATEGORIES.map((category, i) => {
-          return (
-            <>
-              <button
-                className="ml-2 mt-2 w-32 border px-2"
-                onClick={() => onClickCategory(category)}
-                key={i}
-              >
-                {category}
-              </button>
-              <br />
-            </>
-          );
-        })}
-      </ul>
+      {CATEGORIES.map((category, i) => {
+        return (
+          <>
+            <button
+              className="ml-2 mt-2 w-32 border px-2"
+              onClick={() => onClickCategory(category)}
+              key={i}
+            >
+              {category}
+            </button>
+            <br />
+          </>
+        );
+      })}
     </div>
   );
 }

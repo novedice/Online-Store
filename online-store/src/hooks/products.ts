@@ -19,17 +19,17 @@ export function useProducts() {
   async function fetchProducts() {
     try {
       setError('');
-      setLoading(true); 
- 
+      setLoading(true);
+
       const response = await axios.get<IData>(
-        'https://dummyjson.com/products?limit=20',
+        'https://dummyjson.com/products?limit=100'
       );
-      console.log(response);
+      // console.log(response);
 
       setAllProd(response.data.products);
 
-      allProducts = (response.data.products).slice();
-  
+      allProducts = response.data.products.slice();
+
       setLoading(false);
     } catch (e: unknown) {
       // eslint-disable-next-line @typescript-eslint/no-shadow
