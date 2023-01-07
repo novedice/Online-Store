@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
 import { IProdInCart, IProduct } from '../types/types';
 import { CartContext } from '../Context/CartContext';
-import { allProducts } from '../hooks/products';
+// import { allProducts } from '../hooks/products';
+import { findProd } from '../functions/findProduct';
+import { Link } from 'react-router-dom';
 
 interface ItemProps {
   item: IProdInCart;
@@ -10,29 +12,25 @@ interface ItemProps {
 export function ShowItem({ item }: ItemProps) {
   const { minusOne, addOne, delFromCart } = useContext(CartContext);
 
-  function findProd(currentItem: IProdInCart): IProduct {
-    let i = 0;
-    while (allProducts[i].id !== currentItem.id) {
-      i += 1;
-    }
-    return allProducts[i];
-  }
-
-  const prod: IProduct = findProd(item);
+  const prod: IProduct = findProd(item.id.toString(10));
 
   return (
     <>
       <div className="item-in-Cart space-btw flex items-center rounded border px-2 py-2">
-        <img
-          src={prod.thumbnail}
-          className="image-in-Cart basic-1/5 mb-1 w-1/6 px-1 py-1"
-          alt={prod.title}
-        ></img>
-        <div className="item-description flex basis-2/5 flex-col px-2 py-4">
-          <p className="font-bold">{prod.title}</p>
-          <p className="">Category: {prod.category}</p>
-          <p className="">Price: {prod.price}€</p>
-        </div>
+        <Link to={`/product-details/${prod.id}`}>
+          <div className="flex w-[100%] items-center">
+            <img
+              src={prod.thumbnail}
+              className="image-in-Cart basic-1/5 mb-1 w-1/6 px-1 py-1"
+              alt={prod.title}
+            ></img>
+            <div className="item-description flex basis-2/5 flex-col px-2 py-4">
+              <p className="font-bold">{prod.title}</p>
+              <p className="">Category: {prod.category}</p>
+              <p className="">Price: {prod.price}€</p>
+            </div>
+          </div>
+        </Link>
         <div className="basic-2/5 flex flex-col">
           <div className="in-stock">
             <p>

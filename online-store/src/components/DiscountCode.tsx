@@ -40,9 +40,9 @@ export function DiscountCode() {
 
       <button
         type="submit"
-        className="btn-submit flex-shrink-0 rounded border-4 border-teal-500 bg-teal-500 py-1 px-2 text-sm text-white hover:border-teal-700 hover:bg-teal-700"
+        className="btn-submit flex-shrink-0 rounded border-4 border-gray-500 bg-gray-500 py-1 px-2 text-sm text-white hover:border-gray-700 hover:bg-gray-700"
       >
-        apply
+        APPLY
       </button>
     </form>
   );
