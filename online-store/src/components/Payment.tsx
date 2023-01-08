@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import '../assets/ae.jpeg';
+import '../assets/visa.jpeg';
+import '../assets/mastercard.jpeg';
+import '../assets/jcb.jpeg';
 
 interface PaymentProps {
   paid: () => void;
@@ -6,74 +10,286 @@ interface PaymentProps {
 
 export function Payment({ paid }: PaymentProps) {
   const [name, setName] = useState('');
-  const [error, setError] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const [email, setEmail] = useState('');
+  const [bankCard, setBankCard] = useState('');
+  const [cardDate, setCardDate] = useState('');
+  const [cvv, setCvv] = useState('');
+  const [nameError, setNameError] = useState('');
+  const [phoneError, setPhoneError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [addressError, setAddressError] = useState('');
+  const [cardError, setCardError] = useState('');
+  const [cardDateError, setCardDateError] = useState('');
+  const [cvvError, setCvvError] = useState('');
+  const [paymentSystem, setPaymentSystem] = useState('jcb.jpeg');
 
   function submitHandler(event: React.FormEvent) {
-    setError('');
+    const numbers = '1234567890';
+    let err = 0;
+
+    setNameError('');
+    setPhoneError('');
+    setAddressError('');
+    setEmailError('');
+    setCardError('');
+    setCardDateError('');
+    setCvvError('');
+
     event.preventDefault();
 
-    if (name.trim().length <= 6) {
-      setError('Please enter valid name and surname');
+    function isNumber(str: string) {
+      for (let i = 0; i < str.length; i += 1) {
+        if (!numbers.includes(str[i])) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    if (
+      name.trim().split(' ').length < 2 ||
+      name.trim().split(' ')[0].length < 3 ||
+      name.trim().split(' ')[1].length < 3
+    ) {
+      setNameError('Please enter valid name and surname');
+      err += 1;
+    }
+    if (
+      !phone.startsWith('+') ||
+      phone.length < 9 ||
+      !isNumber(phone.slice(1))
+    ) {
+      setPhoneError('Please enter valid phone number');
+      err += 1;
+    }
+    if (
+      address.trim().split(' ').length < 3 ||
+      address.trim().split(' ')[0].length < 5 ||
+      address.trim().split(' ')[1].length < 5 ||
+      address.trim().split(' ')[2].length < 5
+    ) {
+      setAddressError('Please enter valid address');
+      err += 1;
+    }
+    if (
+      !email.includes('@') ||
+      !email.includes('.') ||
+      email.startsWith('@') ||
+      email.lastIndexOf('.') < email.lastIndexOf('@')
+    ) {
+      setEmailError('Please enter valid email');
+      err += 1;
+    }
+    if (bankCard.length !== 16 || !isNumber(bankCard)) {
+      setCardError('Please enter valid card number');
+      err += 1;
+    }
+    if (
+      cardDate.length !== 5 ||
+      !isNumber(cardDate.slice(0, 2)) ||
+      !isNumber(cardDate.slice(3))
+    ) {
+      setCardDateError('Please enter valid card date');
+      err += 1;
+    }
+    if (cvv.length !== 3 || !isNumber(cvv)) {
+      setCvvError('Please enter valid cvv');
+      err += 1;
+    }
+
+    if (err > 0) {
       return;
     }
+
     paid();
   }
 
   function nameHandler(event: React.ChangeEvent<HTMLInputElement>) {
     setName(event.target.value);
   }
+  function phoneHandler(event: React.ChangeEvent<HTMLInputElement>) {
+    setPhone(event.target.value);
+  }
+  function addressHandler(event: React.ChangeEvent<HTMLInputElement>) {
+    setAddress(event.target.value);
+  }
+  function emailHandler(event: React.ChangeEvent<HTMLInputElement>) {
+    setEmail(event.target.value);
+  }
+  function bankCardHandler(event: React.ChangeEvent<HTMLInputElement>) {
+    setBankCard(() => {
+      if (event.target.value[0] === '4') {
+        setPaymentSystem('visa.jpeg');
+      } else if (event.target.value[0] === '5') {
+        setPaymentSystem('mastercard.jpeg');
+      } else if (event.target.value[0] === '1') {
+        setPaymentSystem('ae.jpeg');
+      } else {
+        setPaymentSystem('jcb.jpeg');
+      }
+
+      return event.target.value;
+    });
+  }
+  function cardDateHandler(event: React.ChangeEvent<HTMLInputElement>) {
+    setCardDate((prev) => {
+      if (
+        prev.length > event.target.value.length &&
+        event.target.value[event.target.value.length - 1] === '/'
+      ) {
+        return event.target.value.slice(0, 2);
+      }
+
+      if (
+        event.target.value.length === 2 &&
+        !event.target.value.includes('/')
+      ) {
+        return `${event.target.value.slice(0, 2)}/`;
+      } else {
+        return event.target.value;
+      }
+    });
+  }
+
+  function cvvHandler(event: React.ChangeEvent<HTMLInputElement>) {
+    setCvv(event.target.value);
+  }
 
   return (
     <>
-      <form onSubmit={submitHandler}>
-        {error && <p>{error}</p>}
-        <input
-          className="mb-2 border py-2 px-4"
-          onChange={nameHandler}
-          type="text"
-          placeholder="enter name and surname"
-          name="nameSurname"
-          value={name}
-        ></input>
-        <input
-          className="mb-2 border py-2 px-4"
-          type="number"
-          placeholder="+00000000000"
-          name="mobilePhone"
-        ></input>
-        <input
-          className="mb-2 border py-2 px-4"
-          type="text"
-          placeholder="Enter your address"
-          name="address"
-        ></input>
-        <input
-          className="mb-2 border py-2 px-4"
-          type="email"
-          placeholder="example@example.com"
-          name="email"
-        ></input>
-        <input
-          className="mb-2 border py-2 px-4"
-          type="number"
-          name="bankCard"
-        ></input>
-        <input
-          className="mb-2 border py-2 px-4"
-          type="number"
-          name="cardDate"
-        ></input>
-        <input
-          className="mb-2 border py-2 px-4"
-          type="number"
-          name="cvv"
-        ></input>
-        <button
-          type="submit"
-          className="btn-submit border bg-yellow-300 py-2 px-4"
-        >
-          Submit
-        </button>
+      <form className="flex w-full max-w-lg flex-col" onSubmit={submitHandler}>
+        <div className="-mx-3 mb-6 flex flex-wrap">
+          <div className="w-full px-3">
+            <label
+              className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700"
+              htmlFor="nameSurname"
+            >
+              Please enter your full name and surname
+            </label>
+            <input
+              className="mb-3 block w-full appearance-none rounded border border-gray-200 bg-gray-200 py-3 px-4 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+              onChange={nameHandler}
+              type="text"
+              placeholder="John Black"
+              name="nameSurname"
+              value={name}
+            ></input>
+            {nameError && (
+              <p className="text-xs italic text-red-500">{nameError}</p>
+            )}
+          </div>
+          <div className="w-full px-3">
+            <label
+              className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700"
+              htmlFor="mobilePhone"
+            >
+              Please enter your phone number
+            </label>
+            <input
+              className="mb-3 block w-full appearance-none rounded border border-gray-200 bg-gray-200 py-3 px-4 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+              onChange={phoneHandler}
+              type="tel"
+              placeholder="+0000000000"
+              name="mobilePhone"
+              value={phone}
+            ></input>
+            {phoneError && (
+              <p className="text-xs italic text-red-500">{phoneError}</p>
+            )}
+          </div>
+          <div className="w-full px-3">
+            <label
+              className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700"
+              htmlFor="address"
+            >
+              Please enter your address
+            </label>
+            <input
+              className="mb-3 block w-full appearance-none rounded border border-gray-200 bg-gray-200 py-3 px-4 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+              onChange={addressHandler}
+              type="text"
+              placeholder="Spain Corruna Ferrol "
+              name="address"
+              value={address}
+            ></input>
+            {addressError && (
+              <p className="text-xs italic text-red-500">{addressError}</p>
+            )}
+          </div>
+          <div className="w-full px-3">
+            <label
+              className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700"
+              htmlFor="email"
+            >
+              Please enter your email address
+            </label>
+            <input
+              className="mb-3 block w-full appearance-none rounded border border-gray-200 bg-gray-200 py-3 px-4 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+              onChange={emailHandler}
+              type="email"
+              placeholder="example@example.com"
+              name="email"
+              value={email}
+            ></input>
+            {emailError && (
+              <p className="text-xs italic text-red-500">{emailError}</p>
+            )}
+          </div>
+          <div className="w-full px-3">
+            <p className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
+              Please enter your card details
+            </p>
+            <div className="-mx-3 mb-6 flex w-[300px] flex-col flex-wrap rounded border">
+              <div className="flex">
+                <img
+                  className="mr-2 w-[20%] rounded border"
+                  src={paymentSystem}
+                ></img>
+                <input
+                  className="mb-3 block w-full appearance-none rounded border border-gray-200 bg-gray-200 py-3 px-4 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+                  onChange={bankCardHandler}
+                  type="number"
+                  placeholder="1234567812345678"
+                  name="bankCard"
+                  value={bankCard}
+                ></input>
+              </div>
+              <div className="flex">
+                <input
+                  className="m-3 block w-28 appearance-none rounded border border-gray-200 bg-gray-200 py-3 px-4 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+                  onChange={cardDateHandler}
+                  type="text"
+                  name="cardDate"
+                  value={cardDate}
+                ></input>
+                <input
+                  className="m-3 block w-28 appearance-none rounded border border-gray-200 bg-gray-200 py-3 px-4 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+                  onChange={cvvHandler}
+                  type="number"
+                  name="cvv"
+                  value={cvv}
+                ></input>
+              </div>
+              {cardError && (
+                <p className="text-xs italic text-red-500">{cardError}</p>
+              )}
+              {cardDateError && (
+                <p className="text-xs italic text-red-500">{cardDateError}</p>
+              )}
+              {cvvError && (
+                <p className="text-xs italic text-red-500">{cvvError}</p>
+              )}
+            </div>
+          </div>
+          <button
+            type="submit"
+            className="btn-submit flex-shrink-0 rounded border-4 border-teal-500 bg-teal-500 py-1 px-2 text-sm text-white hover:border-teal-700 hover:bg-teal-700"
+          >
+            Submit
+          </button>
+        </div>
       </form>
     </>
   );

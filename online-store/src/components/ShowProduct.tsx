@@ -1,15 +1,14 @@
 import React, { useContext } from 'react';
 import { IProduct } from '../types/types';
 import { CartContext } from '../Context/CartContext';
+import { Link } from 'react-router-dom';
 
-interface ProductProps {
+export interface ProductProps {
   product: IProduct;
 }
 
 export function ShowProduct({ product }: ProductProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { addToCart, delFromCart, listOfProd, productsInCart } =
-    useContext(CartContext);
+  const { addToCart, delFromCart, listOfProd } = useContext(CartContext);
 
   const btnBgClassName = listOfProd.includes(product.id)
     ? 'bg-red-400 hover:bg-red-600'
@@ -19,12 +18,11 @@ export function ShowProduct({ product }: ProductProps) {
     btnBgClassName,
   ];
 
-  // eslint-disable-next-line @typescript-eslint/no-shadow
-  const buttonHandler = (product: IProduct) => {
-    if (listOfProd.includes(product.id)) {
-      delFromCart(product.id);
+  const buttonHandler = (prod: IProduct) => {
+    if (listOfProd.includes(prod.id)) {
+      delFromCart(prod.id);
     } else {
-      addToCart(product.id);
+      addToCart(prod.id);
     }
   };
 
@@ -77,9 +75,11 @@ export function ShowProduct({ product }: ProductProps) {
             {listOfProd.includes(product.id) ? 'Remove' : 'Add'}
             {/* {myCart.isInCart(product.) ? "Drop from Cart" : "Add to Cart"} */}
           </button>
-          <button className="mb-2 flex items-center rounded bg-slate-300 px-4 py-1">
-            Details
-          </button>
+          <Link to={`/product-details/${product.id}`}>
+            <button className="mb-2 flex items-center rounded bg-slate-300 px-4 py-1">
+              Details
+            </button>
+          </Link>
         </div>
       </div>
     </>

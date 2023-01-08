@@ -3,8 +3,6 @@
 import React, { createContext, useState } from 'react';
 import { ICartContext, IProdInCart } from '../types/types';
 
-// interface setProductsInCart: React.Dispatch<React.SetStateAction<IProdInCart[]>>
-
 export const CartContext = createContext<ICartContext>({
   listOfProd: [],
   rsDiscount: false,
@@ -18,41 +16,113 @@ export const CartContext = createContext<ICartContext>({
   addEpmDisc: () => {},
   removeRsDisc: () => {},
   removeEpmDisc: () => {},
+  clearCart: () => {},
+  resorteCart: () => {},
 });
 
 export const CartState = ({ children }: { children: React.ReactNode }) => {
-
   const [rsDiscount, setRsDiscount] = useState(false);
   const [epmDiscount, setEpmDiscount] = useState(false);
   const [productsInCart, setProductsInCart] = useState<IProdInCart[]>([]);
   const [listOfProd, setListOfProd] = useState<number[]>([]);
 
-  const addRsDisc = () => setRsDiscount(true);
-  const addEpmDisc = () => setEpmDiscount(true);
-  const removeRsDisc = () => setRsDiscount(false);
-  const removeEpmDisc = () => setEpmDiscount(false);
+  const addRsDisc = () => {
+    setRsDiscount(true);
+    localStorage.setItem('rsDiscount', JSON.stringify(true));
+  };
+  const addEpmDisc = () => {
+    setEpmDiscount(true);
+    localStorage.setItem('epmDiscount', JSON.stringify(true));
+  };
+  const removeRsDisc = () => {
+    setRsDiscount(false);
+    localStorage.setItem('rsDiscount', JSON.stringify(false));
+  };
+  const removeEpmDisc = () => {
+    setEpmDiscount(false);
+    localStorage.setItem('epmDiscount', JSON.stringify(false));
+  };
 
   const [quantity, setQuantity] = useState<number>(1);
+
   const addOne = (product: IProdInCart) => {
-    setQuantity(productsInCart[listOfProd.indexOf(product.id)].quantity += 1);
+    setQuantity((productsInCart[listOfProd.indexOf(product.id)].quantity += 1));
+    localStorage.setItem('productsInCart', JSON.stringify(productsInCart));
   };
   const minusOne = (product: IProdInCart) => {
-    setQuantity(productsInCart[listOfProd.indexOf(product.id)].quantity -= 1);
+    setQuantity((productsInCart[listOfProd.indexOf(product.id)].quantity -= 1));
+    localStorage.setItem('productsInCart', JSON.stringify(productsInCart));
   };
-  
+
   const addToCart = (id: number) => {
-    setProductsInCart(prev => [...prev, { id: id, quantity: 1 }]);
-    setListOfProd((prev) => [...prev, id]);
+    setProductsInCart([...productsInCart, { id: id, quantity: 1 }]);
+    setListOfProd([...listOfProd, id]);
+    localStorage.setItem(
+      'productsInCart',
+      JSON.stringify([...productsInCart, { id: id, quantity: 1 }])
+    );
+    localStorage.setItem('listOfProd', JSON.stringify([...listOfProd, id]));
   };
   const delFromCart = (id: number) => {
-    setProductsInCart(prev => prev.filter(product => product.id !== id));
-    setListOfProd(prev => prev.filter(product => product !== id));
+    setProductsInCart((prev) => {
+      localStorage.setItem(
+        'productsInCart',
+        JSON.stringify(prev.filter((product) => product.id !== id))
+      );
+      return prev.filter((product) => product.id !== id);
+    });
+    setListOfProd((prev) => {
+      localStorage.setItem(
+        'listOfProd',
+        JSON.stringify(prev.filter((product) => product !== id))
+      );
+      return prev.filter((product) => product !== id);
+    });
+  };
+
+  const resorteCart = () => {
+    const list = JSON.parse(localStorage.getItem('listOfProd') as string);
+    const products = JSON.parse(
+      localStorage.getItem('productsInCart') as string
+    );
+    const rs = JSON.parse(localStorage.getItem('rsDiscount') as string);
+    const epm = JSON.parse(localStorage.getItem('epmDiscount') as string);
+    setProductsInCart(products);
+    setListOfProd(list);
+    setEpmDiscount(epm);
+    setRsDiscount(rs);
+  };
+  const clearCart = () => {
+    setProductsInCart([]);
+    setListOfProd([]);
+    removeEpmDisc();
+    removeRsDisc();
+    localStorage.removeItem('productsInCart');
+    localStorage.removeItem('listOfProd');
+    localStorage.removeItem('rsDiscount');
+    localStorage.removeItem('epmDiscount');
   };
 
   return (
-    <CartContext.Provider value = { { rsDiscount, epmDiscount, listOfProd, addRsDisc, addEpmDisc,
-      removeRsDisc, removeEpmDisc, productsInCart, minusOne, addOne, addToCart, delFromCart } }>
-      { children }
+    <CartContext.Provider
+      value={{
+        rsDiscount,
+        epmDiscount,
+        listOfProd,
+        addRsDisc,
+        addEpmDisc,
+        removeRsDisc,
+        removeEpmDisc,
+        productsInCart,
+        minusOne,
+        addOne,
+        addToCart,
+        delFromCart,
+        clearCart,
+        resorteCart,
+      }}
+    >
+      {children}
     </CartContext.Provider>
   );
 };

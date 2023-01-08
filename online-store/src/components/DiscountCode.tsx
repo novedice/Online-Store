@@ -4,23 +4,19 @@ import ErrorMes from './errorMessage';
 // import { ErrorMes } from './errorMessage';
 
 export function DiscountCode() {
-
-  const { rsDiscount, epmDiscount, addRsDisc, addEpmDisc } = useContext(CartContext);
+  const { addRsDisc, addEpmDisc } = useContext(CartContext);
   const [value, setValue] = useState('');
   const [error, setError] = useState('');
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
     setError('');
-      
+
     if (value === 'RS') {
       addRsDisc();
-      console.log('rs applied', rsDiscount);
     }
     if (value === 'EPM') {
       addEpmDisc();
-      console.log('epm applied', epmDiscount);
-
     }
   };
 
@@ -32,7 +28,7 @@ export function DiscountCode() {
     <form className="flex" onSubmit={submitHandler}>
       <input
         type="text"
-        className="mb-2 w-full border py-2 px-4"
+        className="mb-2 box-border max-h-8 w-full border py-2 px-4"
         placeholder="Enter discount code"
         value={value}
         onChange={changeHandler}
@@ -42,9 +38,9 @@ export function DiscountCode() {
 
       <button
         type="submit"
-        className="m-0 h-[40px] border bg-green-400 py-0 px-2 text-base hover:bg-red-300"
+        className="btn-submit max-h-8 flex-shrink-0 rounded border-4 border-gray-500 bg-gray-500 text-sm text-white hover:border-gray-700 hover:bg-gray-700"
       >
-        apply
+        APPLY
       </button>
     </form>
   );

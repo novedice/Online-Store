@@ -9,7 +9,7 @@ interface IData {
   total: number;
 }
 
-export let allProducts: IProduct[];
+export let allProducts: IProduct[] = [];
 
 export function useProducts() {
   const [allProd, setAllProd] = useState<IProduct[]>([]);
@@ -28,8 +28,8 @@ export function useProducts() {
       setAllProd(response.data.products);
 
       allProducts = response.data.products.slice();
-     
-      
+      localStorage.setItem('allProducts', JSON.stringify(allProducts));
+
       setLoading(false);
     } catch (e: unknown) {
       // eslint-disable-next-line @typescript-eslint/no-shadow
