@@ -24,12 +24,12 @@ export function useProducts() {
       const response = await axios.get<IData>(
         'https://dummyjson.com/products?limit=100'
       );
-      // console.log(response);
-
+      
       setAllProd(response.data.products);
 
       allProducts = response.data.products.slice();
-
+     
+      
       setLoading(false);
     } catch (e: unknown) {
       // eslint-disable-next-line @typescript-eslint/no-shadow
