@@ -45,24 +45,36 @@ export const CartState = ({ children }: { children: React.ReactNode }) => {
   const [quantity, setQuantity] = useState<number>(1);
   const addOne = (product: IProdInCart) => {
     setQuantity((productsInCart[listOfProd.indexOf(product.id)].quantity += 1));
-    localStorage.setItem('productsInCart', JSON.stringify(productsInCart));
+    // localStorage.setItem(
+    //   'productsInCart',
+    //   JSON.stringify(productsInCart.slice())
+    // );
   };
   const minusOne = (product: IProdInCart) => {
     setQuantity((productsInCart[listOfProd.indexOf(product.id)].quantity -= 1));
-    localStorage.setItem('productsInCart', JSON.stringify(productsInCart));
+    // localStorage.setItem(
+    //   'productsInCart',
+    //   JSON.stringify(productsInCart.slice())
+    // );
   };
 
   const addToCart = (id: number) => {
     setProductsInCart((prev) => [...prev, { id: id, quantity: 1 }]);
     setListOfProd((prev) => [...prev, id]);
-    localStorage.setItem('productsInCart', JSON.stringify(productsInCart));
-    localStorage.setItem('listOfProd', JSON.stringify(listOfProd));
+    // localStorage.setItem(
+    //   'productsInCart',
+    //   JSON.stringify(productsInCart.slice())
+    // );
+    // localStorage.setItem('listOfProd', JSON.stringify(listOfProd.slice()));
   };
   const delFromCart = (id: number) => {
     setProductsInCart((prev) => prev.filter((product) => product.id !== id));
     setListOfProd((prev) => prev.filter((product) => product !== id));
-    localStorage.setItem('productsInCart', JSON.stringify(productsInCart));
-    localStorage.setItem('listOfProd', JSON.stringify(listOfProd));
+    // localStorage.setItem(
+    //   'productsInCart',
+    //   JSON.stringify(productsInCart.slice())
+    // );
+    // localStorage.setItem('listOfProd', JSON.stringify(listOfProd.slice()));
   };
   const clearCart = () => {
     setProductsInCart([]);

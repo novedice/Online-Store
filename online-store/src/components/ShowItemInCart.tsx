@@ -10,7 +10,8 @@ interface ItemProps {
 }
 
 export function ShowItem({ item }: ItemProps) {
-  const { minusOne, addOne, delFromCart } = useContext(CartContext);
+  const { minusOne, addOne, delFromCart, productsInCart } =
+    useContext(CartContext);
 
   const prod: IProduct = findProd(item.id.toString(10));
 
@@ -46,6 +47,10 @@ export function ShowItem({ item }: ItemProps) {
                   delFromCart(item.id);
                 } else {
                   minusOne(item);
+                  localStorage.setItem(
+                    'productsInCart',
+                    JSON.stringify(productsInCart)
+                  );
                 }
               }}
             >
