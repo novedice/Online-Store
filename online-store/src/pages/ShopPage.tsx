@@ -1,8 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Categories } from '../components/Categories';
 import { ShowProduct } from '../components/ShowProduct';
-// import { CartContext } from '../Context/CartContext';
-// import { takeDataFromStorage } from '../functions/dataFromLocalStorage';
 import { useProducts } from '../hooks/products';
 
 export function ShopPage() {

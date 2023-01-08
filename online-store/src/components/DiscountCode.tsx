@@ -27,7 +27,7 @@ export function DiscountCode() {
     <form className="flex" onSubmit={submitHandler}>
       <input
         type="text"
-        className="mb-2 w-full border py-2 px-4"
+        className="mb-2 box-border max-h-8 w-full border py-2 px-4"
         placeholder="Enter discount code"
         value={value}
         onChange={changeHandler}
@@ -37,7 +37,7 @@ export function DiscountCode() {
 
       <button
         type="submit"
-        className="btn-submit flex-shrink-0 rounded border-4 border-gray-500 bg-gray-500 py-1 px-2 text-sm text-white hover:border-gray-700 hover:bg-gray-700"
+        className="btn-submit max-h-8 flex-shrink-0 rounded border-4 border-gray-500 bg-gray-500 text-sm text-white hover:border-gray-700 hover:bg-gray-700"
       >
         APPLY
       </button>

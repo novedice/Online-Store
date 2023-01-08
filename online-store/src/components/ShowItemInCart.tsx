@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { IProdInCart, IProduct } from '../types/types';
 import { CartContext } from '../Context/CartContext';
-// import { allProducts } from '../hooks/products';
 import { findProd } from '../functions/findProduct';
 import { Link } from 'react-router-dom';
 

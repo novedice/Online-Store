@@ -17,6 +17,7 @@ export const CartContext = createContext<ICartContext>({
   removeRsDisc: () => {},
   removeEpmDisc: () => {},
   clearCart: () => {},
+  resorteCart: () => {},
 });
 
 export const CartState = ({ children }: { children: React.ReactNode }) => {
@@ -27,54 +28,67 @@ export const CartState = ({ children }: { children: React.ReactNode }) => {
 
   const addRsDisc = () => {
     setRsDiscount(true);
-    localStorage.setItem('rsDiscount', JSON.stringify(rsDiscount));
+    localStorage.setItem('rsDiscount', JSON.stringify(true));
   };
   const addEpmDisc = () => {
     setEpmDiscount(true);
-    localStorage.setItem('epmDiscount', JSON.stringify(epmDiscount));
+    localStorage.setItem('epmDiscount', JSON.stringify(true));
   };
   const removeRsDisc = () => {
     setRsDiscount(false);
-    localStorage.setItem('rsDiscount', JSON.stringify(rsDiscount));
+    localStorage.setItem('rsDiscount', JSON.stringify(false));
   };
   const removeEpmDisc = () => {
     setEpmDiscount(false);
-    localStorage.setItem('epmDiscount', JSON.stringify(epmDiscount));
+    localStorage.setItem('epmDiscount', JSON.stringify(false));
   };
 
   const [quantity, setQuantity] = useState<number>(1);
+
   const addOne = (product: IProdInCart) => {
     setQuantity((productsInCart[listOfProd.indexOf(product.id)].quantity += 1));
-    // localStorage.setItem(
-    //   'productsInCart',
-    //   JSON.stringify(productsInCart.slice())
-    // );
+    localStorage.setItem('productsInCart', JSON.stringify(productsInCart));
   };
   const minusOne = (product: IProdInCart) => {
     setQuantity((productsInCart[listOfProd.indexOf(product.id)].quantity -= 1));
-    // localStorage.setItem(
-    //   'productsInCart',
-    //   JSON.stringify(productsInCart.slice())
-    // );
+    localStorage.setItem('productsInCart', JSON.stringify(productsInCart));
   };
 
   const addToCart = (id: number) => {
-    setProductsInCart((prev) => [...prev, { id: id, quantity: 1 }]);
-    setListOfProd((prev) => [...prev, id]);
-    // localStorage.setItem(
-    //   'productsInCart',
-    //   JSON.stringify(productsInCart.slice())
-    // );
-    // localStorage.setItem('listOfProd', JSON.stringify(listOfProd.slice()));
+    setProductsInCart([...productsInCart, { id: id, quantity: 1 }]);
+    setListOfProd([...listOfProd, id]);
+    localStorage.setItem(
+      'productsInCart',
+      JSON.stringify([...productsInCart, { id: id, quantity: 1 }])
+    );
+    localStorage.setItem('listOfProd', JSON.stringify([...listOfProd, id]));
   };
   const delFromCart = (id: number) => {
-    setProductsInCart((prev) => prev.filter((product) => product.id !== id));
-    setListOfProd((prev) => prev.filter((product) => product !== id));
-    // localStorage.setItem(
-    //   'productsInCart',
-    //   JSON.stringify(productsInCart.slice())
-    // );
-    // localStorage.setItem('listOfProd', JSON.stringify(listOfProd.slice()));
+    setProductsInCart((prev) => {
+      localStorage.setItem(
+        'productsInCart',
+        JSON.stringify(prev.filter((product) => product.id !== id))
+      );
+      return prev.filter((product) => product.id !== id);
+    });
+    setListOfProd((prev) => {
+      localStorage.setItem(
+        'listOfProd',
+        JSON.stringify(prev.filter((product) => product !== id))
+      );
+      return prev.filter((product) => product !== id);
+    });
+  };
+
+  const resorteCart = () => {
+    const list = JSON.parse(localStorage.getItem('listOfProd'));
+    const products = JSON.parse(localStorage.getItem('productsInCart'));
+    const rs = JSON.parse(localStorage.getItem('rsDiscount'));
+    const epm = JSON.parse(localStorage.getItem('epmDiscount'));
+    setProductsInCart(products);
+    setListOfProd(list);
+    setEpmDiscount(epm);
+    setRsDiscount(rs);
   };
   const clearCart = () => {
     setProductsInCart([]);
@@ -103,6 +117,7 @@ export const CartState = ({ children }: { children: React.ReactNode }) => {
         addToCart,
         delFromCart,
         clearCart,
+        resorteCart,
       }}
     >
       {children}
