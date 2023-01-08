@@ -1,33 +1,26 @@
-import React, { useState } from "react";
-
-// interface ICategiries {
-//   categories:string;
-// }
-
-
+import { CATEGORIES } from '../constans/constans';
+import { useSearchFilters } from '../hooks/SearchFilters';
 
 export function Categories() {
+  const { toggleSearchParams } = useSearchFilters();
 
-  const [activeIndex, setActiveIndex] = useState(0)
-
-  const onClickCategory = (index:number) => {
-    setActiveIndex(index);
-  }
-
-//   const categories = ['Smartphones', 'Laptop', 'Fraqrances', 'Skincare', 'groceries', 'home-decoration', 'furniture', 'tops', 'womens-dresses', 'womens-shoes', 'mens-shirts', 'mens-shoes', 'mens-watches', 'womens-watches', 'womens-bags', 'womens-jewellery', 'sunglasses', 'automotive', 'motorcycle', 'lighting']
-  const categories = ['Smartphones', 'Laptop', 'Fraqrances', 'Skincare']
+  const onClickCategory = (category: string) => {
+    toggleSearchParams('categories', category);
+  };
 
   return (
-    <div className="Categories w- 1/4">
-      <ul>
-        {categories.map((value, i) => { 
-          return (
-          <li onClick={() => onClickCategory(i)} className = { activeIndex === i ? 'bg-green-600 cursor-pointer w-32' : 'cursor-pointer w-10'} key = {i}>
-          {value}
-          </li>
-          )
-        })}
-      </ul> 
+    <div className="Categories m-2 w-44 border p-3 ">
+      {CATEGORIES.map((category) => {
+        return (
+          <button
+            className="ml-2 mt-2 w-32 border px-2 hover:bg-red-200"
+            onClick={() => onClickCategory(category)}
+            key={category}
+          >
+            {category}
+          </button>
+        );
+      })}
     </div>
-  )
+  );
 }
