@@ -7,21 +7,18 @@ export function Brands() {
   const onClickBrand = (brand: string) => {
     toggleSearchParams('brands', brand);
   };
-  console.log('Impression of Acqua Di Gio'.toLowerCase());
+
   return (
     <div className="Brands m-2 w-44 border p-3">
-      {BRANDS.map((brand, index) => {
+      {BRANDS.map((brand) => {
         return (
-          <>
-            <button
-              className="ml-2 mt-2 w-32 border px-2 hover:bg-red-200"
-              onClick={() => onClickBrand(brand)}
-              key={index}
-            >
-              {brand}
-            </button>
-            <br />
-          </>
+          <button
+            className="ml-2 mt-2 w-32 border px-2 hover:bg-red-200"
+            onClick={() => onClickBrand(brand)}
+            key={brand}
+          >
+            {brand}
+          </button>
         );
       })}
     </div>

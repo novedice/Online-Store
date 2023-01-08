@@ -17,7 +17,7 @@ export const useSearchFilters = () => {
   }, [searchParams]);
 
   const filterEmptyValues = (params:Record<string, string>) => {
-    const filteredValues = {...params}; // откуда Params берутся?
+    const filteredValues = {...params};
         
     Object.keys(filteredValues).forEach(key => {
       if (!filteredValues[key].length) {
@@ -28,8 +28,7 @@ export const useSearchFilters = () => {
   }
 
   const toggleSearchParams = (key: string, value: string) => {
-    console.log(value);  // почему value кликнутое значение (из useSearchFilters получено?)
-    
+        
     const currentFilter = parsedParams[key]
     let newValues: string[] = [];
 
@@ -53,6 +52,7 @@ export const useSearchFilters = () => {
     
     setSearchParams(filterEmptyValues({...parsedParams, [key]:value}));
   }
+  
 
   return {toggleSearchParams, updateSearchParams}
 }
