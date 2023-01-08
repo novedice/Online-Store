@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 interface PaymentProps {
   paid: () => void;
 }
 
 export function Payment({ paid }: PaymentProps) {
-  const [name, setName] = useState("");
-  const [error, setError] = useState("");
+  const [name, setName] = useState('');
+  const [error, setError] = useState('');
 
   function submitHandler(event: React.FormEvent) {
-    setError("");
+    setError('');
     event.preventDefault();
 
     if (name.trim().length <= 6) {
-      setError("Please enter valid name and surname");
+      setError('Please enter valid name and surname');
       return;
     }
     paid();

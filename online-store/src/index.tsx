@@ -8,7 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { CartState } from './Context/CartContext';
 
 export const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById('root') as HTMLElement,
 );
 
 root.render(
@@ -18,6 +18,6 @@ root.render(
         <App />
       </ModalWindowState>
     </CartState>
-  </BrowserRouter>
+  </BrowserRouter>,
 );
 

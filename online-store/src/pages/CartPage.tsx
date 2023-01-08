@@ -9,15 +9,15 @@ import { allProducts } from '../hooks/products';
 
 export function CartPage() {
 
-  const {modalWindow, open, close } = useContext(ModalWindowContext);
+  const { modalWindow, open, close } = useContext(ModalWindowContext);
   const { rsDiscount, epmDiscount, listOfProd, productsInCart } = useContext(CartContext);
 
-    return (
+  return (
         <>
-          {modalWindow && <ModalWindow title='Please enter your data' toClose={()=>{close()}}>
+          {modalWindow && <ModalWindow title='Please enter your data' toClose={()=>{close();}}>
             <Payment paid={ function (): void {
-                    close()
-                } } />
+              close();
+            } } />
           </ModalWindow>}
           <div className='Cart-container flex px-2 py-4 border justify-between'>
             <div className='basic-3/5 border w-[100%]'>
@@ -36,34 +36,34 @@ export function CartPage() {
               <div className='border w-[100%]'>
                 <p>Summary</p>
                 { rsDiscount ? 
-                (epmDiscount ? 
+                  (epmDiscount ? 
                 <div>
                   <p>Applied code RS - 10%</p>
                   <p>Applied code EPM - 10%</p>
-                  <p className='line-through'>Total: { allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc , curVal) => acc + curVal.price * productsInCart[listOfProd.indexOf(curVal.id)].quantity, 0).toFixed(2) }€</p>
-                  <p>Total: { (allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc , curVal) => acc + curVal.price * productsInCart[listOfProd.indexOf(curVal.id)].quantity, 0) * 0.8).toFixed(2) }€</p>
+                  <p className='line-through'>Total: { allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc, curVal) => acc + curVal.price * productsInCart[listOfProd.indexOf(curVal.id)].quantity, 0).toFixed(2) }€</p>
+                  <p>Total: { (allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc, curVal) => acc + curVal.price * productsInCart[listOfProd.indexOf(curVal.id)].quantity, 0) * 0.8).toFixed(2) }€</p>
                 </div> :
                 <div>
                   <p>Applied code RS - 10%</p>
-                  <p className='line-through'>Total: { allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc , curVal) => acc + curVal.price * productsInCart[listOfProd.indexOf(curVal.id)].quantity, 0).toFixed(2) }€</p>
-                  <p>Total: { (allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc , curVal) => acc + curVal.price * productsInCart[listOfProd.indexOf(curVal.id)].quantity, 0) * 0.9).toFixed(2) }€</p>
+                  <p className='line-through'>Total: { allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc, curVal) => acc + curVal.price * productsInCart[listOfProd.indexOf(curVal.id)].quantity, 0).toFixed(2) }€</p>
+                  <p>Total: { (allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc, curVal) => acc + curVal.price * productsInCart[listOfProd.indexOf(curVal.id)].quantity, 0) * 0.9).toFixed(2) }€</p>
                 </div>
-                ) :
-                (epmDiscount ? 
+                  ) :
+                  (epmDiscount ? 
                   <div>
                   <p>Applied code EPM - 10%</p>
-                  <p className='line-through'>Total: { allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc , curVal) => acc + curVal.price * productsInCart[listOfProd.indexOf(curVal.id)].quantity, 0).toFixed(2) }€</p>
-                  <p>Total: { (allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc , curVal) => acc + curVal.price * productsInCart[listOfProd.indexOf(curVal.id)].quantity, 0) * 0.9).toFixed(2) }€</p>
+                  <p className='line-through'>Total: { allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc, curVal) => acc + curVal.price * productsInCart[listOfProd.indexOf(curVal.id)].quantity, 0).toFixed(2) }€</p>
+                  <p>Total: { (allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc, curVal) => acc + curVal.price * productsInCart[listOfProd.indexOf(curVal.id)].quantity, 0) * 0.9).toFixed(2) }€</p>
                 </div> :
-                <div>Total: { allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc , curVal) => acc + curVal.price * productsInCart[listOfProd.indexOf(curVal.id)].quantity, 0).toFixed(2) }€</div>
-                )
+                <div>Total: { allProducts.filter(product => listOfProd.includes(product.id)).reduce((acc, curVal) => acc + curVal.price * productsInCart[listOfProd.indexOf(curVal.id)].quantity, 0).toFixed(2) }€</div>
+                  )
                 }
               </div>
               <div className='border w-[100%]'>
-                <button className='btn-checkout border rounded flex items-center px-2 py-2' onClick={() => {open()}}>CHECKOUT</button>
+                <button className='btn-checkout border rounded flex items-center px-2 py-2' onClick={() => {open();}}>CHECKOUT</button>
               </div>
             </div>
           </div>
         </>
-    )
+  );
 }

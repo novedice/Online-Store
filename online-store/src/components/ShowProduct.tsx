@@ -7,64 +7,80 @@ interface ProductProps {
 }
 
 export function ShowProduct({ product }: ProductProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { addToCart, delFromCart, listOfProd, productsInCart } =
+    useContext(CartContext);
 
-const { addToCart, delFromCart, listOfProd, productsInCart } = useContext(CartContext);
+  const btnBgClassName = listOfProd.includes(product.id)
+    ? 'bg-red-400 hover:bg-red-600'
+    : 'bg-green-400 hover:bg-green-600';
+  const btnClasses = [
+    'mb-2 flex rounded items-center  px-4 py-1 mr-3',
+    btnBgClassName,
+  ];
 
-const btnBgClassName = (listOfProd.includes(product.id)) ? 'bg-red-400 hover:bg-red-600' : 'bg-green-400 hover:bg-green-600';
-const btnClasses = ['mb-2 flex rounded items-center  px-4 py-1 mr-3', btnBgClassName];
-
-const buttonHandler = (product: IProduct) => {
-  if (listOfProd.includes(product.id)) {
-    delFromCart(product.id);
-    console.log('del prod.id', product.id);
-    console.log('del list:', listOfProd);
-    console.log('del prodincart', productsInCart);
-    
-  } else {
-    addToCart(product.id);
-    console.log('add prod.id', product.id);
-    console.log('add list:', listOfProd);
-    console.log('del prodincart', productsInCart);
-    
-  }
- 
-}
-
-
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const buttonHandler = (product: IProduct) => {
+    if (listOfProd.includes(product.id)) {
+      delFromCart(product.id);
+    } else {
+      addToCart(product.id);
+    }
+  };
 
   return (
     <>
-      <div 
-      className="flex flex-col items-center rounded border w-1/4 bg-local bgrd justify-between" 
-      style={{
-        backgroundImage: `url(${product.thumbnail})`,
-        backgroundSize: 'cover',
-        height: '250px'
-        }}> 
-        
-        <p className="font-bold title text-lg bg-slate-600 w-full text-center">{product.title}</p>
-        <div className="text-xs bg-slate-300 flex flex-col justify-start">
-          <p className="category"><span className="font-bold">Category: </span>{product.category}</p>
-          <p className="brand"><span className="font-bold">Brand: </span>{product.brand}</p>
-          <p className="price"><span className="font-bold">Price: </span>{product.price}</p>
-          <p className="discountPercentage"><span className="font-bold">Discount: </span>{product.discountPercentage}</p>
-          <p className="rating"><span className="font-bold">Rating: </span>{product.rating}</p>
-          <p className="stock"><span className="font-bold">Stock: </span>{product.stock}</p>
+      <div
+        className="bgrd flex w-1/4 flex-col items-center justify-between rounded border bg-local"
+        style={{
+          backgroundImage: `url(${product.thumbnail})`,
+          backgroundSize: 'cover',
+          height: '250px',
+        }}
+      >
+        <p className="title w-full bg-slate-600 text-center text-lg font-bold">
+          {product.title}
+        </p>
+        <div className="flex flex-col justify-start bg-slate-300 text-xs">
+          <p className="category">
+            <span className="font-bold">Category: </span>
+            {product.category}
+          </p>
+          <p className="brand">
+            <span className="font-bold">Brand: </span>
+            {product.brand}
+          </p>
+          <p className="price">
+            <span className="font-bold">Price: </span>
+            {product.price}
+          </p>
+          <p className="discountPercentage">
+            <span className="font-bold">Discount: </span>
+            {product.discountPercentage}
+          </p>
+          <p className="rating">
+            <span className="font-bold">Rating: </span>
+            {product.rating}
+          </p>
+          <p className="stock">
+            <span className="font-bold">Stock: </span>
+            {product.stock}
+          </p>
         </div>
         <div className="button-wrapper flex justify-between">
-        <button
-          className={btnClasses.join(' ')}
-          onClick={() => {
-            buttonHandler(product);
-            
-          }}
-        >
-          {(listOfProd.includes(product.id)) ? 'Remove' : 'Add'}
-          {/* {myCart.isInCart(product.) ? "Drop from Cart" : "Add to Cart"} */}
-        </button>
-        <button className="mb-2 flex rounded items-center px-4 py-1 bg-slate-300">Details</button>
+          <button
+            className={btnClasses.join(' ')}
+            onClick={() => {
+              buttonHandler(product);
+            }}
+          >
+            {listOfProd.includes(product.id) ? 'Remove' : 'Add'}
+            {/* {myCart.isInCart(product.) ? "Drop from Cart" : "Add to Cart"} */}
+          </button>
+          <button className="mb-2 flex items-center rounded bg-slate-300 px-4 py-1">
+            Details
+          </button>
         </div>
-
       </div>
     </>
   );

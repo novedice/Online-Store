@@ -1,24 +1,23 @@
 module.exports = {
-  parser: "@typescript-eslint/parser", // Specifies the ESLint parser
-  extends: [
-    "plugin:react/recommended", // Uses the recommended rules from @eslint-plugin-react
-    "plugin:@typescript-eslint/recommended", // Uses the recommended rules from @typescript-eslint/eslint-plugin
-  ],
+  root: true,
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
-    sourceType: "module", // Allows for the use of imports
-    ecmaFeatures: {
-      jsx: true, // Allows for the parsing of JSX
-    },
+    project: ['./tsconfig.json'],  //required for "type-aware linting"
   },
+  plugins: [
+    '@typescript-eslint',
+  ],
+  extends: [
+    'airbnb-typescript',
+    'prettier'
+  ],
   rules: {
-    // "no-console": "error"
-    // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
-    // e.g. '@typescript-eslint/explicit-function-return-type': 'off',
-  },
-  settings: {
-    react: {
-      version: "detect", // Tells eslint-plugin-react to automatically detect the version of React to use
-    },
-  },
+    "react/jsx-filename-extension": "off",
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    "@typescript-eslint/no-explicit-any": "off",
+    'import/no-extraneous-dependencies': 'off',
+    'import/extensions' : 'off'
+    // "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
+    // "import/no-extraneous-dependencies": ["error", {"devDependencies": false, "optionalDependencies": false, "peerDependencies": false}]
+  }
 };
