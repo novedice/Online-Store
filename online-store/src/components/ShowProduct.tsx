@@ -18,11 +18,11 @@ export function ShowProduct({ product }: ProductProps) {
     btnBgClassName,
   ];
 
-  const buttonHandler = (product: IProduct) => {
-    if (listOfProd.includes(product.id)) {
-      delFromCart(product.id);
+  const buttonHandler = (prod: IProduct) => {
+    if (listOfProd.includes(prod.id)) {
+      delFromCart(prod.id);
     } else {
-      addToCart(product.id);
+      addToCart(prod.id);
     }
   };
 

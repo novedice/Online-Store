@@ -20,7 +20,9 @@ export function App() {
     localStorage.getItem('allProducts') !== null
   ) {
     useEffect(() => {
-      const curAllProducts = JSON.parse(localStorage.getItem('allProducts'));
+      const curAllProducts = JSON.parse(
+        localStorage.getItem('allProducts') as string
+      );
       for (let i = 0; i < curAllProducts.length; i++) {
         allProducts.push(curAllProducts[i]);
       }

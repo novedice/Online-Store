@@ -25,7 +25,7 @@ export function ProductDetailsPage() {
   };
   console.log(id);
 
-  const product: IProduct = findProd(id);
+  const product: IProduct = findProd(id as string);
   const [prodImageBig, setProdImageBig] = useState<string>(product.images[0]);
 
   function changeImage(img: string): void {

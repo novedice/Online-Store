@@ -81,10 +81,12 @@ export const CartState = ({ children }: { children: React.ReactNode }) => {
   };
 
   const resorteCart = () => {
-    const list = JSON.parse(localStorage.getItem('listOfProd'));
-    const products = JSON.parse(localStorage.getItem('productsInCart'));
-    const rs = JSON.parse(localStorage.getItem('rsDiscount'));
-    const epm = JSON.parse(localStorage.getItem('epmDiscount'));
+    const list = JSON.parse(localStorage.getItem('listOfProd') as string);
+    const products = JSON.parse(
+      localStorage.getItem('productsInCart') as string
+    );
+    const rs = JSON.parse(localStorage.getItem('rsDiscount') as string);
+    const epm = JSON.parse(localStorage.getItem('epmDiscount') as string);
     setProductsInCart(products);
     setListOfProd(list);
     setEpmDiscount(epm);
@@ -93,8 +95,8 @@ export const CartState = ({ children }: { children: React.ReactNode }) => {
   const clearCart = () => {
     setProductsInCart([]);
     setListOfProd([]);
-    removeEpmDisc;
-    removeRsDisc;
+    removeEpmDisc();
+    removeRsDisc();
     localStorage.removeItem('productsInCart');
     localStorage.removeItem('listOfProd');
     localStorage.removeItem('rsDiscount');
