@@ -15,7 +15,19 @@ export function calculateTotal() {
           acc +
           curVal.price * productsInCart[listOfProd.indexOf(curVal.id)].quantity,
         0
-      )
-      .toFixed(2);
+      );
   }
+}
+
+export function calculateTotalDiscount() {
+  const { rsDiscount, epmDiscount } = useContext(CartContext);
+
+  const coefficient = rsDiscount
+    ? epmDiscount
+      ? 0.8
+      : 0.9
+    : epmDiscount
+    ? 0.9
+    : 1;
+  return calculateTotal() * coefficient;
 }

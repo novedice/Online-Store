@@ -3,8 +3,7 @@ import { CartContext } from '../Context/CartContext';
 import { ErrorMes } from './errorMessage';
 
 export function DiscountCode() {
-  const { rsDiscount, epmDiscount, addRsDisc, addEpmDisc } =
-    useContext(CartContext);
+  const { addRsDisc, addEpmDisc } = useContext(CartContext);
   const [value, setValue] = useState('');
   const [error, setError] = useState('');
 
@@ -14,11 +13,9 @@ export function DiscountCode() {
 
     if (value === 'RS') {
       addRsDisc();
-      console.log('rs applied', rsDiscount);
     }
     if (value === 'EPM') {
       addEpmDisc();
-      console.log('epm applied', epmDiscount);
     }
   };
 

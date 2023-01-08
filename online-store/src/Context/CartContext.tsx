@@ -25,32 +25,54 @@ export const CartState = ({ children }: { children: React.ReactNode }) => {
   const [productsInCart, setProductsInCart] = useState<IProdInCart[]>([]);
   const [listOfProd, setListOfProd] = useState<number[]>([]);
 
-  const addRsDisc = () => setRsDiscount(true);
-  const addEpmDisc = () => setEpmDiscount(true);
-  const removeRsDisc = () => setRsDiscount(false);
-  const removeEpmDisc = () => setEpmDiscount(false);
+  const addRsDisc = () => {
+    setRsDiscount(true);
+    localStorage.setItem('rsDiscount', JSON.stringify(rsDiscount));
+  };
+  const addEpmDisc = () => {
+    setEpmDiscount(true);
+    localStorage.setItem('epmDiscount', JSON.stringify(epmDiscount));
+  };
+  const removeRsDisc = () => {
+    setRsDiscount(false);
+    localStorage.setItem('rsDiscount', JSON.stringify(rsDiscount));
+  };
+  const removeEpmDisc = () => {
+    setEpmDiscount(false);
+    localStorage.setItem('epmDiscount', JSON.stringify(epmDiscount));
+  };
 
   const [quantity, setQuantity] = useState<number>(1);
   const addOne = (product: IProdInCart) => {
     setQuantity((productsInCart[listOfProd.indexOf(product.id)].quantity += 1));
+    localStorage.setItem('productsInCart', JSON.stringify(productsInCart));
   };
   const minusOne = (product: IProdInCart) => {
     setQuantity((productsInCart[listOfProd.indexOf(product.id)].quantity -= 1));
+    localStorage.setItem('productsInCart', JSON.stringify(productsInCart));
   };
 
   const addToCart = (id: number) => {
     setProductsInCart((prev) => [...prev, { id: id, quantity: 1 }]);
     setListOfProd((prev) => [...prev, id]);
+    localStorage.setItem('productsInCart', JSON.stringify(productsInCart));
+    localStorage.setItem('listOfProd', JSON.stringify(listOfProd));
   };
   const delFromCart = (id: number) => {
     setProductsInCart((prev) => prev.filter((product) => product.id !== id));
     setListOfProd((prev) => prev.filter((product) => product !== id));
+    localStorage.setItem('productsInCart', JSON.stringify(productsInCart));
+    localStorage.setItem('listOfProd', JSON.stringify(listOfProd));
   };
   const clearCart = () => {
     setProductsInCart([]);
     setListOfProd([]);
     removeEpmDisc;
     removeRsDisc;
+    localStorage.removeItem('productsInCart');
+    localStorage.removeItem('listOfProd');
+    localStorage.removeItem('rsDiscount');
+    localStorage.removeItem('epmDiscount');
   };
 
   return (

@@ -7,6 +7,7 @@ import { DiscountCode } from '../components/DiscountCode';
 import { CartContext } from '../Context/CartContext';
 import { allProducts } from '../hooks/products';
 import { AfterPayment } from '../components/AfterPayment';
+import { useNavigate } from 'react-router-dom';
 
 export function CartPage() {
   const {
@@ -16,10 +17,15 @@ export function CartPage() {
     afterPaymentWindow,
     openAfterPayment,
     closeAfterPayment,
+    redirectionOn,
+    redirection,
+    redirectionOff,
   } = useContext(ModalWindowContext);
 
-  const { rsDiscount, epmDiscount, listOfProd, productsInCart } =
+  const { rsDiscount, epmDiscount, listOfProd, productsInCart, clearCart } =
     useContext(CartContext);
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -46,15 +52,22 @@ export function CartPage() {
           }}
         >
           <AfterPayment
-            paidSuccess={function (): void {
-              setTimeout(() => {
+            paidSuccess={async () => {
+              await setTimeout(() => {
                 closeAfterPayment();
-                window.location.href = '/';
+                redirectionOn();
+                clearCart();
+                setTimeout(() => {
+                  redirectionOff();
+                }, 6000);
               }, 4500);
+              // const navigate = useNavigate();
+              // navigate('/');
             }}
           />
         </ModalWindow>
       )}
+      {redirection && navigate('/')}
       <div className="Cart-container flex justify-between border px-2 py-4">
         <div className="basic-3/5 w-[100%] border">
           <p>My bag ({listOfProd ? listOfProd.length : 0} items)</p>

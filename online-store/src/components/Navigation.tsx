@@ -1,10 +1,15 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../Context/CartContext';
-import { calculateTotal } from '../functions/calculateTotal';
+import {
+  calculateTotal,
+  calculateTotalDiscount,
+} from '../functions/calculateTotal';
+// import { useTotal } from '../hooks/calculateTotal';
 
 export function Navigation() {
-  const { listOfProd } = useContext(CartContext);
+  // const { total, totalWithDiscount } = useTotal();
+  const { listOfProd, rsDiscount, epmDiscount } = useContext(CartContext);
   return (
     <nav className="flex h-11 w-[100%] items-center justify-around bg-gray-600 text-center text-lg font-bold uppercase tracking-wide text-white">
       <div className="ml-5 mr-5 flex items-center">
@@ -19,7 +24,15 @@ export function Navigation() {
         </Link>
       </div>
       <div>
-        <span>Total: {calculateTotal()}€</span>
+        <span>
+          Total:{' '}
+          {(rsDiscount || epmDiscount) && (
+            <span className="text-sm font-light italic line-through">
+              {calculateTotal().toFixed(2)}€
+            </span>
+          )}
+          <span>{calculateTotalDiscount().toFixed(2)}€</span>
+        </span>
       </div>
     </nav>
   );

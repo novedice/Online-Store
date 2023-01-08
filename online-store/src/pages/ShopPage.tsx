@@ -1,14 +1,16 @@
-import React from "react";
-import { Categories } from "../components/Categories";
-import { ShowProduct } from "../components/ShowProduct";
-import { useProducts } from "../hooks/products";
+import React, { useContext } from 'react';
+import { Categories } from '../components/Categories';
+import { ShowProduct } from '../components/ShowProduct';
+// import { CartContext } from '../Context/CartContext';
+// import { takeDataFromStorage } from '../functions/dataFromLocalStorage';
+import { useProducts } from '../hooks/products';
 
 export function ShopPage() {
   const { allProd, loading, error } = useProducts();
 
   return (
     <div className="w-auto">
-      <Categories/>
+      <Categories />
       <div className="container mx-auto flex w-3/4 flex-wrap pt-5">
         {error && <p>{error}</p>}
         {loading && <p>Loading...</p>}

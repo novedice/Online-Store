@@ -8,8 +8,7 @@ export interface ProductProps {
 }
 
 export function ShowProduct({ product }: ProductProps) {
-  const { addToCart, delFromCart, listOfProd, productsInCart } =
-    useContext(CartContext);
+  const { addToCart, delFromCart, listOfProd } = useContext(CartContext);
 
   const btnBgClassName = listOfProd.includes(product.id)
     ? 'bg-red-400 hover:bg-red-600'
@@ -22,14 +21,8 @@ export function ShowProduct({ product }: ProductProps) {
   const buttonHandler = (product: IProduct) => {
     if (listOfProd.includes(product.id)) {
       delFromCart(product.id);
-      console.log('del prod.id', product.id);
-      console.log('del list:', listOfProd);
-      console.log('del prodincart', productsInCart);
     } else {
       addToCart(product.id);
-      console.log('add prod.id', product.id);
-      console.log('add list:', listOfProd);
-      console.log('del prodincart', productsInCart);
     }
   };
 

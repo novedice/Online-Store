@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import React, { createContext, useState } from "react";
+import React, { createContext, useState } from 'react';
 
 interface IModalWindowContext {
   modalWindow: boolean;
@@ -8,9 +8,9 @@ interface IModalWindowContext {
   afterPaymentWindow: boolean;
   openAfterPayment: () => void;
   closeAfterPayment: () => void;
-  productWindow: boolean;
-  openProductWindow: () => void;
-  closeProductWindow: () => void;
+  redirection: boolean;
+  redirectionOn: () => void;
+  redirectionOff: () => void;
 }
 
 export const ModalWindowContext = createContext<IModalWindowContext>({
@@ -20,9 +20,9 @@ export const ModalWindowContext = createContext<IModalWindowContext>({
   afterPaymentWindow: false,
   openAfterPayment: () => {},
   closeAfterPayment: () => {},
-  productWindow: false,
-  openProductWindow: () => {},
-  closeProductWindow: () => {},
+  redirection: false,
+  redirectionOn: () => {},
+  redirectionOff: () => {},
 });
 
 export const ModalWindowState = ({
@@ -36,12 +36,24 @@ export const ModalWindowState = ({
   const [afterPaymentWindow, setAfterPaymentWindow] = useState(false);
   const openAfterPayment = () => setAfterPaymentWindow(true);
   const closeAfterPayment = () => setAfterPaymentWindow(false);
-  const [productWindow, setProductWindow] = useState(false);
-  const openProductWindow = () => setProductWindow(true);
-  const closeProductWindow = () => setProductWindow(false);
+  const [redirection, setRedirection] = useState(false);
+  const redirectionOn = () => setRedirection(true);
+  const redirectionOff = () => setRedirection(false);
 
   return (
-    <ModalWindowContext.Provider value={{ modalWindow, open, close, afterPaymentWindow, openAfterPayment, closeAfterPayment, productWindow, openProductWindow, closeProductWindow }}>
+    <ModalWindowContext.Provider
+      value={{
+        modalWindow,
+        open,
+        close,
+        afterPaymentWindow,
+        openAfterPayment,
+        closeAfterPayment,
+        redirection,
+        redirectionOff,
+        redirectionOn,
+      }}
+    >
       {children}
     </ModalWindowContext.Provider>
   );
