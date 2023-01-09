@@ -9,7 +9,7 @@ export function Categories() {
   };
 
   return (
-    <div className="Categories m-2 w-44 border p-3 ">
+    <div className="Categories m-2 border p-3 ">
       {CATEGORIES.map((category) => {
         return (
           <button
