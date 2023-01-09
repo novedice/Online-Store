@@ -19,7 +19,6 @@ export function CartPage() {
     closeAfterPayment,
     redirectionOn,
     redirection,
-    redirectionOff,
   } = useContext(ModalWindowContext);
 
   const {
@@ -64,15 +63,13 @@ export function CartPage() {
             }}
           >
             <AfterPayment
-              paidSuccess={async () => {
-                await setTimeout(() => {
+              paidSuccess={() => {
+                setTimeout(() => {
                   closeAfterPayment();
-                  redirectionOn();
                   clearCart();
-                  setTimeout(() => {
-                    redirectionOff();
-                  }, 6000);
+                  // redirectionOn();
                 }, 4500);
+                setTimeout(() => redirectionOn(), 4200);
                 // const navigate = useNavigate();
                 // navigate('/');
               }}

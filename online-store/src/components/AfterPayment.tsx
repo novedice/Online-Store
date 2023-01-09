@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
 
 interface AfterPaymentProps {
   paidSuccess: () => void;
@@ -9,6 +10,7 @@ export function AfterPayment({ paidSuccess }: AfterPaymentProps) {
 
   setTimeout(() => setSec(sec - 1), 1000);
   paidSuccess();
+  // const navigate = useNavigate();
 
   return (
     <>
@@ -20,6 +22,7 @@ export function AfterPayment({ paidSuccess }: AfterPaymentProps) {
           You will be redirect to the main page in 0{sec} seconds
         </p>
       </div>
+      {/* { {redirection && navigate('/')}} */}
     </>
   );
 }
