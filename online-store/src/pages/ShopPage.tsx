@@ -10,6 +10,7 @@ import { SearchProduct } from '../components/SearchProduct';
 import { Brands } from '../components/Brands';
 import { IProduct } from '../types/types';
 import Select from '../components/Select';
+import PriceFilterContainer from '../components/PriceFilter';
 
 export function ShopPage() {
   const { allProd, loading, error } = useProducts();
@@ -23,6 +24,18 @@ export function ShopPage() {
   const brandsArray = brands?.split(',') || [];
 
   const sortProduct = searchParams.get('sort') || '';
+
+  // const maxae = allProd.reduce(
+  //   (acc, curr) => (acc > curr.price ? acc : curr),
+  //   {}
+  // );
+  // console.log(maxae);
+
+  const maxPrice = 1750;
+  const priceProduct = [
+    parseInt(searchParams.get('minPrice') ?? '0'),
+    parseInt(searchParams.get('maxPrice') ?? `${maxPrice}`),
+  ];
 
   const filterProducts = () => {
     let filteredProducts: IProduct[] = allProd;
@@ -65,42 +78,60 @@ export function ShopPage() {
         return price - priceB;
       });
     }
+    if (priceProduct) {
+      const min = priceProduct[0];
+      const max = priceProduct[1];
+      filteredProducts = filteredProducts.filter(
+        (product) => product.price >= min && product.price <= max
+      );
+    }
 
     return filteredProducts;
   };
 
   return (
-    <div className="w-auto">
-      <Categories />
-      <Brands />
-      <Select
-        selectSort={(e) => {
-          searchParams.set('sort', e.target.value);
-          setSearchParams(searchParams);
-        }}
-        label="Sort options"
-        name="Sort by"
-        options={[
-          {
-            label: 'Sort by price DESC',
-            value: 'priceDesc',
-          },
-          {
-            label: 'Sort by price ASC',
-            value: 'priceAsc',
-          },
-          {
-            label: 'Sort by rating DESC',
-            value: 'ratingDesc',
-          },
-          {
-            label: 'Sort by rating ASC',
-            value: 'ratingAsc',
-          },
-        ]}
-      />
-      <SearchProduct />
-
+    <div className="grid-cols-2">
+      <div>
+        <button
+          className="ml-2 mt-2 w-32 border px-2 hover:bg-red-200"
+          onClick={() => setSearchParams('')}
+        >
+          Reset Filter
+        </button>
+        <button className="ml-2 mt-2 w-32 border px-2 hover:bg-red-200">
+          Copy Filter
+        </button>
+        <Categories />
+        <Brands />
+        <Select
+          selectSort={(e) => {
+            searchParams.set('sort', e.target.value);
+            setSearchParams(searchParams);
+          }}
+          label="Sort options"
+          name="Sort by"
+          options={[
+            {
+              label: 'Sort by price DESC',
+              value: 'priceDesc',
+            },
+            {
+              label: 'Sort by price ASC',
+              value: 'priceAsc',
+            },
+            {
+              label: 'Sort by rating DESC',
+              value: 'ratingDesc',
+            },
+            {
+              label: 'Sort by rating ASC',
+              value: 'ratingAsc',
+            },
+          ]}
+        />
+        <SearchProduct />
+        <PriceFilterContainer maxPrice={maxPrice} />
+      </div>
       <div className="container mx-auto flex w-3/4 flex-wrap pt-5">
         {error && <p>{error}</p>}
         {loading && <p>Loading...</p>}
