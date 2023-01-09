@@ -7,9 +7,9 @@ export function Brands() {
   const onClickBrand = (brand: string) => {
     toggleSearchParams('brands', brand);
   };
-
+  //flex w-auto
   return (
-    <div className="Brands m-2 w-44 border p-3">
+    <div className="Brands m-2  border p-3">
       {BRANDS.map((brand) => {
         return (
           <button
