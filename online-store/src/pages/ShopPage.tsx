@@ -11,6 +11,7 @@ import { Brands } from '../components/Brands';
 import { IProduct } from '../types/types';
 import Select from '../components/Select';
 import PriceFilterContainer from '../components/PriceFilter';
+import RatingFilterContainer from '../components/RatingFilter';
 
 export function ShopPage() {
   const { allProd, loading, error } = useProducts();
@@ -36,6 +37,12 @@ export function ShopPage() {
   const priceProduct = [
     parseInt(searchParams.get('minPrice') ?? '0'),
     parseInt(searchParams.get('maxPrice') ?? `${maxPrice}`),
+  ];
+
+  const maxRating = 5;
+  const ratingProduct = [
+    parseInt(searchParams.get('minRating') ?? '0'),
+    parseInt(searchParams.get('maxRating') ?? `${maxRating}`),
   ];
 
   const filterProducts = () => {
@@ -132,6 +139,7 @@ export function ShopPage() {
         />
         <SearchProduct />
         <PriceFilterContainer maxPrice={maxPrice} />
+        <RatingFilterContainer maxRating={maxRating} />
       </div>
       <div className="container mx-auto flex w-3/4 flex-wrap pt-5">
         {error && <p>{error}</p>}

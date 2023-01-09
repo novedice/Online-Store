@@ -4,18 +4,18 @@ import { useSearchParams } from 'react-router-dom';
 import CollapsibleList from './CollapsibleList';
 import FilterToggle from './FilterToggle';
 
-function PriceFilter({ maxPrice }: { maxPrice: number }) {
+function RatingFilter({ maxRating }: { maxRating: number }) {
   const [visible, setVisible] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const defaultValues = [
-    parseInt(searchParams.get('minPrice') ?? '0'),
-    parseInt(searchParams.get('maxPrice') ?? `${maxPrice}`),
+    parseInt(searchParams.get('minRating') ?? '0'),
+    parseInt(searchParams.get('maxRating') ?? `${maxRating}`),
   ];
   const [values, setValues] = useState(defaultValues);
-  const filterActive = searchParams.get('minPrice') !== null;
+  const filterActive = searchParams.get('minRating') !== null;
   const onApplyFilter = () => {
-    searchParams.set('minPrice', `${values[0]}`);
-    searchParams.set('maxPrice', `${values[1]}`);
+    searchParams.set('minRating', `${values[0]}`);
+    searchParams.set('maxRating', `${values[1]}`);
     setSearchParams(searchParams, {
       replace: true,
     });
@@ -30,9 +30,9 @@ function PriceFilter({ maxPrice }: { maxPrice: number }) {
           active={filterActive}
           onApply={onApplyFilter}
           onClear={() => {
-            searchParams.delete('minPrice');
-            searchParams.delete('maxPrice');
-            setValues([0, maxPrice]);
+            searchParams.delete('minRating');
+            searchParams.delete('maxRating');
+            setValues([0, maxRating]);
             setSearchParams(searchParams, {
               replace: true,
             });
@@ -56,7 +56,7 @@ function PriceFilter({ maxPrice }: { maxPrice: number }) {
                 className="slider relative flex items-center"
                 value={values}
                 min={0}
-                max={maxPrice}
+                max={maxRating}
                 step={50}
                 minStepsBetweenThumbs={1}
               >
@@ -74,12 +74,12 @@ function PriceFilter({ maxPrice }: { maxPrice: number }) {
   );
 }
 
-export default function PriceFilterContainer({
-  maxPrice,
+export default function RatingFilterContainer({
+  maxRating,
 }: {
-  maxPrice: number;
+  maxRating: number;
 }) {
-  if (maxPrice === 0) return null;
+  if (maxRating === 0) return null;
 
-  return <PriceFilter maxPrice={maxPrice} />;
+  return <RatingFilter maxRating={maxRating} />;
 }
