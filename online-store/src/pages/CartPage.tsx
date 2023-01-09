@@ -69,7 +69,9 @@ export function CartPage() {
                   clearCart();
                   // redirectionOn();
                 }, 4500);
-                setTimeout(() => redirectionOn(), 4200);
+                setTimeout(() => {
+                  redirectionOn();
+                }, 4400);
                 // const navigate = useNavigate();
                 // navigate('/');
               }}

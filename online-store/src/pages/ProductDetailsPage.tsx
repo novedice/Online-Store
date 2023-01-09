@@ -1,10 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { CartContext } from '../Context/CartContext';
 import { IProduct } from '../types/types';
 import { Link, useParams } from 'react-router-dom';
-// import { allProducts } from '../hooks/products';
-import { findProd } from '../functions/findProduct';
 import { ModalWindowContext } from '../Context/ModalWindowContext';
+import { useProducts } from '../hooks/products';
 
 type QParam = {
   id: string;
@@ -12,9 +11,27 @@ type QParam = {
 
 export function ProductDetailsPage() {
   const { open } = useContext(ModalWindowContext);
-
+  const { listOfProd, addToCart, delFromCart } = useContext(CartContext);
   const { id } = useParams<QParam>();
-  const { addToCart, delFromCart, listOfProd } = useContext(CartContext);
+  const [currentProduct, setCurrentProduct] = useState<IProduct>();
+  const [prodImageBig, setProdImageBig] = useState<string>('');
+  const [error, setError] = useState(false);
+
+  const { allProd, loading } = useProducts();
+
+  useEffect(() => {
+    setError(false);
+    if (allProd.length && id) {
+      const findProduct = allProd.find((product) => product.id === +id);
+
+      if (findProduct) {
+        setCurrentProduct(findProduct);
+        setProdImageBig(findProduct.images[0]);
+      } else {
+        setError(true);
+      }
+    }
+  }, [allProd.length]);
 
   const buttonHandler = (product: IProduct) => {
     if (listOfProd.includes(product.id)) {
@@ -23,16 +40,14 @@ export function ProductDetailsPage() {
       addToCart(product.id);
     }
   };
-  console.log(id);
-
-  const product: IProduct = findProd(id as string);
-  const [prodImageBig, setProdImageBig] = useState<string>(product.images[0]);
 
   function changeImage(img: string): void {
     setProdImageBig(img);
   }
-
-  if (id !== undefined && parseInt(id) > 0 && parseInt(id) <= 100) {
+  console.log('load', loading);
+  if (loading) {
+    return <div>loading</div>;
+  } else if (currentProduct) {
     return (
       <>
         <div className="path ml-auto mr-auto flex w-[60%] justify-between text-xl uppercase">
@@ -40,37 +55,37 @@ export function ProductDetailsPage() {
             <span>Store</span>
           </Link>
           <span> ⋯ </span>
-          <span>{product.category}</span>
+          <span>{currentProduct?.category}</span>
           <span> ⋯ </span>
-          <span>{product.brand}</span>
+          <span>{currentProduct?.brand}</span>
           <span> ⋯ </span>
-          <span>{product.title}</span>
+          <span>{currentProduct?.title}</span>
         </div>
         <div className="details ml-auto mr-auto  mt-5 mb-5 flex w-[90%] flex-col rounded-lg border-4">
           <div className="prod-title  border bg-gray-600 text-center text-lg font-bold uppercase tracking-wide text-white">
-            {product.title}
+            {currentProduct?.title}
           </div>
           <div className="flex w-[100%] items-center justify-around">
             <div className="small-images flex w-[10%] flex-col">
               <div className="flex items-center rounded border">
                 <img
                   className="max-w-100%"
-                  onClick={() => changeImage(product.images[0])}
-                  src={product.images[0]}
+                  onClick={() => changeImage(currentProduct?.images[0])}
+                  src={currentProduct?.images[0]}
                 ></img>
               </div>
               <div className="flex items-center rounded border">
                 <img
                   className="max-w-100%"
-                  onClick={() => changeImage(product.images[2])}
-                  src={product.images[2]}
+                  onClick={() => changeImage(currentProduct?.images[2])}
+                  src={currentProduct?.images[2]}
                 ></img>
               </div>
               <div className="flex items-center rounded border">
                 <img
                   className="max-w-100%"
-                  onClick={() => changeImage(product.images[3])}
-                  src={product.images[3]}
+                  onClick={() => changeImage(currentProduct?.images[3])}
+                  src={currentProduct?.images[3]}
                 ></img>
               </div>
             </div>
@@ -81,46 +96,48 @@ export function ProductDetailsPage() {
               <p className="description w-[100%] border bg-gray-600 text-center text-white">
                 Description
               </p>
-              <p className="description text-center">{product.description}</p>
+              <p className="description text-center">
+                {currentProduct?.description}
+              </p>
               <p className="brand w-[100%] border bg-gray-600 text-center text-white">
                 Brand
               </p>
-              <p className="brand text-center">{product.brand}</p>
+              <p className="brand text-center">{currentProduct?.brand}</p>
               <p className="category w-[100%] border bg-gray-600 text-center text-white">
                 Category
               </p>
-              <p className="category text-center">{product.category}</p>
+              <p className="category text-center">{currentProduct?.category}</p>
               <p className="discount-percentage w-[100%] border bg-gray-600 text-center text-white">
                 Discount
               </p>
               <p className="discount-percentage text-center">
-                {product.discountPercentage}%
+                {currentProduct?.discountPercentage}%
               </p>
               <p className="rating w-[100%] border bg-gray-600 text-center text-white">
                 rating
               </p>
-              <p className="rating text-center">{product.rating}</p>
+              <p className="rating text-center">{currentProduct?.rating}</p>
               <p className="in-stock w-[100%] border bg-gray-600 text-center text-white">
                 In stock
               </p>
-              <p className="in-stock text-center">{product.stock}</p>
+              <p className="in-stock text-center">{currentProduct?.stock}</p>
             </div>
             <div className="price-block flex w-[20%] flex-col">
               <div className="price text-center text-2xl font-bold uppercase tracking-wide text-gray-700">
-                {product.price}€
+                {currentProduct?.price}€
               </div>
               <button
                 className="add-remove flex-shrink-0 rounded border-4 border-gray-500 bg-gray-500 py-1 px-2 text-lg text-white hover:border-gray-700 hover:bg-gray-700"
-                onClick={() => buttonHandler(product)}
+                onClick={() => buttonHandler(currentProduct)}
               >
-                {listOfProd.includes(product.id) ? 'Remove' : 'Add'}
+                {listOfProd.includes(currentProduct?.id) ? 'Remove' : 'Add'}
               </button>
               <Link to="/cart">
                 <button
                   className="buy-now w-[100%] flex-shrink-0 rounded border-4 border-gray-500 bg-gray-500 py-1 px-2 text-lg text-white hover:border-gray-700 hover:bg-gray-700"
                   onClick={() => {
-                    if (!listOfProd.includes(product.id)) {
-                      addToCart(product.id);
+                    if (!listOfProd.includes(currentProduct?.id)) {
+                      addToCart(currentProduct?.id);
                     }
                     open();
                   }}
@@ -133,7 +150,7 @@ export function ProductDetailsPage() {
         </div>
       </>
     );
-  } else {
+  } else if (error) {
     return (
       <>
         <div className="flex min-h-[600px] flex-col items-center justify-center text-3xl">
@@ -141,5 +158,7 @@ export function ProductDetailsPage() {
         </div>
       </>
     );
+  } else {
+    return <></>;
   }
 }
