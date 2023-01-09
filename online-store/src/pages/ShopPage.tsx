@@ -29,6 +29,7 @@ export function ShopPage() {
   //   (acc, curr) => (acc > curr.price ? acc : curr),
   //   {}
   // );
+
   // console.log(maxae);
 
   const maxPrice = 1750;
