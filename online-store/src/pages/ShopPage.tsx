@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { ChangeEvent } from 'react';
+// import React, { ChangeEvent } from 'react';
 
 import { Categories } from '../components/Categories';
 import { ShowProduct } from '../components/ShowProduct';
@@ -41,8 +40,8 @@ export function ShopPage() {
 
   const maxRating = 5;
   const ratingProduct = [
-    parseInt(searchParams.get('minRating') ?? '0'),
-    parseInt(searchParams.get('maxRating') ?? `${maxRating}`),
+    parseFloat(searchParams.get('minRating') ?? '0'),
+    parseFloat(searchParams.get('maxRating') ?? `${maxRating}`),
   ];
 
   const filterProducts = () => {
@@ -93,60 +92,83 @@ export function ShopPage() {
         (product) => product.price >= min && product.price <= max
       );
     }
+    if (ratingProduct) {
+      const min = ratingProduct[0];
+      const max = ratingProduct[1];
+      filteredProducts = filteredProducts.filter(
+        (product) => product.rating >= min && product.rating <= max
+      );
+    }
 
     return filteredProducts;
   };
+  const totalCount = filterProducts();
 
   return (
-    <div className="grid-cols-2">
-      <div>
+    <div className="flex flex-col pt-2">
+      <div className="filter-header flex h-10 items-center">
+        <div>
+          <button
+            className="mr-3 ml-2 w-36 border px-2 pt-1 pb-1 hover:bg-red-200"
+            onClick={() => setSearchParams('')}
+          >
+            Reset Filter
+          </button>
+        </div>
         <button
-          className="ml-2 mt-2 w-32 border px-2 hover:bg-red-200"
-          onClick={() => setSearchParams('')}
+          onClick={() => {
+            navigator.clipboard.writeText(window.location.href);
+          }}
+          className="w-36 border px-2 pt-1 pb-1 hover:bg-red-200"
         >
-          Reset Filter
-        </button>
-        <button className="ml-2 mt-2 w-32 border px-2 hover:bg-red-200">
           Copy Filter
         </button>
-        <Categories />
-        <Brands />
-        <Select
-          selectSort={(e) => {
-            searchParams.set('sort', e.target.value);
-            setSearchParams(searchParams);
-          }}
-          label="Sort options"
-          name="Sort by"
-          options={[
-            {
-              label: 'Sort by price DESC',
-              value: 'priceDesc',
-            },
-            {
-              label: 'Sort by price ASC',
-              value: 'priceAsc',
-            },
-            {
-              label: 'Sort by rating DESC',
-              value: 'ratingDesc',
-            },
-            {
-              label: 'Sort by rating ASC',
-              value: 'ratingAsc',
-            },
-          ]}
-        />
-        <SearchProduct />
-        <PriceFilterContainer maxPrice={maxPrice} />
-        <RatingFilterContainer maxRating={maxRating} />
+        <p className="ml-20 font-bold">
+          Total count: {totalCount.length} product
+        </p>
       </div>
-      <div className="container mx-auto flex w-3/4 flex-wrap pt-5">
-        {error && <p>{error}</p>}
-        {loading && <p>Loading...</p>}
-        {filterProducts().map((product) => (
-          <ShowProduct product={product} key={product.id} />
-        ))}
+      <div className="content-container flex">
+        <div className="allfilters flex flex-col">
+          <Categories />
+          <Brands />
+          <Select
+            selectSort={(e) => {
+              searchParams.set('sort', e.target.value);
+              setSearchParams(searchParams);
+            }}
+            label="Sort options"
+            name="Sort by"
+            options={[
+              {
+                label: 'Sort by price DESC',
+                value: 'priceDesc',
+              },
+              {
+                label: 'Sort by price ASC',
+                value: 'priceAsc',
+              },
+              {
+                label: 'Sort by rating DESC',
+                value: 'ratingDesc',
+              },
+              {
+                label: 'Sort by rating ASC',
+                value: 'ratingAsc',
+              },
+            ]}
+          />
+          <SearchProduct />
+          <PriceFilterContainer maxPrice={maxPrice} />
+          <RatingFilterContainer maxRating={maxRating} />
+        </div>
+
+        <div className="container mx-auto flex w-5/6 flex-wrap pt-5">
+          {error && <p>{error}</p>}
+          {loading && <p>Loading...</p>}
+          {filterProducts().map((product) => (
+            <ShowProduct product={product} key={product.id} />
+          ))}
+        </div>
       </div>
     </div>
   );

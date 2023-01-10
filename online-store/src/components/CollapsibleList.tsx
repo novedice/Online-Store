@@ -15,7 +15,7 @@ export default function CollapsibleList({
   // const [visible, setVisible] = useState(true);
 
   return (
-    <div className="price-slider pv4 mw7 bb b--black-10">
+    <div className="price-slider pv4 mw7 bb b--black-10 ml-1 pl-2">
       <div className={'mb2 relative flex items-start justify-between'}>
         <button
           // eslint-disable-next-line @typescript-eslint/no-shadow

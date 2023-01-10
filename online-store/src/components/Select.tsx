@@ -19,7 +19,7 @@ export default function Select({
       <select
         onChange={selectSort}
         name={name}
-        className="select m-2 w-44 border p-2"
+        className="sorting m-2 border p-2"
       >
         <option value="" disabled>
           {label}
