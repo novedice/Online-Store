@@ -9,6 +9,7 @@ import { CartContext } from '../Context/CartContext';
 import { AfterPayment } from '../components/AfterPayment';
 import { Link, useNavigate } from 'react-router-dom';
 import { useProducts } from '../hooks/products';
+// import { PaginationInCart } from '../components/Pagination';
 
 export function CartPage() {
   const { allProd, loading } = useProducts();
@@ -37,11 +38,7 @@ export function CartPage() {
   const navigate = useNavigate();
   if (loading) {
     return <div>loading...</div>;
-  } else if (
-    listOfProd &&
-    listOfProd.length !== 0
-    // localStorage.getItem('listOfProd') === null
-  ) {
+  } else if (listOfProd && listOfProd.length !== 0) {
     return (
       <>
         {modalWindow && (
@@ -83,14 +80,16 @@ export function CartPage() {
           </ModalWindow>
         )}
         {redirection && navigate('/')}
-        <div className="Cart-container flex min-h-[600px] justify-between border px-2 py-4 text-xl">
+        <div className="Cart-container flex min-h-[600px] justify-between px-2 py-4 text-xl">
           <div className="basic-3/5 w-[100%] border">
             <p>
               My bag ({listOfProd ? listOfProd.length : 0}{' '}
               {listOfProd && listOfProd.length > 1 ? 'items' : 'item'})
             </p>
-            <div className="item-container mx-auto flex max-w-2xl flex-col justify-around border pt-5">
+            <div className="item-container mx-auto flex max-w-2xl flex-col justify-around pt-5">
               {productsInCart ? (
+                // <PaginationInCart productsPerPage={2} />
+
                 productsInCart.map((item, index) => (
                   <ShowItem item={item} key={index} />
                 ))

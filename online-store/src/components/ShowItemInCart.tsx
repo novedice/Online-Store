@@ -7,6 +7,7 @@ import { useProducts } from '../hooks/products';
 
 interface ItemProps {
   item: IProdInCart;
+  page?: number;
 }
 
 export function ShowItem({ item }: ItemProps) {
@@ -30,13 +31,12 @@ export function ShowItem({ item }: ItemProps) {
     }
   }, [allProd.length]);
 
-  // const prod: IProduct = findProd(item.id.toString(10));
   if (loading) {
     return <div>loading...</div>;
   } else if (currentProd) {
     return (
       <>
-        <div className="item-in-Cart space-btw ml-auto mr-auto flex w-[95%] items-center rounded border px-2 py-2 text-xl">
+        <div className="item-in-Cart space-btw mb-2  ml-auto mr-auto flex w-[95%] items-center rounded border-2 border-gray-700 px-2 py-2 text-xl">
           <Link to={`/product-details/${currentProd.id}`}>
             <div className="ml-auto mr-auto flex w-[95%] items-center">
               <img

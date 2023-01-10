@@ -8,6 +8,7 @@ export const CartContext = createContext<ICartContext>({
   rsDiscount: false,
   epmDiscount: false,
   productsInCart: [],
+  // changePage: false,
   addOne: (product: IProdInCart) => {},
   minusOne: (product: IProdInCart) => {},
   addToCart: (id: number) => {},
@@ -25,6 +26,7 @@ export const CartState = ({ children }: { children: React.ReactNode }) => {
   const [epmDiscount, setEpmDiscount] = useState(false);
   const [productsInCart, setProductsInCart] = useState<IProdInCart[]>([]);
   const [listOfProd, setListOfProd] = useState<number[]>([]);
+  // const [changePage, setChangePage] = useState<boolean>(false);
 
   const addRsDisc = () => {
     setRsDiscount(true);
