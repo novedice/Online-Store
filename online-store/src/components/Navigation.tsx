@@ -20,7 +20,21 @@ export function Navigation() {
           <Link to="/cart">
             ShopCart{' '}
             <span className="text-lg lowercase">
-              ({listOfProd.length === 0 ? 0 : listOfProd.length} items)
+              (
+              {listOfProd.length === 0
+                ? 0
+                : productsInCart.reduce(
+                    (sum, curItem) => sum + curItem.quantity,
+                    0
+                  )}{' '}
+              {listOfProd.length === 0 ||
+              productsInCart.reduce(
+                (sum, curItem) => sum + curItem.quantity,
+                0
+              ) > 1
+                ? 'products'
+                : 'product'}
+              )
             </span>
           </Link>
         </div>
