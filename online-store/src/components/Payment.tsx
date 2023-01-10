@@ -51,7 +51,9 @@ export function Payment({ paid }: PaymentProps) {
     if (
       name.trim().split(' ').length < 2 ||
       name.trim().split(' ')[0].length < 3 ||
-      name.trim().split(' ')[1].length < 3
+      name.trim().split(' ')[1].length < 3 ||
+      isNumber(name.trim().split(' ')[0]) ||
+      isNumber(name.trim().split(' ')[1])
     ) {
       setNameError('Please enter valid name and surname');
       err += 1;
@@ -89,7 +91,8 @@ export function Payment({ paid }: PaymentProps) {
     if (
       cardDate.length !== 5 ||
       !isNumber(cardDate.slice(0, 2)) ||
-      !isNumber(cardDate.slice(3))
+      !isNumber(cardDate.slice(3)) ||
+      +cardDate.slice(0, 2) > 12
     ) {
       setCardDateError('Please enter valid card date');
       err += 1;

@@ -25,23 +25,26 @@ export function DiscountCode() {
   };
 
   return (
-    <form className="flex" onSubmit={submitHandler}>
-      <input
-        type="text"
-        className="mb-2 box-border max-h-8 w-full border py-2 px-4"
-        placeholder="Enter discount code"
-        value={value}
-        onChange={changeHandler}
-      />
+    <>
+      <form className="mb-3 flex" onSubmit={submitHandler}>
+        <input
+          type="text"
+          className="mb-2 mr-2 box-border max-h-8 w-[80%] border py-2 px-4"
+          placeholder="Enter discount code"
+          value={value}
+          onChange={changeHandler}
+        />
 
-      {error && <ErrorMes error={error} />}
+        {error && <ErrorMes error={error} />}
 
-      <button
-        type="submit"
-        className="btn-submit max-h-8 flex-shrink-0 rounded border-4 border-gray-500 bg-gray-500 text-sm text-white hover:border-gray-700 hover:bg-gray-700"
-      >
-        APPLY
-      </button>
-    </form>
+        <button
+          type="submit"
+          className="btn-submit max-h-8 flex-shrink-0 rounded border-4 border-teal-500 bg-teal-500 text-sm text-white  hover:border-teal-700 hover:bg-teal-700"
+        >
+          APPLY
+        </button>
+      </form>
+      <p className="mb-5 text-sm">Discount codes for tests: RS, EPM</p>
+    </>
   );
 }

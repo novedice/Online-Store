@@ -97,10 +97,7 @@ export const CartState = ({ children }: { children: React.ReactNode }) => {
     setListOfProd([]);
     removeEpmDisc();
     removeRsDisc();
-    localStorage.removeItem('productsInCart');
-    localStorage.removeItem('listOfProd');
-    localStorage.removeItem('rsDiscount');
-    localStorage.removeItem('epmDiscount');
+    localStorage.clear();
   };
 
   return (

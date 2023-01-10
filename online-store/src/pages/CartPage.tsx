@@ -5,11 +5,14 @@ import { ModalWindowContext } from '../Context/ModalWindowContext';
 import { ShowItem } from '../components/ShowItemInCart';
 import { DiscountCode } from '../components/DiscountCode';
 import { CartContext } from '../Context/CartContext';
-import { allProducts } from '../hooks/products';
+// import { allProducts } from '../hooks/products';
 import { AfterPayment } from '../components/AfterPayment';
 import { Link, useNavigate } from 'react-router-dom';
+import { useProducts } from '../hooks/products';
 
 export function CartPage() {
+  const { allProd, loading } = useProducts();
+
   const {
     modalWindow,
     open,
@@ -32,8 +35,9 @@ export function CartPage() {
   } = useContext(CartContext);
 
   const navigate = useNavigate();
-
-  if (
+  if (loading) {
+    return <div>loading...</div>;
+  } else if (
     listOfProd &&
     listOfProd.length !== 0
     // localStorage.getItem('listOfProd') === null
@@ -79,7 +83,7 @@ export function CartPage() {
           </ModalWindow>
         )}
         {redirection && navigate('/')}
-        <div className="Cart-container flex justify-between border px-2 py-4">
+        <div className="Cart-container flex min-h-[600px] justify-between border px-2 py-4 text-xl">
           <div className="basic-3/5 w-[100%] border">
             <p>My bag ({listOfProd ? listOfProd.length : 0} items)</p>
             <div className="item-container mx-auto flex max-w-2xl flex-col justify-around border pt-5">
@@ -92,18 +96,18 @@ export function CartPage() {
               )}
             </div>
           </div>
-          <div className="basic-2/5 flex w-[100%] flex-col items-center">
+          <div className="basic-2/5 flex w-[100%] flex-col items-center pl-[1%]">
             <div className="w-[100%] border px-2 py-4 hover:cursor-pointer">
               <p>Discount code</p>
               <DiscountCode />
             </div>
-            <div className="w-[100%] border">
+            <div className="mb-4 w-[100%] border">
               <p>Summary</p>
               {rsDiscount ? (
                 epmDiscount ? (
                   <div>
                     <div className="flex">
-                      <p>Applied code RS - 10%</p>
+                      <p className="mr-4">Applied code RS - 10%</p>
                       <button
                         className="
                       flex-shrink-0
@@ -121,7 +125,7 @@ export function CartPage() {
                       </button>
                     </div>
                     <div className="flex">
-                      <p>Applied code EPM - 10%</p>
+                      <p className="mr-4">Applied code EPM - 10%</p>
                       <button
                         className="
                       flex-shrink-0
@@ -140,7 +144,7 @@ export function CartPage() {
                     </div>
                     <p className="line-through">
                       Total:{' '}
-                      {allProducts
+                      {allProd
                         .filter((product) => listOfProd.includes(product.id))
                         .reduce(
                           (acc, curVal) =>
@@ -156,7 +160,7 @@ export function CartPage() {
                     <p>
                       Total:{' '}
                       {(
-                        allProducts
+                        allProd
                           .filter((product) => listOfProd.includes(product.id))
                           .reduce(
                             (acc, curVal) =>
@@ -173,7 +177,7 @@ export function CartPage() {
                 ) : (
                   <div>
                     <div className="flex">
-                      <p>Applied code RS - 10%</p>
+                      <p className="mr-4">Applied code RS - 10%</p>
                       <button
                         className="
                       flex-shrink-0
@@ -192,7 +196,7 @@ export function CartPage() {
                     </div>
                     <p className="line-through">
                       Total:{' '}
-                      {allProducts
+                      {allProd
                         .filter((product) => listOfProd.includes(product.id))
                         .reduce(
                           (acc, curVal) =>
@@ -208,7 +212,7 @@ export function CartPage() {
                     <p>
                       Total:{' '}
                       {(
-                        allProducts
+                        allProd
                           .filter((product) => listOfProd.includes(product.id))
                           .reduce(
                             (acc, curVal) =>
@@ -226,7 +230,7 @@ export function CartPage() {
               ) : epmDiscount ? (
                 <div>
                   <div className="flex">
-                    <p>Applied code EPM - 10%</p>
+                    <p className="mr-4">Applied code EPM - 10%</p>
                     <button
                       className="
                       flex-shrink-0
@@ -245,7 +249,7 @@ export function CartPage() {
                   </div>
                   <p className="line-through">
                     Total:{' '}
-                    {allProducts
+                    {allProd
                       .filter((product) => listOfProd.includes(product.id))
                       .reduce(
                         (acc, curVal) =>
@@ -261,7 +265,7 @@ export function CartPage() {
                   <p>
                     Total:{' '}
                     {(
-                      allProducts
+                      allProd
                         .filter((product) => listOfProd.includes(product.id))
                         .reduce(
                           (acc, curVal) =>
@@ -278,7 +282,7 @@ export function CartPage() {
               ) : (
                 <div>
                   Total:{' '}
-                  {allProducts
+                  {allProd
                     .filter((product) => listOfProd.includes(product.id))
                     .reduce(
                       (acc, curVal) =>
