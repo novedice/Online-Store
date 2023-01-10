@@ -53,14 +53,21 @@ export function ShowItem({ item }: ItemProps) {
           </Link>
           <div className="flex w-[100%] flex-col">
             <div className="in-stock">
-              <p className="text-l">
+              <p className="text-sm">
                 in stock: <span>{currentProd.stock}</span>
               </p>
             </div>
             <div className="item-qty flex w-[100%] items-center ">
               <p className="m-2">Qty: </p>
               <button
-                className="minus-one m-2 rounded-full border px-2 py-0 text-2xl"
+                className="minus-one m-2
+                      flex
+                      h-[30px]
+                      w-[30px]
+                      flex-shrink-0
+                      items-center justify-center
+                      rounded-full
+                      border-4 border-teal-500 bg-teal-500 px-2 py-0 text-2xl text-white hover:border-teal-700 hover:bg-teal-700"
                 onClick={() => {
                   if (item.quantity === 1) {
                     delFromCart(item.id);
@@ -78,7 +85,14 @@ export function ShowItem({ item }: ItemProps) {
               </button>
               <span> {item.quantity} </span>
               <button
-                className="plus-one m-2 rounded-full border px-2 py-0 text-2xl"
+                className="plus-one m-2
+                      flex
+                      h-[30px]
+                      w-[30px]
+                      flex-shrink-0
+                      items-center justify-center
+                      rounded-full
+                      border-4 border-teal-500 bg-teal-500 px-2 py-0 text-2xl text-white hover:border-teal-700 hover:bg-teal-700"
                 onClick={() => {
                   if (item.quantity < currentProd.stock) {
                     addOne(item);

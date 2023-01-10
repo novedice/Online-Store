@@ -107,7 +107,7 @@ export function CartPage() {
                 epmDiscount ? (
                   <div>
                     <div className="flex">
-                      <p>Applied code RS - 10%</p>
+                      <p className="mr-4">Applied code RS - 10%</p>
                       <button
                         className="
                       flex-shrink-0
@@ -125,7 +125,7 @@ export function CartPage() {
                       </button>
                     </div>
                     <div className="flex">
-                      <p>Applied code EPM - 10%</p>
+                      <p className="mr-4">Applied code EPM - 10%</p>
                       <button
                         className="
                       flex-shrink-0
@@ -177,7 +177,7 @@ export function CartPage() {
                 ) : (
                   <div>
                     <div className="flex">
-                      <p>Applied code RS - 10%</p>
+                      <p className="mr-4">Applied code RS - 10%</p>
                       <button
                         className="
                       flex-shrink-0
@@ -230,7 +230,7 @@ export function CartPage() {
               ) : epmDiscount ? (
                 <div>
                   <div className="flex">
-                    <p>Applied code EPM - 10%</p>
+                    <p className="mr-4">Applied code EPM - 10%</p>
                     <button
                       className="
                       flex-shrink-0
