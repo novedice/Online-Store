@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 export interface ProductProps {
   product: IProduct;
 }
-
+//, { view }: any
 export function ShowProduct({ product }: ProductProps) {
   const { addToCart, delFromCart, listOfProd } = useContext(CartContext);
 
@@ -73,7 +73,6 @@ export function ShowProduct({ product }: ProductProps) {
             }}
           >
             {listOfProd.includes(product.id) ? 'Remove' : 'Add'}
-            {/* {myCart.isInCart(product.) ? "Drop from Cart" : "Add to Cart"} */}
           </button>
           <Link to={`/product-details/${product.id}`}>
             <button className="mb-2 flex items-center rounded bg-slate-300 px-4 py-1">

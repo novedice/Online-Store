@@ -11,18 +11,20 @@ import { IProduct } from '../types/types';
 import Select from '../components/Select';
 import PriceFilterContainer from '../components/PriceFilter';
 import RatingFilterContainer from '../components/RatingFilter';
+import { CopyUrlButton } from '../components/CopyUrlButton';
+import { useState } from 'react';
 
 export function ShopPage() {
+  const [view, setView] = useState('block');
+
   const { allProd, loading, error } = useProducts();
+
   const [searchParams, setSearchParams] = useSearchParams();
   const categories = searchParams.get('categories');
-  const brands = searchParams.get('brands');
-
-  const searchQuery = searchParams.get('search') || '';
-
   const categoriesArray = categories?.split(',') || [];
+  const brands = searchParams.get('brands');
   const brandsArray = brands?.split(',') || [];
-
+  const searchQuery = searchParams.get('search') || '';
   const sortProduct = searchParams.get('sort') || '';
 
   // const maxae = allProd.reduce(
@@ -106,26 +108,46 @@ export function ShopPage() {
 
   return (
     <div className="flex flex-col pt-2">
-      <div className="filter-header flex h-10 items-center">
+      <div className="filter-header flex h-10 items-center justify-between">
         <div>
           <button
-            className="mr-3 ml-2 w-36 border px-2 pt-1 pb-1 hover:bg-red-200"
+            className="mr-3 ml-2 w-36 rounded border bg-red-400 px-2 pt-1 pb-1 hover:bg-red-600"
             onClick={() => setSearchParams('')}
           >
             Reset Filter
           </button>
+          <CopyUrlButton />
+          {/* // кнопка сетвью block, вторая кнопка которая делает line */}
         </div>
-        <button
-          onClick={() => {
-            navigator.clipboard.writeText(window.location.href);
-          }}
-          className="w-36 border px-2 pt-1 pb-1 hover:bg-red-200"
-        >
-          Copy Filter
-        </button>
+
         <p className="ml-20 font-bold">
           Total count: {totalCount.length} product
         </p>
+
+        <div>
+          <button
+            onClick={() => setView('block')}
+            className={
+              view === 'block'
+                ? 'mr-3 ml-2 w-36 rounded border bg-green-300 px-2 pt-1 pb-1'
+                : 'mr-3 ml-2 w-36 rounded border bg-slate-300 px-2 pt-1 pb-1'
+            }
+          >
+            Block
+          </button>
+
+          <button
+            onClick={() => setView('line')}
+            // className="mr-3 ml-2 w-36 rounded border bg-slate-300 px-2 pt-1 pb-1 "
+            className={
+              view === 'line'
+                ? 'mr-3 ml-2 w-36 rounded border bg-green-300 px-2 pt-1 pb-1'
+                : 'mr-3 ml-2 w-36 rounded border bg-slate-300 px-2 pt-1 pb-1'
+            }
+          >
+            List
+          </button>
+        </div>
       </div>
       <div className="content-container flex">
         <div className="allfilters flex flex-col">
@@ -162,11 +184,19 @@ export function ShopPage() {
           <RatingFilterContainer maxRating={maxRating} />
         </div>
 
-        <div className="container mx-auto flex w-5/6 flex-wrap pt-5">
+        <div
+          // className={
+          //   view === 'block' ? 'container mx-auto flex w-5/6 flex-wrap pt-5'
+          //     : 'container mx-auto flex w-5/6 flex-col flex-wrap pt-5'
+          // }
+          className={`container mx-auto flex w-5/6 flex-wrap pt-5 ${
+            view === 'line' ? 'flex-col' : ''
+          }`}
+        >
           {error && <p>{error}</p>}
           {loading && <p>Loading...</p>}
           {filterProducts().map((product) => (
-            <ShowProduct product={product} key={product.id} />
+            <ShowProduct product={product} key={product.id} /> //view={view}
           ))}
         </div>
       </div>
