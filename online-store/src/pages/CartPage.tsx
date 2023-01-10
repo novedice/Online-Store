@@ -79,7 +79,7 @@ export function CartPage() {
           </ModalWindow>
         )}
         {redirection && navigate('/')}
-        <div className="Cart-container flex justify-between border px-2 py-4">
+        <div className="Cart-container flex min-h-[600px] justify-between border px-2 py-4 text-xl">
           <div className="basic-3/5 w-[100%] border">
             <p>My bag ({listOfProd ? listOfProd.length : 0} items)</p>
             <div className="item-container mx-auto flex max-w-2xl flex-col justify-around border pt-5">
@@ -92,12 +92,12 @@ export function CartPage() {
               )}
             </div>
           </div>
-          <div className="basic-2/5 flex w-[100%] flex-col items-center">
+          <div className="basic-2/5 flex w-[100%] flex-col items-center pl-[1%]">
             <div className="w-[100%] border px-2 py-4 hover:cursor-pointer">
               <p>Discount code</p>
               <DiscountCode />
             </div>
-            <div className="w-[100%] border">
+            <div className="mb-4 w-[100%] border">
               <p>Summary</p>
               {rsDiscount ? (
                 epmDiscount ? (

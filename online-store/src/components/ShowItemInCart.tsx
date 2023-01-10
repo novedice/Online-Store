@@ -16,31 +16,31 @@ export function ShowItem({ item }: ItemProps) {
 
   return (
     <>
-      <div className="item-in-Cart space-btw flex items-center rounded border px-2 py-2">
+      <div className="item-in-Cart space-btw ml-auto mr-auto flex w-[95%] items-center rounded border px-2 py-2 text-xl">
         <Link to={`/product-details/${prod.id}`}>
-          <div className="flex w-[100%] items-center">
+          <div className="ml-auto mr-auto flex w-[95%] items-center">
             <img
               src={prod.thumbnail}
-              className="image-in-Cart basic-1/5 mb-1 w-1/6 px-1 py-1"
+              className="image-in-Cart mb-1 w-[50%] px-1 py-1"
               alt={prod.title}
             ></img>
-            <div className="item-description flex basis-2/5 flex-col px-2 py-4">
+            <div className="item-description flex w-[50%] flex-col px-2 py-4">
               <p className="font-bold">{prod.title}</p>
               <p className="">Category: {prod.category}</p>
               <p className="">Price: {prod.price}€</p>
             </div>
           </div>
         </Link>
-        <div className="basic-2/5 flex flex-col">
+        <div className="flex w-[100%] flex-col">
           <div className="in-stock">
-            <p>
+            <p className="text-l">
               in stock: <span>{prod.stock}</span>
             </p>
           </div>
-          <div className="item-qty flex">
-            <p>Qty: </p>
+          <div className="item-qty flex w-[100%] items-center ">
+            <p className="m-2">Qty: </p>
             <button
-              className="minus-one rounded-full border px-2 py-0 text-2xl"
+              className="minus-one m-2 rounded-full border px-2 py-0 text-2xl"
               onClick={() => {
                 if (item.quantity === 1) {
                   delFromCart(item.id);
@@ -58,7 +58,7 @@ export function ShowItem({ item }: ItemProps) {
             </button>
             <span> {item.quantity} </span>
             <button
-              className="plus-one rounded-full border px-2 py-0 text-2xl"
+              className="plus-one m-2 rounded-full border px-2 py-0 text-2xl"
               onClick={() => {
                 if (item.quantity < prod.stock) {
                   addOne(item);

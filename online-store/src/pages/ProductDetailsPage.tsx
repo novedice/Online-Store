@@ -127,7 +127,7 @@ export function ProductDetailsPage() {
                 {currentProduct?.price}€
               </div>
               <button
-                className="add-remove flex-shrink-0 rounded border-4 border-gray-500 bg-gray-500 py-1 px-2 text-lg text-white hover:border-gray-700 hover:bg-gray-700"
+                className="add-remove mb-3 flex-shrink-0 rounded border-4 border-gray-500 bg-gray-500 py-1 px-2 text-lg text-white hover:border-gray-700 hover:bg-gray-700"
                 onClick={() => buttonHandler(currentProduct)}
               >
                 {listOfProd.includes(currentProduct?.id) ? 'Remove' : 'Add'}
