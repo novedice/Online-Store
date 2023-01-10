@@ -19,7 +19,8 @@ export function SearchProduct() {
       value={searchQuery}
       type="search"
       name="search"
-      className="m-2 border pl-2"
+      placeholder="Search product"
+      className="search-label m-2 h-7 border pl-2 pr-2"
     />
   );
 }
