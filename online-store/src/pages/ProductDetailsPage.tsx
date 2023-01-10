@@ -44,7 +44,6 @@ export function ProductDetailsPage() {
   function changeImage(img: string): void {
     setProdImageBig(img);
   }
-  console.log('load', loading);
   if (loading) {
     return <div>loading</div>;
   } else if (currentProduct) {
@@ -69,21 +68,21 @@ export function ProductDetailsPage() {
             <div className="small-images flex w-[10%] flex-col">
               <div className="flex items-center rounded border">
                 <img
-                  className="max-w-100%"
+                  className="max-w-100% m-1"
                   onClick={() => changeImage(currentProduct?.images[0])}
                   src={currentProduct?.images[0]}
                 ></img>
               </div>
               <div className="flex items-center rounded border">
                 <img
-                  className="max-w-100%"
+                  className="max-w-100 m-1%"
                   onClick={() => changeImage(currentProduct?.images[2])}
                   src={currentProduct?.images[2]}
                 ></img>
               </div>
               <div className="flex items-center rounded border">
                 <img
-                  className="max-w-100%"
+                  className="max-w-100 m-1%"
                   onClick={() => changeImage(currentProduct?.images[3])}
                   src={currentProduct?.images[3]}
                 ></img>

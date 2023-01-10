@@ -9,7 +9,7 @@ interface IData {
   total: number;
 }
 
-export let allProducts: IProduct[] = [];
+// export let allProducts: IProduct[] = [];
 
 export function useProducts() {
   const [allProd, setAllProd] = useState<IProduct[]>([]);
@@ -24,11 +24,11 @@ export function useProducts() {
       const response = await axios.get<IData>(
         'https://dummyjson.com/products?limit=100'
       );
-      
+
       setAllProd(response.data.products);
 
-      allProducts = response.data.products.slice();
-      localStorage.setItem('allProducts', JSON.stringify(allProducts));
+      // allProducts = response.data.products.slice();
+      // localStorage.setItem('allProducts', JSON.stringify(allProducts));
 
       setLoading(false);
     } catch (e: unknown) {

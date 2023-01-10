@@ -5,11 +5,14 @@ import { ModalWindowContext } from '../Context/ModalWindowContext';
 import { ShowItem } from '../components/ShowItemInCart';
 import { DiscountCode } from '../components/DiscountCode';
 import { CartContext } from '../Context/CartContext';
-import { allProducts } from '../hooks/products';
+// import { allProducts } from '../hooks/products';
 import { AfterPayment } from '../components/AfterPayment';
 import { Link, useNavigate } from 'react-router-dom';
+import { useProducts } from '../hooks/products';
 
 export function CartPage() {
+  const { allProd, loading } = useProducts();
+
   const {
     modalWindow,
     open,
@@ -32,8 +35,9 @@ export function CartPage() {
   } = useContext(CartContext);
 
   const navigate = useNavigate();
-
-  if (
+  if (loading) {
+    return <div>loading...</div>;
+  } else if (
     listOfProd &&
     listOfProd.length !== 0
     // localStorage.getItem('listOfProd') === null
@@ -140,7 +144,7 @@ export function CartPage() {
                     </div>
                     <p className="line-through">
                       Total:{' '}
-                      {allProducts
+                      {allProd
                         .filter((product) => listOfProd.includes(product.id))
                         .reduce(
                           (acc, curVal) =>
@@ -156,7 +160,7 @@ export function CartPage() {
                     <p>
                       Total:{' '}
                       {(
-                        allProducts
+                        allProd
                           .filter((product) => listOfProd.includes(product.id))
                           .reduce(
                             (acc, curVal) =>
@@ -192,7 +196,7 @@ export function CartPage() {
                     </div>
                     <p className="line-through">
                       Total:{' '}
-                      {allProducts
+                      {allProd
                         .filter((product) => listOfProd.includes(product.id))
                         .reduce(
                           (acc, curVal) =>
@@ -208,7 +212,7 @@ export function CartPage() {
                     <p>
                       Total:{' '}
                       {(
-                        allProducts
+                        allProd
                           .filter((product) => listOfProd.includes(product.id))
                           .reduce(
                             (acc, curVal) =>
@@ -245,7 +249,7 @@ export function CartPage() {
                   </div>
                   <p className="line-through">
                     Total:{' '}
-                    {allProducts
+                    {allProd
                       .filter((product) => listOfProd.includes(product.id))
                       .reduce(
                         (acc, curVal) =>
@@ -261,7 +265,7 @@ export function CartPage() {
                   <p>
                     Total:{' '}
                     {(
-                      allProducts
+                      allProd
                         .filter((product) => listOfProd.includes(product.id))
                         .reduce(
                           (acc, curVal) =>
@@ -278,7 +282,7 @@ export function CartPage() {
               ) : (
                 <div>
                   Total:{' '}
-                  {allProducts
+                  {allProd
                     .filter((product) => listOfProd.includes(product.id))
                     .reduce(
                       (acc, curVal) =>
