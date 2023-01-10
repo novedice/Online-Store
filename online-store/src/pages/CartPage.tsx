@@ -85,7 +85,10 @@ export function CartPage() {
         {redirection && navigate('/')}
         <div className="Cart-container flex min-h-[600px] justify-between border px-2 py-4 text-xl">
           <div className="basic-3/5 w-[100%] border">
-            <p>My bag ({listOfProd ? listOfProd.length : 0} items)</p>
+            <p>
+              My bag ({listOfProd ? listOfProd.length : 0}{' '}
+              {listOfProd && listOfProd.length > 1 ? 'items' : 'item'})
+            </p>
             <div className="item-container mx-auto flex max-w-2xl flex-col justify-around border pt-5">
               {productsInCart ? (
                 productsInCart.map((item, index) => (
