@@ -28,16 +28,6 @@ export function ShopPage() {
   const searchQuery = searchParams.get('search') || '';
   const sortProduct = searchParams.get('sort') || '';
 
-  // interface Iprice {
-  //   price?: number;
-  // }
-
-  // const maxx: Iprice = allProd.reduce((acc, curr) => {
-  //   acc.price > curr.price ? acc : curr;
-  // }, allProd[0]?.price);
-  // console.log(maxx.price);
-  // console.log(allProd[0]?.price);
-
   const maxPrice = 1750;
   const priceProduct = [
     parseInt(searchParams.get('minPrice') ?? '0'),
@@ -108,7 +98,8 @@ export function ShopPage() {
     return filteredProducts;
   };
 
-  const totalCount = filterProducts();
+  const currentProdArray = filterProducts();
+
   return (
     <div className="flex flex-col pt-2">
       <div className="filter-header flex h-10 items-center justify-between">
@@ -122,7 +113,7 @@ export function ShopPage() {
           <CopyUrlButton />
         </div>
         <p className="ml-20 font-bold">
-          Total found: {totalCount.length} product
+          Total found: {currentProdArray.length} product
         </p>
         <div>
           <button
