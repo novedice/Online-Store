@@ -17,7 +17,7 @@ export const CopyUrlButton = () => {
       onClick={() => {
         copyHref();
       }}
-      className="w-36 rounded border bg-green-400 px-2 pt-1 pb-1 hover:bg-green-600"
+      className="w-36 rounded border bg-green-300 px-2 pt-1 pb-1 hover:bg-green-400"
     >
       {copySuccess ? <span className="blink">{copySuccess}</span> : 'Copy link'}
     </button>
