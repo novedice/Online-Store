@@ -4,18 +4,19 @@ import { Categories } from '../components/Categories';
 import { ShowProduct } from '../components/ShowProduct';
 import { useProducts } from '../hooks/products';
 import { useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
 
 import { SearchProduct } from '../components/SearchProduct';
 import { Brands } from '../components/Brands';
 import { IProduct } from '../types/types';
+import { VIEW } from '../types/enums';
 import Select from '../components/Select';
 import PriceFilterContainer from '../components/PriceFilter';
 import RatingFilterContainer from '../components/RatingFilter';
 import { CopyUrlButton } from '../components/CopyUrlButton';
-import { useState } from 'react';
 
 export function ShopPage() {
-  const [view, setView] = useState('block');
+  const [view, setView] = useState<VIEW>(VIEW.Block);
 
   const { allProd, loading, error } = useProducts();
 
@@ -26,13 +27,6 @@ export function ShopPage() {
   const brandsArray = brands?.split(',') || [];
   const searchQuery = searchParams.get('search') || '';
   const sortProduct = searchParams.get('sort') || '';
-
-  // const maxae = allProd.reduce(
-  //   (acc, curr) => (acc > curr.price ? acc : curr),
-  //   {}
-  // );
-
-  // console.log(maxae);
 
   const maxPrice = 1750;
   const priceProduct = [
@@ -101,48 +95,44 @@ export function ShopPage() {
         (product) => product.rating >= min && product.rating <= max
       );
     }
-
     return filteredProducts;
   };
-  const totalCount = filterProducts();
+
+  const currentProdArray = filterProducts();
 
   return (
     <div className="flex flex-col pt-2">
       <div className="filter-header flex h-10 items-center justify-between">
         <div>
           <button
-            className="mr-3 ml-2 w-36 rounded border bg-red-400 px-2 pt-1 pb-1 hover:bg-red-600"
+            className="mr-3 ml-2 w-36 rounded border bg-red-300 px-2 pt-1 pb-1 hover:bg-red-400"
             onClick={() => setSearchParams('')}
           >
             Reset Filter
           </button>
           <CopyUrlButton />
-          {/* // кнопка сетвью block, вторая кнопка которая делает line */}
         </div>
-
         <p className="ml-20 font-bold">
-          Total count: {totalCount.length} product
+          Total found: {currentProdArray.length} product
         </p>
-
         <div>
           <button
-            onClick={() => setView('block')}
+            onClick={() => setView(VIEW.Block)}
             className={
               view === 'block'
                 ? 'mr-3 ml-2 w-36 rounded border bg-green-300 px-2 pt-1 pb-1'
-                : 'mr-3 ml-2 w-36 rounded border bg-slate-300 px-2 pt-1 pb-1'
+                : 'mr-3 ml-2 w-36 rounded border bg-slate-300 px-2 pt-1 pb-1 hover:bg-slate-400'
             }
           >
             Block
           </button>
 
           <button
-            onClick={() => setView('line')}
-            // className="mr-3 ml-2 w-36 rounded border bg-slate-300 px-2 pt-1 pb-1 "
+            onClick={() => setView(VIEW.List)}
             className={
-              view === 'line'
+              view === 'list'
                 ? 'mr-3 ml-2 w-36 rounded border bg-green-300 px-2 pt-1 pb-1'
-                : 'mr-3 ml-2 w-36 rounded border bg-slate-300 px-2 pt-1 pb-1'
+                : 'mr-3 ml-2 w-36 rounded border bg-slate-300 px-2 pt-1 pb-1 hover:bg-slate-400'
             }
           >
             List
@@ -183,20 +173,15 @@ export function ShopPage() {
           <PriceFilterContainer maxPrice={maxPrice} />
           <RatingFilterContainer maxRating={maxRating} />
         </div>
-
         <div
-          // className={
-          //   view === 'block' ? 'container mx-auto flex w-5/6 flex-wrap pt-5'
-          //     : 'container mx-auto flex w-5/6 flex-col flex-wrap pt-5'
-          // }
-          className={`container mx-auto flex w-5/6 flex-wrap pt-5 ${
-            view === 'line' ? 'flex-col' : ''
+          className={`container mx-auto flex w-5/6 flex-wrap items-center pt-5 ${
+            view === 'list' ? 'flex-col' : ''
           }`}
         >
           {error && <p>{error}</p>}
           {loading && <p>Loading...</p>}
           {filterProducts().map((product) => (
-            <ShowProduct product={product} key={product.id} /> //view={view}
+            <ShowProduct product={product} key={product.id} view={view} />
           ))}
         </div>
       </div>
