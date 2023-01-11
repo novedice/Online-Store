@@ -134,7 +134,7 @@ export function ProductDetailsPage() {
                 >
                   {listOfProd.includes(currentProduct?.id) ? 'Remove' : 'Add'}
                 </button>
-                <Link to="/cart">
+                <Link to={`/cart/${1}`}>
                   <button
                     className="buy-now w-[100%] flex-shrink-0 rounded border-4 border-gray-500 bg-gray-500 py-1 px-2 text-lg text-white hover:border-gray-700 hover:bg-gray-700"
                     onClick={() => {

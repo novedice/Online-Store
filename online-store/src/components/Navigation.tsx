@@ -17,7 +17,8 @@ export function Navigation() {
           <Link to="/">Shop</Link>
         </div>
         <div className="ml-5 mr-5 flex items-center">
-          <Link to="/cart">
+          {/* <Link to={`/product-details/${item.id}`}></Link> */}
+          <Link to={`/cart/${1}`}>
             ShopCart{' '}
             <span className="text-lg lowercase">
               (

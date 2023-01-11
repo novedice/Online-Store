@@ -21,7 +21,7 @@ export function App() {
 
       <Routes>
         <Route path="/" element={<ShopPage />} />
-        <Route path="/cart" element={<CartPage />} />
+        <Route path="/cart/:page" element={<CartPage />} />
         <Route path="/product-details/:id" element={<ProductDetailsPage />} />
       </Routes>
 

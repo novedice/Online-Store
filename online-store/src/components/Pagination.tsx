@@ -4,36 +4,50 @@ import ReactPaginate from 'react-paginate';
 import { ShowItem } from './ShowItemInCart';
 import { useProducts } from '../hooks/products';
 import { IProdInCart, IProduct } from '../types/types';
+// import { useLocation, useParams, useNavigate } from 'react-router-dom';
 
 interface IPaginationInCart {
   productsPerPage: number;
 }
 
+// type QParam = {
+//   page: string;
+// };
+
 export function PaginationInCart({ productsPerPage }: IPaginationInCart) {
   const { productsInCart, listOfProd } = useContext(CartContext);
-  const [page, setPage] = useState(0);
+  // const { page } = useParams<QParam>();
+  const { allProd, loading } = useProducts();
+  // const navigate = useNavigate();
+
+  const [curPage, setCurPage] = useState(0);
+
   const [error, setError] = useState(false);
   const [currentProds, setCurrentProds] = useState<IProduct[]>([]);
   const [allFindedProds, setAllFindedProds] = useState<IProduct[]>([]);
+  const [totalPages, setTotalPages] = useState(0);
+  // const location = useLocation();
 
-  const totalPages = Math.ceil(listOfProd.length / productsPerPage);
-  const lastIndex = page + productsPerPage;
-  const curList = listOfProd.slice(page, lastIndex);
-  const { allProd, loading } = useProducts();
+  const lastIndex = curPage + productsPerPage;
+  const curList = listOfProd.slice(curPage, lastIndex);
 
   const handlePageClick = (event: { selected: number }) => {
     const newPage = (event.selected * productsPerPage) % listOfProd.length;
-    setPage(newPage);
+    setCurPage(newPage);
+    // location.pathname = `/cart/${newPage}`;
   };
 
   // const forcePageChange = () => {
   //   return 1;
   // }
+  // console.log('location', location);
+
+  // console.log('usePar', page);
+
+  // console.log(navigate);
 
   useEffect(() => {
     setError(false);
-    console.log('allProd', allProd);
-    console.log('cl', curList);
     if (allProd.length && listOfProd) {
       const findProducts = allProd.filter((product) =>
         listOfProd.includes(product.id)
@@ -45,7 +59,6 @@ export function PaginationInCart({ productsPerPage }: IPaginationInCart) {
       }
     }
   }, [allProd.length, listOfProd.length, totalPages]);
-  console.log('allProducts', allFindedProds);
   useEffect(() => {
     if (allFindedProds.length && curList) {
       const findCurProd = allFindedProds.filter((prod) =>
@@ -53,18 +66,21 @@ export function PaginationInCart({ productsPerPage }: IPaginationInCart) {
       );
       if (findCurProd) {
         setCurrentProds(findCurProd);
+        setTotalPages(Math.ceil(listOfProd.length / productsPerPage));
+        // if (curPage > totalPages) {
+        //   setCurPage(totalPages - 1);
+        // }
       } else {
         setError(true);
       }
     }
   }, [
-    page,
+    curPage,
     allFindedProds.length,
     listOfProd.length,
     productsPerPage,
     totalPages,
   ]);
-  console.log('curProducts', currentProds);
 
   if (loading) {
     return <div>loading...</div>;
@@ -94,6 +110,7 @@ export function PaginationInCart({ productsPerPage }: IPaginationInCart) {
           ))}
         </div>
         <ReactPaginate
+          initialPage={curPage}
           className="width-[100%] m-3 flex items-center justify-center p-2"
           disabledLinkClassName="m-2 text-gray-700"
           pageClassName="m-2"

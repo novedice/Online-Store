@@ -13,34 +13,6 @@ interface ItemProps {
 export function ShowItem({ item, itemInCart }: ItemProps) {
   const { minusOne, addOne, delFromCart, productsInCart } =
     useContext(CartContext);
-  // const quantity = productsInCart.find(
-  //   (product) => product.id === item.id
-  // )?.quantity;
-  // const curItem: IProdInCart = {
-  //   id: item.id,
-  //   quantity: quantity ? quantity : 0,
-  // };
-  // const [currentProd, setCurrentProd] = useState<IProduct>();
-  // const [error, setError] = useState(false);
-
-  // const { allProd, loading } = useProducts();
-
-  // useEffect(() => {
-  //   setError(false);
-  //   if (allProd.length && item.id) {
-  //     const findProduct = allProd.find((product) => product.id === item.id);
-
-  //     if (findProduct) {
-  //       setCurrentProd(findProduct);
-  //     } else {
-  //       setError(true);
-  //     }
-  //   }
-  // }, [allProd.length]);
-
-  // if (loading) {
-  //   return <div>loading...</div>;
-  // } else if (currentProd) {
   return (
     <>
       <div className="item-in-Cart space-btw mb-2  ml-auto mr-auto flex w-[95%] items-center rounded border-2 border-gray-700 px-2 py-2 text-xl">
@@ -137,15 +109,3 @@ export function ShowItem({ item, itemInCart }: ItemProps) {
     </>
   );
 }
-// } else if (error) {
-//   return (
-//     <>
-//       <div className="flex min-h-[600px] flex-col items-center justify-center text-3xl">
-//         <p className="text-center">PAGE NOT FOUND (404)</p>
-//       </div>
-//     </>
-//   );
-// } else {
-//   return <></>;
-// }
-// }
