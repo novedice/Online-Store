@@ -1,15 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { ModalWindow } from '../components/ModalWindow';
 import { Payment } from '../components/Payment';
 import { ModalWindowContext } from '../Context/ModalWindowContext';
-import { ShowItem } from '../components/ShowItemInCart';
+// import { ShowItem } from '../components/ShowItemInCart';
 import { DiscountCode } from '../components/DiscountCode';
 import { CartContext } from '../Context/CartContext';
 // import { allProducts } from '../hooks/products';
 import { AfterPayment } from '../components/AfterPayment';
 import { Link, useNavigate } from 'react-router-dom';
 import { useProducts } from '../hooks/products';
-// import { PaginationInCart } from '../components/Pagination';
+import { PaginationInCart } from '../components/Pagination';
 
 export function CartPage() {
   const { allProd, loading } = useProducts();
@@ -36,6 +36,13 @@ export function CartPage() {
   } = useContext(CartContext);
 
   const navigate = useNavigate();
+  const [itemsPerPage, setItemsPerPage] = useState(2);
+
+  const handlerPageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setItemsPerPage(+event.target.value);
+    console.log(itemsPerPage);
+  };
+
   if (loading) {
     return <div>loading...</div>;
   } else if (listOfProd && listOfProd.length !== 0) {
@@ -81,19 +88,37 @@ export function CartPage() {
         )}
         {redirection && navigate('/')}
         <div className="Cart-container flex min-h-[600px] justify-between px-2 py-4 text-xl">
-          <div className="basic-3/5 w-[100%] border">
-            <p>
-              My bag ({listOfProd ? listOfProd.length : 0}{' '}
-              {listOfProd && listOfProd.length > 1 ? 'items' : 'item'})
-            </p>
+          <div className="basic-3/5 w-[100%] border pt-4 pl-2 pr-2">
+            <div className="flex justify-between">
+              <p>
+                My bag ({listOfProd ? listOfProd.length : 0}{' '}
+                {listOfProd && listOfProd.length > 1 ? 'items' : 'item'})
+              </p>
+              <div className="mr-4 flex">
+                <p className="mr-2">Items per page </p>
+                <select
+                  defaultValue={2}
+                  onChange={handlerPageChange}
+                  className="border"
+                >
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                </select>
+              </div>
+            </div>
             <div className="item-container mx-auto flex max-w-2xl flex-col justify-around pt-5">
               {productsInCart ? (
-                // <PaginationInCart productsPerPage={2} />
-
-                productsInCart.map((item, index) => (
-                  <ShowItem item={item} key={index} />
-                ))
+                <PaginationInCart productsPerPage={itemsPerPage} />
               ) : (
+                // productsInCart.map((item, index) => (
+                //   <ShowItem item={item} key={index} />
+                // ))
                 <p>Your cart is empty</p>
               )}
             </div>
@@ -108,7 +133,7 @@ export function CartPage() {
               {rsDiscount ? (
                 epmDiscount ? (
                   <div>
-                    <div className="flex">
+                    <div className="mb-4 flex">
                       <p className="mr-4">Applied code RS - 10%</p>
                       <button
                         className="
@@ -126,7 +151,7 @@ export function CartPage() {
                         DROP
                       </button>
                     </div>
-                    <div className="flex">
+                    <div className="mb-4 flex">
                       <p className="mr-4">Applied code EPM - 10%</p>
                       <button
                         className="
