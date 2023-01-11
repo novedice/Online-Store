@@ -162,9 +162,12 @@ export function Payment({ paid }: PaymentProps) {
 
   return (
     <>
-      <form className="flex w-full max-w-lg flex-col" onSubmit={submitHandler}>
+      <form
+        className="ml-auto mr-auto flex w-full max-w-lg flex-col p-4"
+        onSubmit={submitHandler}
+      >
         <div className="-mx-3 mb-6 flex flex-wrap">
-          <div className="w-full px-3">
+          <div className="mb-4 w-full px-3">
             <label
               className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700"
               htmlFor="nameSurname"
@@ -183,7 +186,7 @@ export function Payment({ paid }: PaymentProps) {
               <p className="text-xs italic text-red-500">{nameError}</p>
             )}
           </div>
-          <div className="w-full px-3">
+          <div className="mb-4 w-full px-3">
             <label
               className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700"
               htmlFor="mobilePhone"
@@ -202,7 +205,7 @@ export function Payment({ paid }: PaymentProps) {
               <p className="text-xs italic text-red-500">{phoneError}</p>
             )}
           </div>
-          <div className="w-full px-3">
+          <div className="mb-4 w-full px-3">
             <label
               className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700"
               htmlFor="address"
@@ -221,7 +224,7 @@ export function Payment({ paid }: PaymentProps) {
               <p className="text-xs italic text-red-500">{addressError}</p>
             )}
           </div>
-          <div className="w-full px-3">
+          <div className="mb-4 w-full px-3">
             <label
               className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700"
               htmlFor="email"
@@ -229,7 +232,7 @@ export function Payment({ paid }: PaymentProps) {
               Please enter your email address
             </label>
             <input
-              className="mb-3 block w-full appearance-none rounded border border-gray-200 bg-gray-200 py-3 px-4 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+              className=" block w-full appearance-none rounded border border-gray-200 bg-gray-200 py-3 px-4 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
               onChange={emailHandler}
               type="email"
               placeholder="example@example.com"
@@ -240,11 +243,11 @@ export function Payment({ paid }: PaymentProps) {
               <p className="text-xs italic text-red-500">{emailError}</p>
             )}
           </div>
-          <div className="w-full px-3">
+          <div className="w-full p-3 px-3">
             <p className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
               Please enter your card details
             </p>
-            <div className="-mx-3 mb-6 flex w-[300px] flex-col flex-wrap rounded border">
+            <div className="-mx-3 mb-6 flex w-[300px] flex-col flex-wrap rounded border-2 p-3">
               <div className="flex">
                 <img
                   className="mr-2 w-[20%] rounded border"
@@ -260,20 +263,26 @@ export function Payment({ paid }: PaymentProps) {
                 ></input>
               </div>
               <div className="flex">
-                <input
-                  className="m-3 block w-28 appearance-none rounded border border-gray-200 bg-gray-200 py-3 px-4 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
-                  onChange={cardDateHandler}
-                  type="text"
-                  name="cardDate"
-                  value={cardDate}
-                ></input>
-                <input
-                  className="m-3 block w-28 appearance-none rounded border border-gray-200 bg-gray-200 py-3 px-4 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
-                  onChange={cvvHandler}
-                  type="number"
-                  name="cvv"
-                  value={cvv}
-                ></input>
+                <div className="m-3">
+                  <p>valid until</p>
+                  <input
+                    className=" block w-24 appearance-none rounded border border-gray-200 bg-gray-200 py-3 px-4 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+                    onChange={cardDateHandler}
+                    type="text"
+                    name="cardDate"
+                    value={cardDate}
+                  ></input>
+                </div>
+                <div className="m-3">
+                  <p>CVV</p>
+                  <input
+                    className=" block w-24 appearance-none rounded border border-gray-200 bg-gray-200 py-3 px-4 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+                    onChange={cvvHandler}
+                    type="number"
+                    name="cvv"
+                    value={cvv}
+                  ></input>
+                </div>
               </div>
               {cardError && (
                 <p className="text-xs italic text-red-500">{cardError}</p>
@@ -288,9 +297,9 @@ export function Payment({ paid }: PaymentProps) {
           </div>
           <button
             type="submit"
-            className="btn-submit flex-shrink-0 rounded border-4 border-teal-500 bg-teal-500 py-1 px-2 text-sm text-white hover:border-teal-700 hover:bg-teal-700"
+            className="btn-submit text-l w-[100%] flex-shrink-0 rounded border-4 border-teal-500 bg-teal-500 py-1 px-2 text-white hover:border-teal-700 hover:bg-teal-700"
           >
-            Submit
+            SUBMIT
           </button>
         </div>
       </form>

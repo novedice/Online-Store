@@ -38,6 +38,7 @@ export interface ICartContext {
   rsDiscount: boolean;
   epmDiscount: boolean;
   productsInCart: IProdInCart[];
+  // changePage: boolean;
   addOne: (prodInCart: IProdInCart) => void;
   minusOne: (prodInCart: IProdInCart) => void;
   addToCart: (id: number) => void;
