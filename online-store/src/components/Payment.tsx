@@ -133,7 +133,7 @@ export function Payment({ paid }: PaymentProps) {
         setPaymentSystem('jcb.jpeg');
       }
 
-      return event.target.value;
+      return event.target.value.slice(0, 16);
     });
   }
   function cardDateHandler(event: React.ChangeEvent<HTMLInputElement>) {
@@ -157,7 +157,7 @@ export function Payment({ paid }: PaymentProps) {
   }
 
   function cvvHandler(event: React.ChangeEvent<HTMLInputElement>) {
-    setCvv(event.target.value);
+    setCvv(event.target.value.slice(0, 3));
   }
 
   return (
