@@ -8,9 +8,10 @@ import { Link } from 'react-router-dom';
 interface ItemProps {
   item: IProduct;
   itemInCart: IProdInCart;
+  index: number;
 }
 
-export function ShowItem({ item, itemInCart }: ItemProps) {
+export function ShowItem({ item, itemInCart, index }: ItemProps) {
   const { minusOne, addOne, delFromCart, productsInCart } =
     useContext(CartContext);
   return (
@@ -18,6 +19,7 @@ export function ShowItem({ item, itemInCart }: ItemProps) {
       <div className="item-in-Cart space-btw mb-2  ml-auto mr-auto flex w-[95%] items-center rounded border-2 border-gray-700 px-2 py-2 text-xl">
         <Link to={`/product-details/${item.id}`}>
           <div className="ml-auto mr-auto flex w-[95%] items-center">
+            <div className="">{index}</div>
             <img
               src={item.thumbnail}
               className="image-in-Cart mb-1 w-[50%] px-1 py-1"

@@ -28,12 +28,14 @@ export function PaginationInCart({ productsPerPage }: IPaginationInCart) {
   const [totalPages, setTotalPages] = useState(0);
   // const location = useLocation();
 
-  const lastIndex = curPage + productsPerPage;
-  const curList = listOfProd.slice(curPage, lastIndex);
+  const firstIndex = curPage * productsPerPage;
+  const lastIndex = firstIndex + productsPerPage;
+  const curList = listOfProd.slice(firstIndex, lastIndex);
 
   const handlePageClick = (event: { selected: number }) => {
-    const newPage = (event.selected * productsPerPage) % listOfProd.length;
-    setCurPage(newPage);
+    // const newPage = (event.selected * productsPerPage) % listOfProd.length;
+    // setCurPage(newPage);
+    setCurPage(event.selected);
     // location.pathname = `/cart/${newPage}`;
   };
 
@@ -82,6 +84,8 @@ export function PaginationInCart({ productsPerPage }: IPaginationInCart) {
     totalPages,
   ]);
 
+  console.log(curPage);
+
   if (loading) {
     return <div>loading...</div>;
   } else if (currentProds) {
@@ -105,6 +109,7 @@ export function PaginationInCart({ productsPerPage }: IPaginationInCart) {
                   (prod) => prod.id === item.id
                 ) as IProdInCart
               }
+              index={curPage * productsPerPage + currentProds.indexOf(item) + 1}
               key={index}
             />
           ))}
