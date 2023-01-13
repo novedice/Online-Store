@@ -1,22 +1,21 @@
 import React, { useContext, useState } from 'react';
 import { CartContext } from '../Context/CartContext';
-import ErrorMes from './errorMessage';
-// import { ErrorMes } from './errorMessage';
+import { styleAllBtn, styleErrorMes } from '../styleClassNames/styleConstants';
 
 export function DiscountCode() {
   const { addRsDisc, addEpmDisc } = useContext(CartContext);
-  const [value, setValue] = useState('');
-  const [error, setError] = useState('');
+  const [value, setValue] = useState<string>('');
+  const [error, setError] = useState<string>('');
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
     setError('');
-
     if (value === 'RS') {
       addRsDisc();
-    }
-    if (value === 'EPM') {
+    } else if (value === 'EPM') {
       addEpmDisc();
+    } else {
+      setError(`sorry, we cannot find code ${value}`);
     }
   };
 
@@ -34,16 +33,14 @@ export function DiscountCode() {
           value={value}
           onChange={changeHandler}
         />
-
-        {error && <ErrorMes error={error} />}
-
         <button
           type="submit"
-          className="btn-submit max-h-8 flex-shrink-0 rounded border-4 border-teal-500 bg-teal-500 text-sm text-white  hover:border-teal-700 hover:bg-teal-700"
+          className={`btn-submit box-border max-h-8 rounded ${styleAllBtn}`}
         >
           APPLY
         </button>
       </form>
+      {error && <p className={`${styleErrorMes}`}>{error}</p>}
       <p className="mb-5 text-sm">Discount codes for tests: RS, EPM</p>
     </>
   );

@@ -1,15 +1,6 @@
 import { useState, useEffect } from 'react';
-import { IProduct } from '../types/types';
 import axios, { AxiosError } from 'axios';
-
-interface IData {
-  limit: number;
-  products: IProduct[];
-  skip: number;
-  total: number;
-}
-
-// export let allProducts: IProduct[] = [];
+import { IData, IProduct } from '../types/types';
 
 export function useProducts() {
   const [allProd, setAllProd] = useState<IProduct[]>([]);
@@ -29,10 +20,9 @@ export function useProducts() {
 
       setLoading(false);
     } catch (e: unknown) {
-      // eslint-disable-next-line @typescript-eslint/no-shadow
-      const error = e as AxiosError;
+      const err = e as AxiosError;
       setLoading(false);
-      setError(error.message);
+      setError(err.message);
     }
   }
 

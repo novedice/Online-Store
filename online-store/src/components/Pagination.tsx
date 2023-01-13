@@ -4,47 +4,28 @@ import ReactPaginate from 'react-paginate';
 import { ShowItem } from './ShowItemInCart';
 import { useProducts } from '../hooks/products';
 import { IProdInCart, IProduct } from '../types/types';
-// import { useLocation, useParams, useNavigate } from 'react-router-dom';
 
 interface IPaginationInCart {
   productsPerPage: number;
 }
 
-// type QParam = {
-//   page: string;
-// };
-
 export function PaginationInCart({ productsPerPage }: IPaginationInCart) {
   const { productsInCart, listOfProd } = useContext(CartContext);
-  // const { page } = useParams<QParam>();
   const { allProd, loading } = useProducts();
-  // const navigate = useNavigate();
 
-  const [curPage, setCurPage] = useState(0);
-
-  const [error, setError] = useState(false);
+  const [curPage, setCurPage] = useState<number>(0);
+  const [error, setError] = useState<boolean>(false);
   const [currentProds, setCurrentProds] = useState<IProduct[]>([]);
   const [allFindedProds, setAllFindedProds] = useState<IProduct[]>([]);
-  const [totalPages, setTotalPages] = useState(0);
-  // const location = useLocation();
+  const [totalPages, setTotalPages] = useState<number>(0);
 
-  const lastIndex = curPage + productsPerPage;
-  const curList = listOfProd.slice(curPage, lastIndex);
+  const firstIndex = curPage * productsPerPage;
+  const lastIndex = firstIndex + productsPerPage;
+  const curList = listOfProd.slice(firstIndex, lastIndex);
 
   const handlePageClick = (event: { selected: number }) => {
-    const newPage = (event.selected * productsPerPage) % listOfProd.length;
-    setCurPage(newPage);
-    // location.pathname = `/cart/${newPage}`;
+    setCurPage(event.selected);
   };
-
-  // const forcePageChange = () => {
-  //   return 1;
-  // }
-  // console.log('location', location);
-
-  // console.log('usePar', page);
-
-  // console.log(navigate);
 
   useEffect(() => {
     setError(false);
@@ -59,6 +40,7 @@ export function PaginationInCart({ productsPerPage }: IPaginationInCart) {
       }
     }
   }, [allProd.length, listOfProd.length, totalPages]);
+
   useEffect(() => {
     if (allFindedProds.length && curList) {
       const findCurProd = allFindedProds.filter((prod) =>
@@ -67,9 +49,6 @@ export function PaginationInCart({ productsPerPage }: IPaginationInCart) {
       if (findCurProd) {
         setCurrentProds(findCurProd);
         setTotalPages(Math.ceil(listOfProd.length / productsPerPage));
-        // if (curPage > totalPages) {
-        //   setCurPage(totalPages - 1);
-        // }
       } else {
         setError(true);
       }
@@ -105,6 +84,7 @@ export function PaginationInCart({ productsPerPage }: IPaginationInCart) {
                   (prod) => prod.id === item.id
                 ) as IProdInCart
               }
+              index={curPage * productsPerPage + currentProds.indexOf(item) + 1}
               key={index}
             />
           ))}
@@ -122,17 +102,6 @@ export function PaginationInCart({ productsPerPage }: IPaginationInCart) {
           pageRangeDisplayed={2}
           pageCount={totalPages}
           previousLabel="< previuous"
-          // forcePage={page - 1}
-          // hrefBuilder={(
-          //   pageIndex: number,
-          //   pageCount: number,
-          //   selectedPage: number
-          // ) =>
-          //   (pageIndex = page) >= 0 && selectedPage <= pageCount
-          //     ? `/page/${selectedPage}`
-          //     : '#'
-          // }
-          // hrefAllControls={true}
           renderOnZeroPageCount={undefined}
         ></ReactPaginate>
       </>

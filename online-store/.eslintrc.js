@@ -12,6 +12,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     'import/no-extraneous-dependencies': 'off',
     'import/extensions': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
     // "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
     // "import/no-extraneous-dependencies": ["error", {"devDependencies": false, "optionalDependencies": false, "peerDependencies": false}]
   },

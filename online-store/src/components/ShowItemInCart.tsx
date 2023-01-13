@@ -1,23 +1,28 @@
 import React, { useContext } from 'react';
 import { IProdInCart, IProduct } from '../types/types';
 import { CartContext } from '../Context/CartContext';
-// import { findProd } from '../functions/findProduct';
 import { Link } from 'react-router-dom';
-// import { useProducts } from '../hooks/products';
+import {
+  styleAllBtn,
+  styleBtnPlusMinus,
+} from '../styleClassNames/styleConstants';
 
 interface ItemProps {
   item: IProduct;
   itemInCart: IProdInCart;
+  index: number;
 }
 
-export function ShowItem({ item, itemInCart }: ItemProps) {
+export function ShowItem({ item, itemInCart, index }: ItemProps) {
   const { minusOne, addOne, delFromCart, productsInCart } =
     useContext(CartContext);
+
   return (
     <>
       <div className="item-in-Cart space-btw mb-2  ml-auto mr-auto flex w-[95%] items-center rounded border-2 border-gray-700 px-2 py-2 text-xl">
         <Link to={`/product-details/${item.id}`}>
           <div className="ml-auto mr-auto flex w-[95%] items-center">
+            <div className="">{index}</div>
             <img
               src={item.thumbnail}
               className="image-in-Cart mb-1 w-[50%] px-1 py-1"
@@ -39,14 +44,7 @@ export function ShowItem({ item, itemInCart }: ItemProps) {
           <div className="item-qty flex w-[100%] items-center ">
             <p className="m-2">Qty: </p>
             <button
-              className="minus-one m-2
-                      flex
-                      h-[30px]
-                      w-[30px]
-                      flex-shrink-0
-                      items-center justify-center
-                      rounded-full
-                      border-4 border-teal-500 bg-teal-500 px-2 py-0 text-2xl text-white hover:border-teal-700 hover:bg-teal-700"
+              className={`minus-one ${styleAllBtn} ${styleBtnPlusMinus}`}
               onClick={() => {
                 if (itemInCart.quantity === 1) {
                   delFromCart(item.id);
@@ -64,14 +62,7 @@ export function ShowItem({ item, itemInCart }: ItemProps) {
             </button>
             <span> {itemInCart?.quantity} </span>
             <button
-              className="plus-one m-2
-                      flex
-                      h-[30px]
-                      w-[30px]
-                      flex-shrink-0
-                      items-center justify-center
-                      rounded-full
-                      border-4 border-teal-500 bg-teal-500 px-2 py-0 text-2xl text-white hover:border-teal-700 hover:bg-teal-700"
+              className={`plus-one ${styleAllBtn} ${styleBtnPlusMinus}`}
               onClick={() => {
                 if (itemInCart?.quantity < item.stock) {
                   addOne(itemInCart);
