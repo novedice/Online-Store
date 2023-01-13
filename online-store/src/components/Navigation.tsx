@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../Context/CartContext';
 import { useProducts } from '../hooks/products';
+import { styleText } from '../styleClassNames/styleConstants';
 
 export function Navigation() {
   const { allProd, loading } = useProducts();
@@ -12,12 +13,13 @@ export function Navigation() {
     return <div>loading...</div>;
   } else if (allProd) {
     return (
-      <nav className="mb-3 flex h-11 w-[100%] items-center justify-around bg-gray-600 text-center text-lg font-bold uppercase tracking-wide text-white">
+      <nav
+        className={`mb-3 flex h-11 w-[100%] items-center justify-around bg-gray-600 text-center text-lg ${styleText} text-white`}
+      >
         <div className="ml-5 mr-5 flex items-center">
           <Link to="/">Shop</Link>
         </div>
         <div className="ml-5 mr-5 flex items-center">
-          {/* <Link to={`/product-details/${item.id}`}></Link> */}
           <Link to={`/cart/${1}`}>
             ShopCart{' '}
             <span className="text-lg lowercase">
@@ -57,7 +59,6 @@ export function Navigation() {
                 €
               </span>
             )}
-            {/* <span>{calculateTotalDiscount().toFixed(2)}€</span> */}
             <span>
               {rsDiscount && epmDiscount
                 ? (

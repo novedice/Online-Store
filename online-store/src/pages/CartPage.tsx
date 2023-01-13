@@ -2,14 +2,13 @@ import React, { useContext, useState } from 'react';
 import { ModalWindow } from '../components/ModalWindow';
 import { Payment } from '../components/Payment';
 import { ModalWindowContext } from '../Context/ModalWindowContext';
-// import { ShowItem } from '../components/ShowItemInCart';
 import { DiscountCode } from '../components/DiscountCode';
 import { CartContext } from '../Context/CartContext';
-// import { allProducts } from '../hooks/products';
 import { AfterPayment } from '../components/AfterPayment';
 import { Link, useNavigate } from 'react-router-dom';
 import { useProducts } from '../hooks/products';
 import { PaginationInCart } from '../components/Pagination';
+import { styleAllBtn, styleBtnSubmit } from '../styleClassNames/styleConstants';
 
 export function CartPage() {
   const { allProd, loading } = useProducts();
@@ -36,11 +35,10 @@ export function CartPage() {
   } = useContext(CartContext);
 
   const navigate = useNavigate();
-  const [itemsPerPage, setItemsPerPage] = useState(2);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(2);
 
   const handlerPageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setItemsPerPage(+event.target.value);
-    console.log(itemsPerPage);
   };
 
   if (loading) {
@@ -75,13 +73,10 @@ export function CartPage() {
                 setTimeout(() => {
                   closeAfterPayment();
                   clearCart();
-                  // redirectionOn();
                 }, 4500);
                 setTimeout(() => {
                   redirectionOn();
                 }, 4400);
-                // const navigate = useNavigate();
-                // navigate('/');
               }}
             />
           </ModalWindow>
@@ -116,9 +111,6 @@ export function CartPage() {
               {productsInCart ? (
                 <PaginationInCart productsPerPage={itemsPerPage} />
               ) : (
-                // productsInCart.map((item, index) => (
-                //   <ShowItem item={item} key={index} />
-                // ))
                 <p>Your cart is empty</p>
               )}
             </div>
@@ -136,16 +128,7 @@ export function CartPage() {
                     <div className="mb-4 flex">
                       <p className="mr-4">Applied code RS - 10%</p>
                       <button
-                        className="
-                      flex-shrink-0
-                      rounded
-                      border-4
-                      border-teal-500
-                      bg-teal-500
-                      text-sm
-                      text-white
-                      hover:border-teal-700
-                      hover:bg-teal-700"
+                        className={`rounded text-sm ${styleAllBtn}`}
                         onClick={() => removeRsDisc()}
                       >
                         DROP
@@ -154,16 +137,7 @@ export function CartPage() {
                     <div className="mb-4 flex">
                       <p className="mr-4">Applied code EPM - 10%</p>
                       <button
-                        className="
-                      flex-shrink-0
-                      rounded
-                      border-4
-                      border-teal-500
-                      bg-teal-500
-                      text-sm
-                      text-white
-                      hover:border-teal-700
-                      hover:bg-teal-700"
+                        className={`rounded text-sm ${styleAllBtn}`}
                         onClick={() => removeEpmDisc()}
                       >
                         DROP
@@ -206,16 +180,7 @@ export function CartPage() {
                     <div className="flex">
                       <p className="mr-4">Applied code RS - 10%</p>
                       <button
-                        className="
-                      flex-shrink-0
-                      rounded
-                      border-4
-                      border-teal-500
-                      bg-teal-500
-                      text-sm
-                      text-white
-                      hover:border-teal-700
-                      hover:bg-teal-700"
+                        className={`rounded text-sm ${styleAllBtn}`}
                         onClick={() => removeRsDisc()}
                       >
                         DROP
@@ -259,16 +224,7 @@ export function CartPage() {
                   <div className="flex">
                     <p className="mr-4">Applied code EPM - 10%</p>
                     <button
-                      className="
-                      flex-shrink-0
-                      rounded
-                      border-4
-                      border-teal-500
-                      bg-teal-500
-                      text-sm
-                      text-white
-                      hover:border-teal-700
-                      hover:bg-teal-700"
+                      className={`rounded text-sm ${styleAllBtn}`}
                       onClick={() => removeEpmDisc()}
                     >
                       DROP
@@ -326,7 +282,7 @@ export function CartPage() {
             </div>
             <div className="w-[100%]flex items-center border">
               <button
-                className="flex-shrink-0 rounded border-4 border-teal-500 bg-teal-500 py-1 px-2 text-sm text-white hover:border-teal-700 hover:bg-teal-700"
+                className={`${styleBtnSubmit} ${styleAllBtn}`}
                 onClick={() => {
                   open();
                 }}

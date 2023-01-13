@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-empty-function */
 import React, { createContext, useState } from 'react';
 import { ICartContext, IProdInCart } from '../types/types';
 
@@ -8,11 +7,10 @@ export const CartContext = createContext<ICartContext>({
   rsDiscount: false,
   epmDiscount: false,
   productsInCart: [],
-  // changePage: false,
-  addOne: (product: IProdInCart) => {},
-  minusOne: (product: IProdInCart) => {},
-  addToCart: (id: number) => {},
-  delFromCart: (id: number) => {},
+  addOne: () => {},
+  minusOne: () => {},
+  addToCart: () => {},
+  delFromCart: () => {},
   addRsDisc: () => {},
   addEpmDisc: () => {},
   removeRsDisc: () => {},
@@ -22,11 +20,10 @@ export const CartContext = createContext<ICartContext>({
 });
 
 export const CartState = ({ children }: { children: React.ReactNode }) => {
-  const [rsDiscount, setRsDiscount] = useState(false);
-  const [epmDiscount, setEpmDiscount] = useState(false);
+  const [rsDiscount, setRsDiscount] = useState<boolean>(false);
+  const [epmDiscount, setEpmDiscount] = useState<boolean>(false);
   const [productsInCart, setProductsInCart] = useState<IProdInCart[]>([]);
   const [listOfProd, setListOfProd] = useState<number[]>([]);
-  // const [changePage, setChangePage] = useState<boolean>(false);
 
   const addRsDisc = () => {
     setRsDiscount(true);

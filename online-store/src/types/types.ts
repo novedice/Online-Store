@@ -1,3 +1,10 @@
+export interface IData {
+  limit: number;
+  products: IProduct[];
+  skip: number;
+  total: number;
+}
+
 export interface IProduct {
   id: number;
   title: string;
@@ -14,20 +21,6 @@ export interface IProduct {
   inCart?: boolean;
 }
 
-export interface ItemInCart {
-  product: IProduct;
-  quantity: number;
-}
-
-export interface ICart {
-  productsInCart: ItemInCart[];
-  cartList: string[];
-  summaryItems: number;
-  totalPay: number;
-  rsDiscount: boolean;
-  epmDiscount: boolean;
-}
-
 export interface IProdInCart {
   id: number;
   quantity: number;
@@ -38,7 +31,6 @@ export interface ICartContext {
   rsDiscount: boolean;
   epmDiscount: boolean;
   productsInCart: IProdInCart[];
-  // changePage: boolean;
   addOne: (prodInCart: IProdInCart) => void;
   minusOne: (prodInCart: IProdInCart) => void;
   addToCart: (id: number) => void;
@@ -50,3 +42,7 @@ export interface ICartContext {
   clearCart: () => void;
   resorteCart: () => void;
 }
+
+export type QParam = {
+  id: string;
+};
