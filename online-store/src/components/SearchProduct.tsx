@@ -8,7 +8,7 @@ export function SearchProduct() {
 
   const { updateSearchParams } = useSearchFilters();
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     updateSearchParams('search', value);
   };

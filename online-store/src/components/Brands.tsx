@@ -31,7 +31,6 @@ export function Brands() {
                 <Checkbox.Root
                   id={brand}
                   name={brand}
-                  // disabled={false}
                   onCheckedChange={() => onClickBrand(brand)}
                   checked={hasBrands(brand)}
                   className="checkbox lh-solid pa0 w125 h125 br2 bn flex items-center justify-center bg-white"

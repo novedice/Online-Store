@@ -34,7 +34,6 @@ export function Categories() {
                 <Checkbox.Root
                   id={category}
                   name={category}
-                  // disabled={false}
                   onCheckedChange={() => onClickCategory(category)}
                   checked={hasCategories(category)}
                   className="checkbox lh-solid pa0 w125 h125 br2 bn flex items-center justify-center bg-white"

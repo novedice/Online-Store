@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface ModalWindowProps {
   children: React.ReactNode;
   title: string;
