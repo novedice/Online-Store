@@ -1,5 +1,3 @@
-// import React, { ChangeEvent } from 'react';
-
 import { Categories } from '../components/Categories';
 import { ShowProduct } from '../components/ShowProduct';
 import { useProducts } from '../hooks/products';

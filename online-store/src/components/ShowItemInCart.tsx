@@ -6,7 +6,6 @@ import {
   styleAllBtn,
   styleBtnPlusMinus,
 } from '../styleClassNames/styleConstants';
-
 interface ItemProps {
   item: IProduct;
   itemInCart: IProdInCart;

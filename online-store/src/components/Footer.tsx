@@ -1,8 +1,5 @@
-import React from 'react';
 import '../assets/GitHubLogo.png';
 import '../assets/GitHubLogo1.png';
-
-// import { Link } from 'react-router-dom';
 
 export function Footer() {
   return (

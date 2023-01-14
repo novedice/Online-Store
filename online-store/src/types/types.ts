@@ -4,7 +4,6 @@ export interface IData {
   skip: number;
   total: number;
 }
-
 export interface IProduct {
   id: number;
   title: string;
@@ -20,12 +19,10 @@ export interface IProduct {
   quantity?: number;
   inCart?: boolean;
 }
-
 export interface IProdInCart {
   id: number;
   quantity: number;
 }
-
 export interface ICartContext {
   listOfProd: number[];
   rsDiscount: boolean;

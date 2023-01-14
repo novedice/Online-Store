@@ -4,7 +4,6 @@
   --color-primary: #a463f2;
   --color-gray-dark: #ccc;
   --color-gray: #f9fafb;
-
   --font-primary: 'Inter', sans-serif;
 }
 
@@ -98,7 +97,6 @@ body {
 }
 
 .price-slider {
-  /* margin: 0 auto; */
   width: 300px;
 }
 
