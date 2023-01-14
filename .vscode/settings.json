@@ -1,0 +1,16 @@
+{
+  "files.associations": {
+    "\"*.css\"": "\"tailwindcss\""
+  },
+  "tailwindCSS.includeLanguages": {
+    "\"plaintext\"": "\"html\""
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": [
+    "javascript"
+  ],
+  "eslint.run": "onType",
+  "eslint.runtime": ""
+}
